@@ -28,48 +28,48 @@ st.markdown("""
 .block-container {padding-top: 3.6rem; padding-bottom: 3rem; max-width: 1400px;}
 [data-testid="stSidebar"] h3 {font-size: 0.95rem; margin-bottom: 0.2rem;}
 
-.pl-hero {background: linear-gradient(120deg, #0f6e5c 0%, #138a72 60%, #1fa287 100%);
+.pl-hero {background: linear-gradient(120deg, #002d42 0%, #00547a 65%, #0a6d99 100%);
   color: #fff; border-radius: 18px; padding: 26px 30px 22px; margin-bottom: 18px;
-  box-shadow: 0 6px 22px rgba(15,110,92,.18);}
+  box-shadow: 0 6px 22px rgba(0,84,122,.20);}
 .pl-hero .eyebrow {font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; opacity: .85; font-weight: 600;}
 .pl-hero h1 {color: #fff; font-size: 2.3rem; margin: 4px 0 6px; padding: 0; line-height: 1.15;}
 .pl-hero p {margin: 0 0 14px; opacity: .93; font-size: 1.02rem; max-width: 760px;}
 .pl-chip {display: inline-block; background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.28);
   border-radius: 999px; padding: 4px 12px; margin: 0 6px 6px 0; font-size: .86rem; font-weight: 500;}
 
-.pl-kpi {background: #fff; border: 1px solid #dce8e4; border-radius: 14px; padding: 16px 18px; min-height: 128px;
-  box-shadow: 0 1px 3px rgba(20,48,43,.05);}
-.pl-kpi .label {font-size: .82rem; color: #4d6b64; font-weight: 600; text-transform: uppercase; letter-spacing: .04em;}
-.pl-kpi .value {font-size: 2.1rem; font-weight: 700; color: #14302b; line-height: 1.15; margin: 4px 0 2px;}
-.pl-kpi .hint {font-size: .85rem; color: #5f7a74;}
-.pl-kpi.accent {border-left: 5px solid #d64545;}
-.pl-kpi.good {border-left: 5px solid #0f6e5c;}
+.pl-kpi {background: #fff; border: 1px solid #e5eef2; border-radius: 14px; padding: 16px 18px; min-height: 128px;
+  box-shadow: 0 1px 3px rgba(31,41,55,.05);}
+.pl-kpi .label {font-size: .82rem; color: #65758b; font-weight: 600; text-transform: uppercase; letter-spacing: .04em;}
+.pl-kpi .value {font-size: 2.1rem; font-weight: 700; color: #1f2937; line-height: 1.15; margin: 4px 0 2px;}
+.pl-kpi .hint {font-size: .85rem; color: #65758b;}
+.pl-kpi.accent {border-left: 5px solid #ef4444;}
+.pl-kpi.good {border-left: 5px solid #00547a;}
 
-.pl-card {background: #fff; border: 1px solid #dce8e4; border-radius: 14px; padding: 16px 18px; height: 100%;
-  box-shadow: 0 1px 3px rgba(20,48,43,.05);}
+.pl-card {background: #fff; border: 1px solid #e5eef2; border-radius: 14px; padding: 16px 18px; height: 100%;
+  box-shadow: 0 1px 3px rgba(31,41,55,.05);}
 .pl-card.top3 {min-height: 262px;}
 .pl-card .top {display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;}
-.pl-rank {background: #0f6e5c; color: #fff; border-radius: 8px; padding: 2px 9px; font-weight: 700; font-size: .9rem;}
+.pl-rank {background: #00547a; color: #fff; border-radius: 8px; padding: 2px 9px; font-weight: 700; font-size: .9rem;}
 .pl-pill {border-radius: 999px; padding: 2px 10px; font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em;}
-.pl-pill.alta {background: #fde4e4; color: #b42318;}
+.pl-pill.alta {background: #fde8e8; color: #b91c1c;}
 .pl-pill.media {background: #fff1dc; color: #b45309;}
-.pl-pill.baja {background: #eef2f1; color: #4d6b64;}
-.pl-card .prob {font-size: 1.9rem; font-weight: 700; color: #14302b; line-height: 1.1;}
-.pl-card .prob small {font-size: .85rem; font-weight: 500; color: #5f7a74;}
-.pl-card .meta {font-size: .88rem; color: #4d6b64; margin: 6px 0 10px;}
-.pl-card .meta b {color: #14302b;}
-.pl-card .why {font-size: .9rem; background: #f2f8f6; border-radius: 10px; padding: 10px 12px; color: #14302b;}
+.pl-pill.baja {background: #f3f6f7; color: #65758b;}
+.pl-card .prob {font-size: 1.9rem; font-weight: 700; color: #1f2937; line-height: 1.1;}
+.pl-card .prob small {font-size: .85rem; font-weight: 500; color: #65758b;}
+.pl-card .meta {font-size: .88rem; color: #65758b; margin: 6px 0 10px;}
+.pl-card .meta b {color: #1f2937;}
+.pl-card .why {font-size: .9rem; background: #e9f5fb; border-radius: 10px; padding: 10px 12px; color: #1f2937;}
 
-.pl-section {font-size: 1.15rem; font-weight: 700; color: #14302b; margin: 18px 0 8px;}
-.pl-muted {color: #5f7a74; font-size: .9rem;}
+.pl-section {font-size: 1.15rem; font-weight: 700; color: #1f2937; margin: 18px 0 8px;}
+.pl-muted {color: #65758b; font-size: .9rem;}
 .pl-facts {display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; margin: 8px 0 12px;}
-.pl-facts div {font-size: .9rem; color: #4d6b64;}
-.pl-facts b {display: block; color: #14302b; font-size: .98rem;}
+.pl-facts div {font-size: .9rem; color: #65758b;}
+.pl-facts b {display: block; color: #1f2937; font-size: .98rem;}
 .pl-big {font-size: 2.6rem; font-weight: 800; line-height: 1;}
 .pl-wa {background: #e7f8ee; border: 1px solid #b9e6cb; border-radius: 14px 14px 14px 4px; padding: 14px 16px;
-  font-size: .98rem; color: #14302b; white-space: pre-wrap;}
-.pl-formula {background: #fff; font-weight: 600; line-height: 1.7; border: 1px dashed #9cc9bd;
-  border-radius: 12px; padding: 14px 16px; font-size: .95rem; color: #14302b;}
+  font-size: .98rem; color: #1f2937; white-space: pre-wrap;}
+.pl-formula {background: #fff; font-weight: 600; line-height: 1.7; border: 1px dashed #9fc7da;
+  border-radius: 12px; padding: 14px 16px; font-size: .95rem; color: #1f2937;}
 
 .stTabs [data-baseweb="tab-list"] {gap: 6px;}
 .stTabs [data-baseweb="tab"] {font-weight: 600; padding: 0 14px;}
@@ -123,14 +123,14 @@ def grafica_validacion(pct: dict) -> alt.LayerChart:
     barras = alt.Chart(datos).mark_bar(cornerRadiusEnd=6, height=34).encode(
         x=alt.X("pct:Q", title="% de las ventas que quedan en el primer tercio", scale=alt.Scale(domain=[0, 100])),
         y=y,
-        color=alt.condition(alt.datum.nuestro, alt.value("#0f6e5c"), alt.value("#b8cdc7")),
+        color=alt.condition(alt.datum.nuestro, alt.value("#00547a"), alt.value("#c6d6df")),
         tooltip=[alt.Tooltip("orden:N", title="Orden"), alt.Tooltip("pct:Q", title="%", format=".0f")],
     )
-    texto = barras.mark_text(align="left", dx=6, fontSize=14, fontWeight="bold", color="#14302b").encode(
-        text=alt.Text("pct:Q", format=".0f"), color=alt.value("#14302b"))
-    azar = alt.Chart(pd.DataFrame({"x": [100 / 3]})).mark_rule(strokeDash=[5, 4], color="#d64545", size=2).encode(x="x:Q")
+    texto = barras.mark_text(align="left", dx=6, fontSize=14, fontWeight="bold", color="#1f2937").encode(
+        text=alt.Text("pct:Q", format=".0f"), color=alt.value("#1f2937"))
+    azar = alt.Chart(pd.DataFrame({"x": [100 / 3]})).mark_rule(strokeDash=[5, 4], color="#ef4444", size=2).encode(x="x:Q")
     nota = alt.Chart(pd.DataFrame({"x": [100 / 3], "t": ["al azar: 33%"]})).mark_text(
-        align="left", dx=5, dy=-8, color="#d64545", fontSize=12).encode(x="x:Q", y=alt.value(0), text="t:N")
+        align="left", dx=5, dy=-8, color="#ef4444", fontSize=12).encode(x="x:Q", y=alt.value(0), text="t:N")
     return (barras + texto + azar + nota).properties(height=190)
 
 
