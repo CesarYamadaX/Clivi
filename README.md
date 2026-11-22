@@ -24,7 +24,7 @@ Un tercio al azar daría 33%. Son pocas ventas, así que el siguiente paso es un
 
 ## Asistente de seguimiento (IA)
 
-Para el lead que elijas, el asistente (OpenAI GPT-6 Luna, `gpt-6-luna`, con salida estructurada; se cambia con la variable `OPENAI_MODEL`) decide si empezar por llamada o WhatsApp y escribe:
+Para el lead que elijas, el asistente (GPT-6 Luna con salida estructurada, por OpenRouter `openai/gpt-6-luna` o directo con OpenAI `gpt-6-luna`; se cambia con la variable `MODELO_IA`) decide si empezar por llamada o WhatsApp y escribe:
 
 - el WhatsApp listo para enviar (máximo 3 frases, termina en pregunta),
 - la apertura de la llamada y 3 preguntas para entender el caso,
@@ -35,9 +35,11 @@ Usa lo que se sabe del lead: anuncio, objetivo, plan, horas esperando y priorida
 
 Para activarlo, usa una de estas opciones:
 
-- escribe la clave en la barra lateral de la app,
-- `export OPENAI_API_KEY=...` antes de `streamlit run app.py`,
-- en Streamlit Cloud, agrega `OPENAI_API_KEY` en *Settings → Secrets*.
+- escribe la clave en la barra lateral de la app (una clave `sk-or-...` usa OpenRouter; una `sk-...` usa OpenAI),
+- `export OPENROUTER_API_KEY=...` (u `OPENAI_API_KEY`) antes de `streamlit run app.py`,
+- en Streamlit Cloud, agrega `OPENROUTER_API_KEY` en *Settings → Secrets*.
+
+Nunca subas la clave al repositorio: `.streamlit/secrets.toml` está en `.gitignore`.
 
 ## Cómo correrla
 
@@ -54,7 +56,7 @@ La app usa `data/leads_ficticios.csv` por defecto. Desde la barra lateral se pue
 
 1. Sube esta carpeta a un repositorio de GitHub.
 2. Entra a https://share.streamlit.io, elige el repositorio y `app.py` como archivo principal.
-3. En *Advanced settings → Secrets* agrega `OPENAI_API_KEY = "..."` si quieres el asistente con IA.
+3. En *Advanced settings → Secrets* agrega `OPENROUTER_API_KEY = "..."` si quieres el asistente con IA.
 4. Comparte la liga que te da.
 
 ## Archivos

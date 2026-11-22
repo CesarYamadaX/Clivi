@@ -8,11 +8,9 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-import os
 
-import openai
 
-from primera_llamada.agente import preparar_contacto
+from primera_llamada.agente import clave_del_entorno, preparar_contacto
 from primera_llamada.modelo import leer_leads, lista_del_dia, validar
 
 DATOS = Path(__file__).parent / "data" / "leads_ficticios.csv"
@@ -65,15 +63,15 @@ with st.sidebar:
 
     st.divider()
     st.subheader("Asistente de seguimiento (IA)")
-    clave = st.text_input("Clave de API de OpenAI", type="password",
+    clave = st.text_input("Clave de API (OpenRouter u OpenAI)", type="password",
                           help="Opcional. Sin clave, el asistente usa una plantilla fija. "
-                               "También lee OPENAI_API_KEY o los secretos de Streamlit.")
+                               "También lee OPENROUTER_API_KEY u OPENAI_API_KEY del entorno o de los secretos de Streamlit.")
     if not clave:
         try:
-            clave = st.secrets.get("OPENAI_API_KEY", "")
+            clave = st.secrets.get("OPENROUTER_API_KEY", "") or st.secrets.get("OPENAI_API_KEY", "")
         except Exception:
             clave = ""
-    clave = clave or os.environ.get("OPENAI_API_KEY", "")
+    clave = clave or clave_del_entorno()
     st.caption("IA activa ✓" if clave else "Sin clave: se usará la plantilla.")
 
 # ---------------------------------------------------------------- lista del día
@@ -150,8 +148,7 @@ with izq:
                                              "edad", "horas_esperando", "prioridad", "probabilidad"]}
             lead["hora_actual"] = f"{hora:02d}:00"
             with st.spinner("Preparando…"):
-                cliente = openai.OpenAI(api_key=clave) if clave else None
-                contacto, fuente = preparar_contacto(lead, cliente)
+                contacto, fuente = preparar_contacto(lead, clave)
             st.session_state["contacto"] = (fila.lead_id, contacto, fuente)
         if "contacto" in st.session_state:
             lid, c, fuente = st.session_state["contacto"]

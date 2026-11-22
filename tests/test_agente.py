@@ -31,7 +31,7 @@ def cliente_falso(capturado):
 
 def test_con_ia():
     enviado = []
-    c, fuente = preparar_contacto(LEAD, cliente_falso(enviado))
+    c, fuente = preparar_contacto(LEAD, client=cliente_falso(enviado), modelo="gpt-6-luna")
     assert fuente == "ia" and isinstance(c, Contacto) and c.canal_recomendado == "llamada"
     req = enviado[0]
     assert req["model"] == "gpt-6-luna"
@@ -40,10 +40,9 @@ def test_con_ia():
 
 
 def test_sin_credenciales(monkeypatch):
-    for v in ["OPENAI_API_KEY", "OPENAI_ADMIN_KEY"]:
+    for v in ["OPENAI_API_KEY", "OPENROUTER_API_KEY"]:
         monkeypatch.delenv(v, raising=False)
-    monkeypatch.setenv("HOME", "/nonexistent")
-    c, fuente = preparar_contacto(LEAD, None)
+    c, fuente = preparar_contacto(LEAD)
     assert fuente.startswith("plantilla") and "control de peso" in c.whatsapp
 
 
@@ -51,5 +50,13 @@ def test_clave_invalida():
     def manejar(request):
         return httpx.Response(401, json={"error": {"type": "invalid_request_error", "code": "invalid_api_key", "message": "bad"}})
     cli = openai.OpenAI(api_key="x", max_retries=0, http_client=httpx.Client(transport=httpx.MockTransport(manejar)))
-    c, fuente = preparar_contacto(LEAD, cli)
+    c, fuente = preparar_contacto(LEAD, client=cli)
     assert fuente == "plantilla: la clave de API no es válida"
+
+
+def test_clave_openrouter():
+    from primera_llamada.agente import crear_cliente
+    cli, modelo = crear_cliente("sk-or-v1-prueba")
+    assert str(cli.base_url).startswith("https://openrouter.ai/api/v1") and modelo == "openai/gpt-6-luna"
+    cli, modelo = crear_cliente("sk-prueba")
+    assert "openai.com" in str(cli.base_url) and modelo == "gpt-6-luna"

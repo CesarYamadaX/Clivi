@@ -3,11 +3,12 @@ Asistente de seguimiento: prepara el primer contacto con cada lead.
 
 Para cada lead de la lista decide si conviene WhatsApp o llamada, y escribe
 el mensaje de WhatsApp, el guion de llamada, las objeciones probables y qué
-hacer si no contesta. Usa la API de OpenAI (GPT-6 Luna) con salida estructurada.
+hacer si no contesta. Usa GPT-6 Luna con salida estructurada, por OpenRouter
+(clave sk-or-...) o directo con OpenAI (clave sk-...).
 
-El modelo se puede cambiar con la variable OPENAI_MODEL.
-Si no hay OPENAI_API_KEY o la llamada falla, usa una plantilla fija para que
-la app siga funcionando.
+El modelo se puede cambiar con la variable MODELO_IA.
+Si no hay clave o la llamada falla, usa una plantilla fija para que la app
+siga funcionando.
 """
 from __future__ import annotations
 
@@ -18,7 +19,22 @@ import os
 import openai
 from pydantic import BaseModel, Field
 
-MODELO = os.environ.get("OPENAI_MODEL", "gpt-6-luna")
+OPENROUTER_URL = "https://openrouter.ai/api/v1"
+MODELO_OPENROUTER = "openai/gpt-6-luna"
+MODELO_OPENAI = "gpt-6-luna"
+
+
+def crear_cliente(clave: str) -> tuple[openai.OpenAI, str]:
+    """Una clave sk-or-... va a OpenRouter; cualquier otra, directo a OpenAI."""
+    if clave.startswith("sk-or-"):
+        cliente = openai.OpenAI(api_key=clave, base_url=OPENROUTER_URL,
+                                default_headers={"X-Title": "Primera Llamada"})
+        return cliente, os.environ.get("MODELO_IA", MODELO_OPENROUTER)
+    return openai.OpenAI(api_key=clave), os.environ.get("MODELO_IA", MODELO_OPENAI)
+
+
+def clave_del_entorno() -> str:
+    return os.environ.get("OPENROUTER_API_KEY") or os.environ.get("OPENAI_API_KEY") or ""
 
 SISTEMA = """Eres el asistente de seguimiento de los asesores de ventas de Clivi, \
 una clínica digital mexicana para control de peso y diabetes tipo 2. \
@@ -84,12 +100,18 @@ def plantilla(lead: dict) -> Contacto:
     )
 
 
-def preparar_contacto(lead: dict, client: openai.OpenAI | None = None) -> tuple[Contacto, str]:
+def preparar_contacto(lead: dict, clave: str = "", client: openai.OpenAI | None = None,
+                      modelo: str | None = None) -> tuple[Contacto, str]:
     """Devuelve (contacto, fuente) donde fuente es 'ia' o 'plantilla: <motivo>'."""
+    clave = clave or clave_del_entorno()
+    if client is None:
+        if not clave:
+            return plantilla(lead), "plantilla: falta la clave de API"
+        client, modelo = crear_cliente(clave)
+    modelo = modelo or MODELO_OPENAI
     try:
-        client = client or openai.OpenAI()
         r = client.chat.completions.parse(
-            model=MODELO,
+            model=modelo,
             messages=[{"role": "system", "content": SISTEMA},
                       {"role": "user", "content": _contexto(lead)}],
             response_format=Contacto,
@@ -101,12 +123,12 @@ def preparar_contacto(lead: dict, client: openai.OpenAI | None = None) -> tuple[
     except openai.AuthenticationError:
         return plantilla(lead), "plantilla: la clave de API no es válida"
     except openai.NotFoundError:
-        return plantilla(lead), f"plantilla: el modelo {MODELO} no está disponible en tu cuenta"
+        return plantilla(lead), f"plantilla: el modelo {modelo} no está disponible en tu cuenta"
     except openai.RateLimitError:
         return plantilla(lead), "plantilla: límite de uso de la API, intenta en un minuto"
     except openai.APIStatusError as e:
         return plantilla(lead), f"plantilla: error de la API ({e.status_code})"
     except openai.APIConnectionError:
         return plantilla(lead), "plantilla: sin conexión con la API"
-    except openai.OpenAIError:
-        return plantilla(lead), "plantilla: falta OPENAI_API_KEY"
+    except (openai.OpenAIError, ValueError) as e:
+        return plantilla(lead), f"plantilla: no se pudo leer la respuesta ({type(e).__name__})"
