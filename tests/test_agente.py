@@ -152,3 +152,18 @@ def test_revision_reglas_de_estilo():
                  guion_apertura="Hola, te llamo de Clivi por el control de peso, ¿tienes un minuto?")
     p = " | ".join(revisar(c, lead))
     assert "conversación previa" in p and "poco esperando" in p
+
+
+def test_clave_desde_env(tmp_path, monkeypatch):
+    from primera_llamada import agente
+    for v in ["OPENAI_API_KEY", "OPENROUTER_API_KEY"]:
+        monkeypatch.delenv(v, raising=False)
+    env = tmp_path / ".env"
+    env.write_text('# comentario\nexport OPENROUTER_API_KEY="sk-or-desde-archivo"\n', encoding="utf-8")
+    monkeypatch.setattr(agente, "ARCHIVO_ENV", env)
+    assert agente.clave_del_entorno() == "sk-or-desde-archivo"
+    monkeypatch.setenv("OPENROUTER_API_KEY", "sk-or-terminal")
+    assert agente.clave_del_entorno() == "sk-or-terminal"
+    monkeypatch.delenv("OPENROUTER_API_KEY")
+    env.unlink()
+    assert agente.clave_del_entorno() == ""

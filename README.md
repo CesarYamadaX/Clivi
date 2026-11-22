@@ -35,11 +35,12 @@ Usa lo que se sabe del lead: anuncio, objetivo, plan, horas esperando y priorida
 
 Para activarlo, usa una de estas opciones:
 
+- **recomendado:** copia `.env.example` como `.env` y pon ahí tu clave (`.env` está en `.gitignore`, no se sube); la app y `probar_ia.py` la leen solas,
 - escribe la clave en la barra lateral de la app (una clave `sk-or-...` usa OpenRouter; una `sk-...` usa OpenAI),
 - `export OPENROUTER_API_KEY=...` (u `OPENAI_API_KEY`) antes de `streamlit run app.py`,
 - en Streamlit Cloud, agrega `OPENROUTER_API_KEY` en *Settings → Secrets*.
 
-Nunca subas la clave al repositorio: `.streamlit/secrets.toml` está en `.gitignore`.
+Nunca subas la clave al repositorio: `.env` y `.streamlit/secrets.toml` están en `.gitignore`.
 
 ## Cómo correrla
 
@@ -48,7 +49,7 @@ pip install -r requirements.txt
 streamlit run app.py          # abre la app en el navegador
 python validar.py             # imprime la validación en la terminal
 python -m pytest              # corre las pruebas
-OPENROUTER_API_KEY=sk-or-... python probar_ia.py   # prueba la IA real con 12 leads y escribe reporte_ia.md
+python probar_ia.py           # prueba la IA real con 12 leads y escribe reporte_ia.md
 ```
 
 La app usa `data/leads_ficticios.csv` por defecto. Desde la barra lateral se puede subir otro CSV con las mismas columnas; se limpia solo (fechas DD/MM y teléfonos repetidos).

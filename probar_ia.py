@@ -1,9 +1,9 @@
 """
 Prueba el asistente con la IA real y revisa cada respuesta.
 
-Uso (la clave no se guarda en ningún lado):
-    OPENROUTER_API_KEY=sk-or-... python probar_ia.py          # 12 leads
-    OPENROUTER_API_KEY=sk-or-... python probar_ia.py 30       # 30 leads
+Uso (la clave se lee de .env o de la terminal):
+    python probar_ia.py          # 12 leads
+    python probar_ia.py 30       # 30 leads
 
 Toma leads variados (prioridad alta, media y baja; recién llegados y de más de
 12 h; peso y diabetes) de varias mañanas, le pide a la IA el primer contacto de
@@ -46,7 +46,7 @@ def main():
     n = int(sys.argv[1]) if len(sys.argv) > 1 else 12
     clave = clave_del_entorno()
     if not clave:
-        sys.exit("Falta la clave: corre  OPENROUTER_API_KEY=sk-or-... python probar_ia.py")
+        sys.exit("Falta la clave: ponla en .env (copia .env.example) o corre  OPENROUTER_API_KEY=sk-or-... python probar_ia.py")
     _, modelo = crear_cliente(clave)
     print(f"Probando {n} leads con {modelo}…\n")
 

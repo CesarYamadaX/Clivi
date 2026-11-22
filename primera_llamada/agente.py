@@ -15,6 +15,7 @@ from __future__ import annotations
 from typing import Literal
 
 import os
+from pathlib import Path
 
 import openai
 from pydantic import BaseModel, Field
@@ -35,8 +36,35 @@ def crear_cliente(clave: str) -> tuple[openai.OpenAI, str]:
             os.environ.get("MODELO_IA", MODELO_OPENAI))
 
 
+ARCHIVO_ENV = Path(__file__).resolve().parents[1] / ".env"
+
+
+def leer_env(ruta: Path | None = None) -> dict:
+    """Lee un .env sencillo (CLAVE=valor por línea). No pisa variables ya definidas en la terminal."""
+    valores = {}
+    ruta = ruta or ARCHIVO_ENV
+    if not ruta.is_file():
+        return valores
+    for linea in ruta.read_text(encoding="utf-8").splitlines():
+        linea = linea.strip()
+        if not linea or linea.startswith("#") or "=" not in linea:
+            continue
+        nombre, valor = linea.split("=", 1)
+        nombre = nombre.strip().removeprefix("export ").strip()
+        valores[nombre] = valor.strip().strip('"').strip("'")
+    return valores
+
+
 def clave_del_entorno() -> str:
-    return os.environ.get("OPENROUTER_API_KEY") or os.environ.get("OPENAI_API_KEY") or ""
+    """Primero la terminal; si no, el archivo .env de la carpeta del proyecto."""
+    archivo = leer_env()
+    for nombre in ("OPENROUTER_API_KEY", "OPENAI_API_KEY"):
+        if os.environ.get(nombre):
+            return os.environ[nombre]
+    for nombre in ("OPENROUTER_API_KEY", "OPENAI_API_KEY"):
+        if archivo.get(nombre):
+            return archivo[nombre]
+    return ""
 
 SISTEMA = """Eres el asistente de seguimiento de los asesores de ventas de Clivi, \
 una clínica digital mexicana para control de peso y diabetes tipo 2. \
