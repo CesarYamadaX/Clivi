@@ -165,8 +165,9 @@ with st.sidebar:
     st.markdown("### 🗓️ ¿Cuándo?")
     primero = leads.reg.min().normalize() + timedelta(days=7)
     ultimo = leads.reg.max().normalize() + timedelta(days=1)
-    dias = list(pd.date_range(primero, ultimo))[::-1]
-    dia = st.selectbox("Día", dias, format_func=lambda d: fecha_txt(d) + (" · mañana siguiente a los datos" if d == ultimo else ""))
+    dias = {fecha_txt(d) + (" · mañana siguiente a los datos" if d == ultimo else ""): d
+            for d in pd.date_range(primero, ultimo)[::-1]}
+    dia = dias[st.selectbox("Día", list(dias))]
     hora = st.select_slider("Hora", options=list(range(7, 21)), value=9, format_func=lambda h: f"{h:02d}:00")
 
     st.markdown("### 👥 ¿Quién trabaja hoy?")

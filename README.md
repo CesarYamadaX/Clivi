@@ -48,6 +48,7 @@ pip install -r requirements.txt
 streamlit run app.py          # abre la app en el navegador
 python validar.py             # imprime la validación en la terminal
 python -m pytest              # corre las pruebas
+OPENROUTER_API_KEY=sk-or-... python probar_ia.py   # prueba la IA real con 12 leads y escribe reporte_ia.md
 ```
 
 La app usa `data/leads_ficticios.csv` por defecto. Desde la barra lateral se puede subir otro CSV con las mismas columnas; se limpia solo (fechas DD/MM y teléfonos repetidos).
@@ -67,6 +68,8 @@ La app usa `data/leads_ficticios.csv` por defecto. Desde la barra lateral se pue
 | `primera_llamada/agente.py` | Asistente de seguimiento con IA (y plantilla sin IA) |
 | `app.py` | Pantalla en Streamlit |
 | `validar.py` | Validación desde la terminal |
+| `primera_llamada/revision.py` | Revisa automáticamente cada mensaje (máx. 3 frases, sin promesas médicas, sin nombres inventados, precios reales, etc.) |
+| `probar_ia.py` | Prueba la IA real con leads variados y deja el detalle en `reporte_ia.md` |
 | `tests/` | Pruebas: limpieza, orden, reparto, que no use el futuro, números de la validación y el asistente con la API simulada |
 | `data/leads_ficticios.csv` | Datos de la Introducción |
 | `web/` | Versión de página web (un solo HTML, sin instalar nada) |

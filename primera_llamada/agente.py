@@ -22,15 +22,17 @@ from pydantic import BaseModel, Field
 OPENROUTER_URL = "https://openrouter.ai/api/v1"
 MODELO_OPENROUTER = "openai/gpt-6-luna"
 MODELO_OPENAI = "gpt-6-luna"
+TIEMPO_MAXIMO = 45  # segundos; en una demo es mejor caer a la plantilla que dejar la pantalla congelada
 
 
 def crear_cliente(clave: str) -> tuple[openai.OpenAI, str]:
     """Una clave sk-or-... va a OpenRouter; cualquier otra, directo a OpenAI."""
     if clave.startswith("sk-or-"):
-        cliente = openai.OpenAI(api_key=clave, base_url=OPENROUTER_URL,
+        cliente = openai.OpenAI(api_key=clave, base_url=OPENROUTER_URL, timeout=TIEMPO_MAXIMO, max_retries=1,
                                 default_headers={"X-Title": "Primera Llamada"})
         return cliente, os.environ.get("MODELO_IA", MODELO_OPENROUTER)
-    return openai.OpenAI(api_key=clave), os.environ.get("MODELO_IA", MODELO_OPENAI)
+    return (openai.OpenAI(api_key=clave, timeout=TIEMPO_MAXIMO, max_retries=1),
+            os.environ.get("MODELO_IA", MODELO_OPENAI))
 
 
 def clave_del_entorno() -> str:
@@ -82,12 +84,12 @@ def plantilla(lead: dict) -> Contacto:
     """Versión sin IA, para cuando no hay credenciales o la API falla."""
     objetivo = lead.get("objetivo") or "tu salud"
     espera = lead.get("horas_esperando", 0)
-    disculpa = "Perdón por la demora en contestarte. " if espera >= 12 else ""
+    disculpa = "Perdón por tardar en escribirte. " if espera >= 12 else ""
     alta = lead.get("prioridad") == "alta"
     return Contacto(
         canal_recomendado="llamada" if alta else "whatsapp",
         por_que_canal="Es prioridad alta: vale la pena una llamada." if alta else "Un WhatsApp primero es menos invasivo.",
-        whatsapp=f"¡Hola! Soy tu asesor de Clivi. {disculpa}Vi que te interesa el programa de {objetivo}. "
+        whatsapp=f"¡Hola, soy tu asesor de Clivi y vi que te interesa el programa de {objetivo}! {disculpa}"
                  f"¿Te queda bien una llamada de 5 minutos hoy para contarte cómo funciona?",
         guion_apertura=f"Hola, te llamo de Clivi porque dejaste tus datos sobre {objetivo}. "
                        f"¿Tienes 5 minutos para que te cuente cómo funciona?",
@@ -128,6 +130,8 @@ def preparar_contacto(lead: dict, clave: str = "", client: openai.OpenAI | None 
         return plantilla(lead), "plantilla: límite de uso de la API, intenta en un minuto"
     except openai.APIStatusError as e:
         return plantilla(lead), f"plantilla: error de la API ({e.status_code})"
+    except openai.APITimeoutError:
+        return plantilla(lead), "plantilla: la IA tardó demasiado en responder"
     except openai.APIConnectionError:
         return plantilla(lead), "plantilla: sin conexión con la API"
     except (openai.OpenAIError, ValueError) as e:
