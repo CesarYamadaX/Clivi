@@ -4,6 +4,7 @@ Correr:  streamlit run app.py
 """
 from datetime import datetime, timedelta
 from pathlib import Path
+from typing import Optional
 
 import pandas as pd
 import streamlit as st
@@ -26,7 +27,7 @@ def fecha_txt(d) -> str:
 
 
 @st.cache_data
-def cargar(contenido: bytes | None):
+def cargar(contenido: Optional[bytes]):
     if contenido is None:
         return leer_leads(DATOS)
     from io import BytesIO
@@ -34,7 +35,7 @@ def cargar(contenido: bytes | None):
 
 
 @st.cache_data
-def validacion(contenido: bytes | None):
+def validacion(contenido: Optional[bytes]):
     leads, _ = cargar(contenido)
     return validar(leads)
 

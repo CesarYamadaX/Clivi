@@ -1,7 +1,10 @@
 import json
 
 import openai
-import httpx2 as httpx
+try:
+    import httpx2 as httpx
+except ImportError:  # versiones anteriores de openai usan httpx
+    import httpx
 
 from primera_llamada.agente import Contacto, preparar_contacto
 
