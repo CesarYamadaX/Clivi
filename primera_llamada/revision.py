@@ -58,6 +58,20 @@ def revisar(c: Contacto, lead: dict) -> List[str]:
         if precio.rstrip(",") not in PRECIOS_VALIDOS:
             problemas.append(f"precio que no existe: ${precio}")
 
+    if "clivi" not in wa.lower():
+        problemas.append("el WhatsApp no dice que es de Clivi")
+    if not c.guion_apertura.strip().endswith("?"):
+        problemas.append("la apertura de la llamada no termina en pregunta")
+    texto_lead = (wa + " " + c.guion_apertura).lower()
+    anuncio = str(lead.get("anuncio") or "").lower()
+    if anuncio and anuncio != "(sin anuncio)" and anuncio in texto_lead:
+        problemas.append(f"cita el nombre interno del anuncio ({lead.get('anuncio')})")
+    if re.search(r"\bmeta\b", texto_lead):
+        problemas.append("menciona «Meta» (nombre interno del canal)")
+    if re.search(r"\bme (comentaste|dijiste|contaste)\b", texto_lead):
+        problemas.append("da por hecho una conversación previa")
+    if float(lead.get("horas_esperando") or 0) < 6 and re.search(r"perd[oó]n|disculp", texto_lead):
+        problemas.append("se disculpa aunque el lead lleva poco esperando")
     if lead.get("prioridad") == "alta" and c.canal_recomendado != "llamada":
         problemas.append("prioridad alta pero no recomienda llamada")
     if float(lead.get("horas_esperando") or 0) >= 12 and not DISCULPA.search(wa + " " + c.guion_apertura):

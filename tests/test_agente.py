@@ -133,3 +133,22 @@ def test_plantilla_pasa_la_revision(horas, objetivo):
     from primera_llamada.revision import revisar
     lead = {**LEAD, "horas_esperando": horas, "objetivo": objetivo}
     assert revisar(plantilla(lead), lead) == []
+
+
+def test_revision_reglas_de_estilo():
+    """Casos reales de la primera prueba con la IA (22 nov) que antes pasaban."""
+    from primera_llamada.revision import revisar
+    base = dict(canal_recomendado="whatsapp", por_que_canal="x", preguntas=["a", "b", "c"],
+                objeciones=["a", "b"], si_no_contesta="x")
+    lead = {**LEAD, "prioridad": "baja", "horas_esperando": 15.7, "anuncio": "Imagen plan mensual"}
+    c = Contacto(**base, whatsapp="Hola, vi que llegaste por el anuncio de Meta del plan mensual y te interesa "
+                                  "el control de peso. Disculpa la espera. ¿Te cuento más por aquí?",
+                 guion_apertura="Hola, te contacto de Clivi por tu registro de control de peso.")
+    p = " | ".join(revisar(c, lead))
+    assert "no dice que es de Clivi" in p and "Meta" in p and "no termina en pregunta" in p
+    lead = {**LEAD, "prioridad": "media", "horas_esperando": 3.2}
+    c = Contacto(**base, whatsapp="Hola, soy de Clivi; una disculpa por la demora. Me comentaste que te interesa "
+                                  "el control de peso. ¿Te llamo?",
+                 guion_apertura="Hola, te llamo de Clivi por el control de peso, ¿tienes un minuto?")
+    p = " | ".join(revisar(c, lead))
+    assert "conversación previa" in p and "poco esperando" in p
