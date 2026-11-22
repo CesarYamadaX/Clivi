@@ -1,0 +1,427 @@
+<title>Primera Llamada</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: barra de control arriba, resumen en una fila, lista por asesor a la izquierda y "cómo decide" a la derecha; una columna en teléfono */
+:root{
+  --bg:#f5f7f6; --surface:#ffffff; --ink:#14302b; --muted:#5d716c; --line:#dbe3e0;
+  --accent:#0f6e5c; --accent-soft:#e1f0eb;
+  --hot:#c2412d; --hot-soft:#fbe7e2; --warm:#a86a00; --warm-soft:#fbf0d9; --cold:#66788a; --cold-soft:#e9edf1;
+  --good:#1d7a3f; --good-soft:#e2f3e7;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e1715; --surface:#152220; --ink:#e4eeeb; --muted:#93a8a2; --line:#263834;
+  --accent:#4cc3a6; --accent-soft:#183a33;
+  --hot:#f07a63; --hot-soft:#3a1e19; --warm:#e0a73c; --warm-soft:#33280f; --cold:#9aaabb; --cold-soft:#1f2830;
+  --good:#5fcf86; --good-soft:#163323; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e1715; --surface:#152220; --ink:#e4eeeb; --muted:#93a8a2; --line:#263834;
+  --accent:#4cc3a6; --accent-soft:#183a33;
+  --hot:#f07a63; --hot-soft:#3a1e19; --warm:#e0a73c; --warm-soft:#33280f; --cold:#9aaabb; --cold-soft:#1f2830;
+  --good:#5fcf86; --good-soft:#163323; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.45}
+.wrap{max-width:1240px;margin:0 auto;padding-block:20px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:18px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+h1{font-size:clamp(1.6rem,3.2vw,2.2rem);font-weight:700;letter-spacing:-.01em}
+h2{font-size:1.15rem;font-weight:700}
+h3{font-size:.95rem;font-weight:700}
+.eyebrow{font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+header{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:flex-end;justify-content:space-between}
+header p{margin:4px 0 0;color:var(--muted);max-width:60ch}
+.controls{display:flex;flex-wrap:wrap;gap:12px 16px;align-items:flex-end;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px}
+.field{display:grid;gap:4px}
+.field label,.field .lbl{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+select,button,.btn{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:7px 10px;cursor:pointer}
+select:focus-visible,button:focus-visible,input:focus-visible,.btn:focus-within{outline:2px solid var(--accent);outline-offset:2px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{padding:6px 10px;border-radius:999px;font-weight:600;font-size:.85rem}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.switch{display:flex;align-items:center;gap:8px;font-size:.9rem;cursor:pointer}
+.switch input{width:18px;height:18px;accent-color:var(--accent)}
+.btn input{display:none}
+.datainfo{font-size:.8rem;color:var(--muted);flex-basis:100%}
+.summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.stat{padding:12px 14px;border-left:3px solid var(--line)}
+.stat .v{font-family:var(--f-display);font-size:1.7rem;font-weight:700;line-height:1.1}
+.stat .k{font-size:.82rem;color:var(--muted)}
+.stat.hot{border-color:var(--hot)} .stat.acc{border-color:var(--accent)} .stat.good{border-color:var(--good)}
+.main{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:18px;align-items:start}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;min-width:0}
+.tabs{display:flex;gap:4px;padding:10px 10px 0;border-bottom:1px solid var(--line);overflow-x:auto}
+.tab{border:none;background:none;border-bottom:3px solid transparent;border-radius:0;padding:8px 12px;font-weight:600;color:var(--muted);white-space:nowrap}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.tab .n{font-family:var(--f-mono);font-size:.78rem;margin-left:4px;color:var(--muted)}
+.listhead{display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:space-between;align-items:center;padding:12px 14px}
+.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;width:160px}
+.progress i{display:block;height:100%;background:var(--accent);width:0}
+ol.leads{list-style:none;margin:0;padding:0}
+.lead{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:4px 12px;padding:12px 14px;border-top:1px solid var(--line);align-items:start}
+.lead.done{opacity:.45}
+.lead.done .who{text-decoration:line-through}
+.rank{font-family:var(--f-mono);font-weight:600;font-size:1.05rem;color:var(--muted);padding-top:2px}
+.who{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline}
+.who b{font-family:var(--f-display);font-size:1.02rem}
+.meta{font-size:.84rem;color:var(--muted)}
+.why{font-size:.86rem;margin-top:4px}
+.right{display:grid;justify-items:end;gap:6px;text-align:right}
+.prob{font-family:var(--f-mono);font-size:1.15rem;font-weight:600}
+.pill{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:999px}
+.p-alta{background:var(--hot-soft);color:var(--hot)}
+.p-media{background:var(--warm-soft);color:var(--warm)}
+.p-baja{background:var(--cold-soft);color:var(--cold)}
+.out{font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--cold-soft);color:var(--cold)}
+.out.venta{background:var(--good-soft);color:var(--good)}
+.phone{display:flex;gap:6px;align-items:center;font-size:.84rem;white-space:nowrap}
+.phone button{padding:2px 8px;font-size:.75rem}
+.call{display:flex;gap:6px;align-items:center;font-size:.82rem;cursor:pointer;color:var(--muted)}
+.call input{width:18px;height:18px;accent-color:var(--accent)}
+.empty{padding:28px 14px;color:var(--muted)}
+.side{display:grid;gap:18px}
+.side .panel{padding:14px;display:grid;gap:10px}
+.formula{font-family:var(--f-mono);font-size:.82rem;background:var(--accent-soft);color:var(--ink);padding:10px;border-radius:8px;line-height:1.6}
+table{border-collapse:collapse;width:100%;font-size:.82rem}
+td,th{padding:4px 2px;text-align:left;border-bottom:1px solid var(--line)}
+th{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+td.num,th.num{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.bar{display:grid;grid-template-columns:118px minmax(0,1fr) 46px;gap:8px;align-items:center;font-size:.84rem}
+.bar .track{height:14px;background:var(--line);border-radius:3px;overflow:hidden}
+.bar .fill{height:100%;background:var(--cold)}
+.bar.win .fill{background:var(--accent)}
+.bar.win{font-weight:600}
+.note{font-size:.82rem;color:var(--muted);margin:0}
+.validation-banner{margin:0 14px 12px;padding:10px 12px;border-radius:8px;background:var(--good-soft);color:var(--ink);font-size:.86rem}
+.toast{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:8px;font-size:.85rem}
+@media (max-width:900px){.main{grid-template-columns:minmax(0,1fr)}.summary{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.lead{grid-template-columns:28px minmax(0,1fr)}.right{grid-column:2;justify-items:start;text-align:left;grid-auto-flow:column;align-items:center;justify-content:start}}
+@media (prefers-reduced-motion:no-preference){.progress i{transition:width .25s}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <div class="eyebrow">Clivi · Misión A</div>
+      <h1>Primera Llamada</h1>
+      <p>La lista de cada mañana: a quién llama primero cada asesor, ordenada por la probabilidad de venta si se le llama ahora.</p>
+    </div>
+  </header>
+
+  <section class="controls" aria-label="Controles">
+    <div class="field"><label for="fecha">Día</label><select id="fecha"></select></div>
+    <div class="field"><label for="hora">Hora</label><select id="hora"></select></div>
+    <div class="field"><span class="lbl">¿Quién trabaja hoy?</span><div class="chips" id="asesores"></div></div>
+    <label class="switch"><input type="checkbox" id="validar"> Mostrar qué pasó después (validación)</label>
+    <label class="btn" for="archivo">Cargar mi CSV<input type="file" id="archivo" accept=".csv,text/csv"></label>
+    <div class="datainfo" id="datainfo">Cargando datos…</div>
+  </section>
+
+  <section class="summary" aria-label="Resumen">
+    <div class="stat acc"><div class="v mono" id="s-cola">–</div><div class="k">leads esperando primera llamada</div></div>
+    <div class="stat hot"><div class="v mono" id="s-alta">–</div><div class="k">de prioridad alta (≥ 8% de probabilidad)</div></div>
+    <div class="stat good"><div class="v mono" id="s-esp">–</div><div class="k">ventas esperadas si se llama a todos ya</div></div>
+    <div class="stat"><div class="v mono" id="s-dup">–</div><div class="k">registros duplicados que no se volverán a llamar</div></div>
+  </section>
+
+  <div class="main">
+    <section class="panel" aria-label="Lista de llamadas">
+      <div class="tabs" role="tablist" id="tabs"></div>
+      <div class="listhead">
+        <h2 id="listtitle">Lista</h2>
+        <div style="display:flex;align-items:center;gap:10px"><span class="meta" id="progtxt">0 llamados</span><div class="progress"><i id="progbar"></i></div></div>
+      </div>
+      <div id="valbanner" class="validation-banner" hidden></div>
+      <ol class="leads" id="lista"></ol>
+    </section>
+
+    <aside class="side">
+      <section class="panel">
+        <div class="eyebrow">Cómo decide el orden</div>
+        <div class="formula">probabilidad = tasa de venta del anuncio<br>&nbsp;&nbsp;× efecto del tiempo esperando</div>
+        <p class="note">Aprende solo de los días anteriores al que eliges. Los anuncios con pocos datos se acercan al promedio de su canal para no exagerar.</p>
+        <h3>Efecto del tiempo esperando</h3>
+        <table id="t-mult"><thead><tr><th>Si se le llama…</th><th class="num">efecto</th></tr></thead><tbody></tbody></table>
+        <h3>Tasa de venta por anuncio</h3>
+        <div style="overflow-x:auto"><table id="t-ads"><thead><tr><th>Canal · anuncio</th><th class="num">leads</th><th class="num">venta</th></tr></thead><tbody></tbody></table></div>
+      </section>
+      <section class="panel">
+        <div class="eyebrow">¿Funciona?</div>
+        <h3>Ventas que quedan en el primer tercio de la lista de las 9:00</h3>
+        <div id="bt" style="display:grid;gap:8px"></div>
+        <p class="note" id="btnote">Prueba con días que el modelo no había visto.</p>
+      </section>
+    </aside>
+  </div>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(function(){
+"use strict";
+const H = 3600e3;
+const BINS = [0, .25, 1, 12, Infinity];
+const BIN_LABEL = ["en menos de 15 min","entre 15 y 60 min","entre 1 y 12 h","después de 12 h"];
+const K = 30;
+const WINDOW_H = 48;
+const DIAS = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+const MESES = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+const $ = id => document.getElementById(id);
+const store = {
+  get(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } },
+  set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+};
+
+let ALL = [], META = {}, state = { fecha:null, hora:9, asesores:["Asesor A","Asesor B","Asesor C","Asesor D","Asesor E"], tab:"Todos", validar:false };
+let called = store.get("pl-called") || {};
+let current = null;
+
+/* ---------- 1. Leer y limpiar el CSV ---------- */
+function parseDate(s){
+  if(!s) return null;
+  let m = s.match(/^(\d{4})-(\d{2})-(\d{2})[ T](\d{1,2}):(\d{2})/);
+  if(m) return new Date(+m[1], m[2]-1, +m[3], +m[4], +m[5]);
+  m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4}) (\d{1,2}):(\d{2})/);
+  if(m) return new Date(+m[3], m[2]-1, +m[1], +m[4], +m[5]);
+  return null;
+}
+function parseCSV(text){
+  const lines = text.replace(/\r/g,"").split("\n").filter(l => l.trim());
+  const head = lines[0].split(",").map(h => h.trim());
+  const need = ["lead_id","fecha_registro","canal","telefono","resultado"];
+  for(const n of need) if(!head.includes(n)) throw new Error("Al archivo le falta la columna " + n);
+  let ddmm = 0;
+  const rows = lines.slice(1).map(l => {
+    const c = l.split(","); const o = {};
+    head.forEach((h,i) => o[h] = (c[i]||"").trim());
+    if(/^\d{1,2}\//.test(o.fecha_registro)) ddmm++;
+    o.reg = parseDate(o.fecha_registro);
+    o.con = parseDate(o.primer_contacto);
+    o.anuncio = o.anuncio || "(sin anuncio)";
+    o.venta = o.resultado === "venta" ? 1 : 0;
+    return o;
+  }).filter(o => o.reg);
+  rows.sort((a,b) => a.reg - b.reg);
+  const seen = new Set(); const clean = []; let dup = 0;
+  for(const r of rows){ if(seen.has(r.telefono)){ dup++; continue; } seen.add(r.telefono); clean.push(r); }
+  return { rows: clean, meta: { total: rows.length, dup, ddmm } };
+}
+
+/* ---------- 2. Aprender tasas de días anteriores ---------- */
+function fit(train){
+  const g = train.reduce((s,r)=>s+r.venta,0) / Math.max(train.length,1);
+  const ch = {}, ad = {};
+  for(const r of train){
+    (ch[r.canal] ||= {s:0,n:0}); ch[r.canal].s += r.venta; ch[r.canal].n++;
+    const k = r.canal + "|" + r.anuncio;
+    (ad[k] ||= {canal:r.canal, anuncio:r.anuncio, s:0, n:0}); ad[k].s += r.venta; ad[k].n++;
+  }
+  for(const c in ch) ch[c].p = (ch[c].s + K*g) / (ch[c].n + K);
+  for(const k in ad){ const a = ad[k]; a.p = (a.s + K*ch[a.canal].p) / (a.n + K); }
+  const base = r => (ad[r.canal+"|"+r.anuncio] || {}).p ?? (ch[r.canal] || {}).p ?? g;
+  const obs = BINS.slice(0,-1).map(()=>0), exp = obs.slice();
+  for(const r of train){
+    if(!r.con) continue;
+    const w = (r.con - r.reg)/H;
+    const b = binOf(w); obs[b] += r.venta; exp[b] += base(r);
+  }
+  const mult = obs.map((o,i) => exp[i] > 0 ? o/exp[i] : 1);
+  return { g, ch, ad, base, mult, n: train.length };
+}
+function binOf(w){ for(let i=0;i<BINS.length-1;i++) if(w < BINS[i+1]) return i; return BINS.length-2; }
+
+/* ---------- 3. Armar la cola a una hora dada ---------- */
+function queueAt(rows, t){
+  const from = new Date(t - WINDOW_H*H);
+  return rows.filter(r => r.reg < t && r.reg >= from && (!r.con || r.con >= t));
+}
+function scoreQueue(q, model, t){
+  return q.map(r => {
+    const w = (t - r.reg)/H;
+    const b = model.base(r), m = model.mult[binOf(w)];
+    return { r, w, b, p: b*m };
+  }).sort((a,b) => b.p - a.p || a.r.reg - b.r.reg);
+}
+function tier(p){ return p >= .08 ? "alta" : p >= .03 ? "media" : "baja"; }
+function why(x, model){
+  const a = x.r.anuncio === "(sin anuncio)" ? x.r.canal : x.r.anuncio;
+  const pct = Math.round(x.b*100);
+  let s = `${esc(a)}: ${pct < 1 ? "menos de 1" : pct} de cada 100 leads compran.`;
+  if(x.w < .25) s += ` Acaba de llegar: si se le llama en los próximos ${Math.max(1,Math.round(15 - x.w*60))} min su probabilidad sube ×${model.mult[0].toFixed(1)}.`;
+  else if(x.w < 12) s += ` Lleva ${fmtWait(x.w)}. Le quedan ${fmtWait(12 - x.w)} antes de que pase de 12 h y su probabilidad caiga.`;
+  else s += ` Lleva ${fmtWait(x.w)}. Ya pasó de 12 h, hay que intentarlo hoy antes de perderlo.`;
+  return s;
+}
+function esc(s){ return String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function safe(r){ const o = {...r}; for(const k in o) if(typeof o[k] === "string") o[k] = esc(o[k]); return o; }
+function fmtWait(h){ if(h < 1) return Math.round(h*60) + " min"; return (h < 24 ? h.toFixed(1) : Math.round(h)) + " h"; }
+function fmtDate(d){ return `${DIAS[d.getDay()]} ${d.getDate()} ${MESES[d.getMonth()]}`; }
+function fmtTime(d){ return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0"); }
+function dayKey(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+
+/* ---------- 4. Repartir entre asesores (en serpiente) ---------- */
+function assign(list, advisors){
+  const n = advisors.length; if(!n) return list.map(x => ({...x, asesor: "Sin asignar"}));
+  return list.map((x,i) => {
+    const round = Math.floor(i/n), pos = i % n;
+    return {...x, asesor: advisors[round % 2 === 0 ? pos : n-1-pos]};
+  });
+}
+
+/* ---------- 5. Validación: ¿el orden pone las ventas arriba? ---------- */
+function backtest(rows){
+  const first = new Date(rows[0].reg); first.setHours(0,0,0,0);
+  const last = new Date(rows[rows.length-1].reg); last.setHours(0,0,0,0);
+  const start = new Date(first.getTime() + 14*24*H);
+  const res = { model:0, real:0, fifo:0, tot:0, days:0, leads:0 };
+  for(let d = new Date(start); d <= last; d = new Date(d.getTime()+24*H)){
+    const t = new Date(d); t.setHours(9,0,0,0);
+    const model = fit(rows.filter(r => r.reg < d));
+    const q = queueAt(rows, t); if(!q.length) continue;
+    const k = Math.ceil(q.length/3);
+    const byModel = scoreQueue(q, model, t).map(x=>x.r);
+    const byFifo = q.slice().sort((a,b)=>a.reg-b.reg);
+    const byReal = q.slice().sort((a,b)=>(a.con?a.con:Infinity)-(b.con?b.con:Infinity));
+    const top = arr => arr.slice(0,k).reduce((s,r)=>s+r.venta,0);
+    res.model += top(byModel); res.fifo += top(byFifo); res.real += top(byReal);
+    res.tot += q.reduce((s,r)=>s+r.venta,0); res.days++; res.leads += q.length;
+  }
+  return res;
+}
+function renderBacktest(rows){
+  const b = backtest(rows);
+  if(!b.tot){ $("bt").innerHTML = '<p class="note">No hay suficientes días con ventas para validar.</p>'; return; }
+  const items = [["Primera Llamada", b.model, true],["Orden real de los asesores", b.real],["Orden de llegada", b.fifo]];
+  $("bt").innerHTML = items.map(([n,v,win]) => {
+    const pct = Math.round(100*v/b.tot);
+    return `<div class="bar${win?" win":""}"><span>${n}</span><div class="track"><div class="fill" style="width:${pct}%"></div></div><span class="mono">${pct}%</span></div>`;
+  }).join("");
+  $("btnote").textContent = `${b.days} mañanas, ${b.leads} leads en cola, ${b.tot} ventas. Cada día el modelo solo usa datos de días anteriores. Un tercio al azar daría 33%.`;
+}
+
+/* ---------- 6. Pintar ---------- */
+function setupControls(){
+  const first = new Date(ALL[0].reg); first.setHours(0,0,0,0);
+  const last = new Date(ALL[ALL.length-1].reg); last.setHours(0,0,0,0);
+  const sel = $("fecha"); sel.innerHTML = "";
+  const opts = [];
+  for(let d = new Date(first.getTime()+7*24*H); d <= new Date(last.getTime()+24*H); d = new Date(d.getTime()+24*H)) opts.push(new Date(d));
+  opts.reverse().forEach((d,i) => {
+    const o = document.createElement("option"); o.value = dayKey(d);
+    o.textContent = fmtDate(d) + (i===0 ? " (día siguiente a los datos)" : ""); sel.appendChild(o);
+  });
+  if(!state.fecha || ![...sel.options].some(o=>o.value===state.fecha)) state.fecha = opts[0] ? dayKey(opts[0]) : null;
+  sel.value = state.fecha;
+  const hs = $("hora"); if(!hs.options.length){ for(let h=7;h<=20;h++){ const o=document.createElement("option"); o.value=h; o.textContent=String(h).padStart(2,"0")+":00"; hs.appendChild(o);} }
+  hs.value = state.hora;
+  const advisors = [...new Set(ALL.map(r=>r.asesor).filter(Boolean))].sort();
+  state.asesores = state.asesores.filter(a => advisors.includes(a)); if(!state.asesores.length) state.asesores = advisors.slice();
+  $("asesores").innerHTML = advisors.map(a => `<button class="chip" type="button" aria-pressed="${state.asesores.includes(a)}" data-a="${esc(a)}">${esc(a.replace("Asesor ",""))}</button>`).join("");
+  $("asesores").querySelectorAll(".chip").forEach(btn => btn.onclick = () => {
+    const a = btn.dataset.a;
+    state.asesores = state.asesores.includes(a) ? state.asesores.filter(x=>x!==a) : [...state.asesores, a].sort();
+    if(state.tab !== "Todos" && !state.asesores.includes(state.tab)) state.tab = "Todos";
+    setupControls(); render();
+  });
+  $("datainfo").textContent = `${META.total.toLocaleString("es-MX")} registros leídos · ${META.dup} teléfonos repetidos quitados · ${META.ddmm} fechas DD/MM corregidas · ${ALL.length.toLocaleString("es-MX")} personas únicas.`;
+}
+function render(){
+  const [y,mo,da] = state.fecha.split("-").map(Number);
+  const day = new Date(y, mo-1, da);
+  const t = new Date(y, mo-1, da, state.hora, 0);
+  const model = fit(ALL.filter(r => r.reg < day));
+  const list = assign(scoreQueue(queueAt(ALL, t), model, t), state.asesores);
+  current = { list, model, t };
+
+  $("s-cola").textContent = list.length;
+  $("s-alta").textContent = list.filter(x=>tier(x.p)==="alta").length;
+  $("s-esp").textContent = list.reduce((s,x)=>s+x.p,0).toFixed(1);
+  $("s-dup").textContent = META.dup;
+
+  const tabs = ["Todos", ...state.asesores];
+  $("tabs").innerHTML = tabs.map(a => {
+    const n = a==="Todos" ? list.length : list.filter(x=>x.asesor===a).length;
+    return `<button class="tab" role="tab" aria-selected="${state.tab===a}" data-t="${esc(a)}">${esc(a)}<span class="n">${n}</span></button>`;
+  }).join("");
+  $("tabs").querySelectorAll(".tab").forEach(b => b.onclick = () => { state.tab = b.dataset.t; render(); });
+
+  renderList();
+  renderModel(model);
+}
+function renderList(){
+  const { list, model, t } = current;
+  const rows = state.tab === "Todos" ? list : list.filter(x => x.asesor === state.tab);
+  const key = state.fecha;
+  $("listtitle").textContent = (state.tab === "Todos" ? "Todos los asesores" : state.tab) + " · " + fmtDate(t) + ", " + fmtTime(t);
+  const done = rows.filter(x => called[key+"|"+x.r.lead_id]).length;
+  $("progtxt").textContent = `${done} de ${rows.length} llamados`;
+  $("progbar").style.width = rows.length ? (100*done/rows.length)+"%" : "0";
+
+  if(state.validar && rows.length){
+    const k = Math.ceil(rows.length/3); const tot = rows.reduce((s,x)=>s+x.r.venta,0); const top = rows.slice(0,k).reduce((s,x)=>s+x.r.venta,0);
+    $("valbanner").hidden = false;
+    $("valbanner").textContent = tot ? `En esta lista hubo ${tot} venta${tot>1?"s":""}. ${top} ${top===1?"quedó":"quedaron"} en el primer tercio (los primeros ${k}).` : "Ninguno de estos leads terminó comprando. Prueba otro día para ver dónde caen las ventas.";
+  } else $("valbanner").hidden = true;
+
+  if(!rows.length){ $("lista").innerHTML = `<li class="empty">No hay leads esperando primera llamada a esta hora. Prueba las 9:00 o otro día.</li>`; return; }
+  $("lista").innerHTML = rows.map((x,i) => {
+    const r = safe(x.r), tr = tier(x.p), id = key+"|"+r.lead_id, isDone = !!called[id];
+    const edad = +r.edad >= 18 && +r.edad <= 90 ? r.edad + " años" : "edad sin dato";
+    const out = state.validar ? `<span class="out ${r.venta?"venta":""}">${r.resultado.replace("_"," ")}${r.venta && +r.monto_venta ? " · $"+(+r.monto_venta).toLocaleString("es-MX") : ""}</span>` : "";
+    return `<li class="lead${isDone?" done":""}">
+      <div class="rank">${i+1}</div>
+      <div style="min-width:0">
+        <div class="who"><b>${r.lead_id}</b><span class="pill p-${tr}">${tr}</span>${state.tab==="Todos"?`<span class="meta">${x.asesor}</span>`:""}${out}</div>
+        <div class="meta">${r.canal}${r.anuncio!=="(sin anuncio)"?" · "+r.anuncio:""} · ${r.objetivo||""} · ${edad} · ${r.estado||""} · llegó ${fmtDate(r.reg)} ${fmtTime(r.reg)}</div>
+        <div class="why">${why(x, model)}</div>
+      </div>
+      <div class="right">
+        <span class="prob" title="Probabilidad estimada de venta si se le llama ahora">${(x.p*100).toFixed(1)}%</span>
+        <span class="phone mono">${r.telefono}<button type="button" data-tel="${r.telefono}">copiar</button></span>
+        <label class="call"><input type="checkbox" data-id="${id}" ${isDone?"checked":""}> llamado</label>
+      </div>
+    </li>`;
+  }).join("");
+  $("lista").querySelectorAll("input[data-id]").forEach(cb => cb.onchange = () => {
+    if(cb.checked) called[cb.dataset.id] = 1; else delete called[cb.dataset.id];
+    store.set("pl-called", called); renderList();
+  });
+  $("lista").querySelectorAll("button[data-tel]").forEach(b => b.onclick = () => {
+    const tel = b.dataset.tel;
+    Promise.resolve().then(()=>navigator.clipboard.writeText(tel)).then(()=>toast("Teléfono copiado: "+tel), ()=>toast("Copia a mano: "+tel));
+  });
+}
+function renderModel(model){
+  $("t-mult").querySelector("tbody").innerHTML = model.mult.map((m,i) =>
+    `<tr><td>${BIN_LABEL[i]}</td><td class="num">×${m.toFixed(2)}</td></tr>`).join("");
+  const ads = Object.values(model.ad).sort((a,b)=>b.p-a.p);
+  $("t-ads").querySelector("tbody").innerHTML = ads.map(a =>
+    `<tr><td>${esc(a.canal)}${a.anuncio!=="(sin anuncio)"?" · "+esc(a.anuncio):""}</td><td class="num">${a.n}</td><td class="num">${(a.p*100).toFixed(1)}%</td></tr>`).join("");
+}
+let toastTimer;
+function toast(msg){ const el=$("toast"); el.textContent=msg; el.hidden=false; clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.hidden=true,2200); }
+
+function load(text){
+  const parsed = parseCSV(text);
+  if(parsed.rows.length < 50) throw new Error("El archivo tiene muy pocos leads para aprender (mínimo 50).");
+  ALL = parsed.rows; META = parsed.meta;
+  setupControls(); render(); renderBacktest(ALL);
+}
+$("fecha").onchange = e => { state.fecha = e.target.value; render(); };
+$("hora").onchange = e => { state.hora = +e.target.value; render(); };
+$("validar").onchange = e => { state.validar = e.target.checked; renderList(); };
+$("archivo").onchange = e => {
+  const f = e.target.files[0]; if(!f) return;
+  const rd = new FileReader();
+  rd.onload = () => { try{ state.fecha = null; load(rd.result); toast("Archivo cargado: "+f.name); }catch(err){ toast(err.message); } };
+  rd.readAsText(f);
+};
+fetch("leads_ficticios.csv").then(r => { if(!r.ok) throw new Error("No se pudo leer leads_ficticios.csv"); return r.text(); })
+  .then(load).catch(err => { $("datainfo").textContent = err.message + ". Usa Cargar mi CSV."; });
+})();
+</script>
