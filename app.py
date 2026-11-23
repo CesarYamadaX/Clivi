@@ -348,7 +348,8 @@ with tab_contacto:
                 lid, c, fuente = guardado
                 icono = "📞" if c.canal_recomendado == "llamada" else "💬"
                 st.success(f"{icono} **Empezar por {c.canal_recomendado}.** {c.por_que_canal}")
-                st.caption("✨ Escrito con IA (GPT-6 Luna)" if fuente == "ia" else f"📝 Usando {fuente}")
+                st.caption(("✨ Escrito con IA (GPT-6 Luna)" + (" · corregido automáticamente" if "corregida" in fuente else ""))
+                           if fuente.startswith("ia") else f"📝 Usando {fuente}")
                 with st.container(border=True):
                     st.markdown("**💬 WhatsApp listo para enviar**")
                     st.markdown(f'<div class="pl-wa">{escape(c.whatsapp)}</div>', unsafe_allow_html=True)

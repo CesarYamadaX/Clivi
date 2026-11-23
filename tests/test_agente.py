@@ -191,3 +191,17 @@ def test_pistas_por_tipo_de_lead():
         assert esperado in p, esperado
     assert pistas({**LEAD, "edad": "199"}) == pistas({**LEAD, "edad": "nan"})  # edades imposibles se ignoran
     assert "Pistas para este lead" in _contexto(LEAD)
+
+
+def test_autocorreccion_cuando_rompe_reglas():
+    malo = {**RESPUESTA, "whatsapp": "Hola. Soy de Clivi. Vi tu registro. Es de control de peso. ¿Te llamo?"}
+    bueno = {**RESPUESTA, "whatsapp": "Hola, soy tu asesor de Clivi y vi tu registro de control de peso. ¿Te llamo hoy?",
+             "guion_apertura": "Hola, te llamo de Clivi por tu registro de control de peso. ¿Tienes 5 minutos?"}
+    respuestas, enviados = [malo, bueno], []
+
+    def manejar(request):
+        enviados.append(json.loads(request.content))
+        return _respuesta(json.dumps(respuestas.pop(0), ensure_ascii=False))
+    c, fuente = preparar_contacto(LEAD, client=_cliente(manejar), modelo="m")
+    assert fuente == "ia (corregida)" and c.whatsapp == bueno["whatsapp"]
+    assert "Corrige estos problemas" in enviados[1]["messages"][-1]["content"]

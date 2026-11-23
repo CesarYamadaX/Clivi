@@ -53,17 +53,18 @@ def main():
 
     lineas = [f"# Prueba del asistente con IA\n\n{datetime.now():%Y-%m-%d %H:%M} · modelo `{modelo}` · {n} leads\n"]
     resumen = []
-    inicios, objeciones = set(), []
+    inicios, objeciones, corregidas = set(), [], 0
     for f in muestra(n).itertuples():
         lead = {k: getattr(f, k) for k in ["lead_id", "canal", "anuncio", "objetivo", "plan_de_interes", "estado",
                                             "edad", "horas_esperando", "prioridad", "probabilidad", "hora_actual"]}
         t = time.time()
         c, fuente = preparar_contacto(lead, clave)
         seg = time.time() - t
-        problemas = revisar(c, lead) if fuente == "ia" else [fuente]
+        problemas = revisar(c, lead) if fuente.startswith("ia") else [fuente]
         ok = "✅" if not problemas else "⚠️"
-        resumen.append((fuente == "ia", not problemas, seg))
-        if fuente == "ia":
+        resumen.append((fuente.startswith("ia"), not problemas, seg))
+        corregidas += fuente == "ia (corregida)"
+        if fuente.startswith("ia"):
             inicios.add(" ".join(c.whatsapp.lower().replace(",", "").split()[:5]))
             objeciones += c.objeciones
         print(f"{ok} {lead['lead_id']} · {lead['prioridad']:5} · {lead['horas_esperando']:5.1f} h · "
@@ -88,7 +89,8 @@ def main():
              f"tiempo típico {tiempos[len(tiempos) // 2]:.1f} s, máximo {tiempos[-1]:.1f} s")
     genericas = sum(bool(re.search(r"pensar|caro|no puedo hablar|no tengo tiempo", o, re.I)) for o in objeciones)
     total += (f"\nVariedad: {len(inicios)} formas distintas de empezar el WhatsApp en {con_ia} mensajes · "
-              f"objeciones genéricas (pensarlo, caro, no puedo hablar): {genericas} de {len(objeciones)}")
+              f"objeciones genéricas (pensarlo, caro, no puedo hablar): {genericas} de {len(objeciones)} · "
+              f"corregidas automáticamente: {corregidas}")
     print(total)
     lineas.insert(1, total.strip() + "\n")
     (AQUI / "reporte_ia.md").write_text("\n".join(lineas), encoding="utf-8")

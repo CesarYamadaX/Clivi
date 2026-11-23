@@ -279,16 +279,29 @@ def preparar_contacto(lead: dict, clave: str = "", client: openai.OpenAI | None 
         client, modelo = crear_cliente(clave)
     modelo = modelo or MODELO_OPENAI
     try:
-        r = client.chat.completions.parse(
-            model=modelo,
-            messages=mensajes(lead),
-            response_format=Contacto,
-            temperature=TEMPERATURA,
-        )
+        historial = mensajes(lead)
+        r = client.chat.completions.parse(model=modelo, messages=historial, response_format=Contacto,
+                                          temperature=TEMPERATURA)
         msg = r.choices[0].message
         if msg.refusal or msg.parsed is None:
             return plantilla(lead), "plantilla: la IA no devolvió una respuesta válida"
-        return msg.parsed, "ia"
+        contacto = msg.parsed
+        # Autocorrección: si rompe alguna regla, se le devuelve la lista de problemas una sola vez.
+        from .revision import revisar
+        problemas = revisar(contacto, lead)
+        if problemas:
+            historial += [{"role": "assistant", "content": msg.content or contacto.model_dump_json()},
+                          {"role": "user", "content": "Corrige estos problemas y devuelve la respuesta completa:\n"
+                                                      + "\n".join(f"- {p}" for p in problemas)}]
+            try:
+                r2 = client.chat.completions.parse(model=modelo, messages=historial, response_format=Contacto,
+                                                   temperature=TEMPERATURA)
+                segundo = r2.choices[0].message.parsed
+                if segundo is not None and len(revisar(segundo, lead)) < len(problemas):
+                    return segundo, "ia (corregida)"
+            except (openai.OpenAIError, ValueError):
+                pass
+        return contacto, "ia"
     except openai.AuthenticationError:
         return plantilla(lead), "plantilla: la clave de API no es válida"
     except openai.NotFoundError:
