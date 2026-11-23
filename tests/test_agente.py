@@ -44,9 +44,11 @@ def test_con_ia():
     assert req["temperature"] == 0.4
 
 
-def test_sin_credenciales(monkeypatch):
+def test_sin_credenciales(monkeypatch, tmp_path):
+    from primera_llamada import agente
     for v in ["OPENAI_API_KEY", "OPENROUTER_API_KEY"]:
         monkeypatch.delenv(v, raising=False)
+    monkeypatch.setattr(agente, "ARCHIVO_ENV", tmp_path / "no-existe.env")  # que no lea tu .env real
     c, fuente = preparar_contacto(LEAD)
     assert fuente.startswith("plantilla") and "control de peso" in c.whatsapp
 
