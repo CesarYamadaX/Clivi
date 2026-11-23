@@ -27,49 +27,97 @@ st.set_page_config(page_title="Primera Llamada", page_icon="📞", layout="wide"
 
 st.markdown("""
 <style>
-.block-container {padding-top: 3.6rem; padding-bottom: 3rem; max-width: 1400px;}
-[data-testid="stSidebar"] h3 {font-size: 0.95rem; margin-bottom: 0.2rem;}
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap');
+/* Mesa de trabajo de un asesor: encabezado sobrio, una franja de cifras, tarjetas de lead sin adornos.
+   Tinta petróleo + azul Clivi; grises con un toque azul; rojo y ámbar solo para prioridad. */
+:root {
+  --pl-ink: #0e2a36;      /* texto principal */
+  --pl-brand: #00547a;    /* azul Clivi */
+  --pl-muted: #5a6e78;    /* texto secundario */
+  --pl-line: #dbe6ea;     /* filetes y bordes */
+  --pl-surface: #ffffff;  /* tarjetas */
+  --pl-wash: #eef4f6;     /* fondos suaves */
+  --pl-alta: #b4232a; --pl-alta-bg: #fbeceb;
+  --pl-media: #9a5b0f; --pl-media-bg: #fbf1e2;
+  --pl-display: 'Manrope', 'Inter', system-ui, sans-serif;
+}
+.block-container {padding-top: 3.2rem; padding-bottom: 4rem; max-width: 1320px;}
+.block-container, .pl-num {font-variant-numeric: tabular-nums;}
 
-.pl-hero {border-bottom: 1px solid #e5eef2; padding: 0 0 14px; margin-bottom: 18px;}
-.pl-hero h1 {color: #00547a; font-size: 2rem; margin: 0 0 4px; padding: 0; line-height: 1.15;}
-.pl-hero p {margin: 0 0 6px; color: #1f2937; font-size: 1.02rem; max-width: 760px;}
-.pl-hero .estado {color: #65758b; font-size: .9rem;}
+/* barra lateral */
+[data-testid="stSidebar"] h2 {font-family: var(--pl-display); font-size: 1.15rem; font-weight: 700;
+  letter-spacing: -.01em; color: var(--pl-ink);}
+[data-testid="stSidebar"] h3 {font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .09em;
+  color: var(--pl-muted); margin: 1.1rem 0 .1rem; padding-top: 1rem; border-top: 1px solid var(--pl-line);}
 
-.pl-kpi {background: #fff; border: 1px solid #e5eef2; border-radius: 10px; padding: 14px 16px; min-height: 118px;}
-.pl-kpi .label {font-size: .9rem; color: #65758b; font-weight: 600;}
-.pl-kpi .value {font-size: 2.1rem; font-weight: 700; color: #1f2937; line-height: 1.15; margin: 4px 0 2px;}
-.pl-kpi .hint {font-size: .85rem; color: #65758b;}
-.pl-kpi.accent .value {color: #b91c1c;}
-.pl-kpi.good .value {color: #00547a;}
+/* encabezado */
+.pl-hero {display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap;
+  padding: 0 0 20px; margin-bottom: 22px; border-bottom: 1px solid var(--pl-line);}
+.pl-hero .marca {font-size: .8rem; font-weight: 600; color: var(--pl-brand); letter-spacing: .02em; margin-bottom: 6px;}
+.pl-hero h1 {font-family: var(--pl-display); color: var(--pl-ink); font-size: 2.5rem; font-weight: 800;
+  letter-spacing: -.035em; margin: 0; padding: 0; line-height: 1.05;}
+.pl-hero p {margin: 8px 0 0; color: var(--pl-muted); font-size: 1rem; max-width: 620px; text-wrap: balance;}
+.pl-hero .estado {text-align: right; color: var(--pl-muted); font-size: .88rem; line-height: 1.6;}
+.pl-hero .estado b {display: block; font-family: var(--pl-display); color: var(--pl-ink); font-size: 1.2rem;
+  font-weight: 700; letter-spacing: -.01em;}
 
-.pl-card {background: #fff; border: 1px solid #e5eef2; border-radius: 10px; padding: 16px 18px; height: 100%;}
-.pl-card.top3 {min-height: 262px;}
-.pl-card .top {display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;}
-.pl-rank {background: #00547a; color: #fff; border-radius: 8px; padding: 2px 9px; font-weight: 700; font-size: .9rem;}
-.pl-pill {border-radius: 6px; padding: 2px 8px; font-size: .82rem; font-weight: 600;}
-.pl-pill.alta {background: #fde8e8; color: #b91c1c;}
-.pl-pill.media {background: #fff1dc; color: #b45309;}
-.pl-pill.baja {background: #f3f6f7; color: #65758b;}
-.pl-card .prob {font-size: 1.9rem; font-weight: 700; color: #1f2937; line-height: 1.1;}
-.pl-card .prob small {font-size: .85rem; font-weight: 500; color: #65758b;}
-.pl-card .meta {font-size: .88rem; color: #65758b; margin: 6px 0 10px;}
-.pl-card .meta b {color: #1f2937;}
-.pl-card .why {font-size: .9rem; background: #f3f8fa; border-radius: 8px; padding: 10px 12px; color: #1f2937;}
+/* franja de cifras */
+.pl-franja {display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); background: var(--pl-surface);
+  border: 1px solid var(--pl-line); border-radius: 14px; overflow: hidden; margin: 4px 0 8px;}
+.pl-franja > div {padding: 18px 22px 16px; border-left: 1px solid var(--pl-line); margin-left: -1px;}
+.pl-franja .label {font-size: .8rem; color: var(--pl-muted); font-weight: 600;}
+.pl-franja .value {font-family: var(--pl-display); font-size: 2.15rem; font-weight: 700; color: var(--pl-ink);
+  letter-spacing: -.03em; line-height: 1.1; margin: 6px 0 4px;}
+.pl-franja .hint {font-size: .82rem; color: var(--pl-muted); line-height: 1.4;}
+.pl-franja .accent .value {color: var(--pl-alta);}
+.pl-franja .good .value {color: var(--pl-brand);}
 
-.pl-section {font-size: 1.15rem; font-weight: 700; color: #1f2937; margin: 18px 0 8px;}
-.pl-muted {color: #65758b; font-size: .9rem;}
-.pl-facts {display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; margin: 8px 0 12px;}
-.pl-facts div {font-size: .9rem; color: #65758b;}
-.pl-facts b {display: block; color: #1f2937; font-size: .98rem;}
-.pl-big {font-size: 2.6rem; font-weight: 800; line-height: 1;}
-.pl-wa {background: #e7f8ee; border: 1px solid #b9e6cb; border-radius: 14px 14px 14px 4px; padding: 14px 16px;
-  font-size: .98rem; color: #1f2937; white-space: pre-wrap;}
-.pl-formula {background: #f3f8fa; font-weight: 600; line-height: 1.7; border: 0;
-  border-radius: 8px; padding: 14px 16px; font-size: .95rem; color: #1f2937;}
+/* tarjetas de lead */
+.pl-card {background: var(--pl-surface); border: 1px solid var(--pl-line); border-radius: 14px; padding: 18px 20px;
+  height: 100%; transition: border-color .15s ease;}
+.pl-card:hover {border-color: #b9cdd5;}
+.pl-card.top3 {min-height: 250px; display: flex; flex-direction: column;}
+.pl-card .top {display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;}
+.pl-rank {font-family: var(--pl-display); color: var(--pl-muted); font-weight: 700; font-size: .95rem;}
+.pl-pill {display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 3px 10px;
+  font-size: .76rem; font-weight: 600; text-transform: capitalize;}
+.pl-pill::before {content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor;}
+.pl-pill.alta {background: var(--pl-alta-bg); color: var(--pl-alta);}
+.pl-pill.media {background: var(--pl-media-bg); color: var(--pl-media);}
+.pl-pill.baja {background: var(--pl-wash); color: var(--pl-muted);}
+.pl-card .prob {font-family: var(--pl-display); font-size: 2.1rem; font-weight: 700; color: var(--pl-ink);
+  letter-spacing: -.03em; line-height: 1.05;}
+.pl-card .prob small {font-family: Inter, sans-serif; font-size: .82rem; font-weight: 500; color: var(--pl-muted);
+  letter-spacing: 0; margin-left: 4px;}
+.pl-card .meta {font-size: .86rem; color: var(--pl-muted); margin: 8px 0 12px; line-height: 1.55;}
+.pl-card .meta b {color: var(--pl-ink); font-weight: 600;}
+.pl-card .why {font-size: .87rem; color: #34505c; line-height: 1.55; margin-top: auto; padding-top: 12px;
+  border-top: 1px solid var(--pl-line);}
 
-.stTabs [data-baseweb="tab-list"] {gap: 6px;}
-.stTabs [data-baseweb="tab"] {font-weight: 600; padding: 0 14px;}
-.stTabs [data-baseweb="tab"] p {font-size: 1rem;}
+.pl-section {font-family: var(--pl-display); font-size: 1.2rem; font-weight: 700; color: var(--pl-ink);
+  letter-spacing: -.015em; margin: 26px 0 10px;}
+.pl-muted {color: var(--pl-muted); font-size: .9rem; line-height: 1.55;}
+.pl-facts {display: grid; grid-template-columns: 1fr 1fr; gap: 12px 18px; margin: 12px 0 14px;}
+.pl-facts div {font-size: .78rem; color: var(--pl-muted); font-weight: 500;}
+.pl-facts b {display: block; color: var(--pl-ink); font-size: .95rem; font-weight: 600; margin-top: 2px;}
+.pl-wa {background: #e9f6ee; border-radius: 16px 16px 16px 4px; padding: 14px 16px; max-width: 560px;
+  font-size: .97rem; line-height: 1.55; color: #12301f; white-space: pre-wrap;}
+.pl-formula {background: var(--pl-wash); font-family: var(--pl-display); font-weight: 600; line-height: 1.8;
+  border-radius: 12px; padding: 16px 18px; font-size: .98rem; color: var(--pl-ink);}
+
+/* pestañas */
+.stTabs [data-baseweb="tab-list"] {gap: 22px; border-bottom: 1px solid var(--pl-line);}
+.stTabs [data-baseweb="tab"] {padding: 0 2px 10px; background: transparent;}
+.stTabs [data-baseweb="tab"] p {font-family: var(--pl-display); font-size: 1rem; font-weight: 600; color: var(--pl-muted);}
+.stTabs [aria-selected="true"] p {color: var(--pl-ink);}
+.stTabs [data-baseweb="tab-highlight"] {background: var(--pl-ink); height: 2px;}
+.stTabs [data-baseweb="tab-border"] {display: none;}
+
+@media (max-width: 640px) {
+  .pl-hero .estado {text-align: left;}
+  .pl-hero h1 {font-size: 2rem;}
+}
+@media (prefers-reduced-motion: reduce) {.pl-card {transition: none;}}
 </style>
 """, unsafe_allow_html=True)
 
@@ -81,17 +129,19 @@ def fecha_txt(d) -> str:
 
 def horas_txt(h: float) -> str:
     if h < 1:
-        return f"{max(1, round(h * 60))} min"
-    return f"{h:.1f} h" if h < 24 else f"{round(h)} h"
+        return f"{max(1, round(h * 60))}\u00a0min"
+    return f"{h:.1f}\u00a0h" if h < 24 else f"{round(h)}\u00a0h"
 
 
 def anuncio_txt(fila) -> str:
     return fila.canal if fila.anuncio == "(sin anuncio)" else f"{fila.canal} · {fila.anuncio}"
 
 
-def kpi(col, etiqueta: str, valor: str, pista: str, clase: str = "") -> None:
-    col.markdown(f'<div class="pl-kpi {clase}"><div class="label">{etiqueta}</div>'
-                 f'<div class="value">{valor}</div><div class="hint">{pista}</div></div>', unsafe_allow_html=True)
+def franja(cifras: list) -> None:
+    """Fila de cifras unidas en una sola franja: (etiqueta, valor, pista[, clase])."""
+    celdas = "".join(f'<div class="{c[3] if len(c) > 3 else ""}"><div class="label">{c[0]}</div>'
+                     f'<div class="value">{c[1]}</div><div class="hint">{c[2]}</div></div>' for c in cifras)
+    st.markdown(f'<div class="pl-franja">{celdas}</div>', unsafe_allow_html=True)
 
 
 def tarjeta_lead(col, fila, mostrar: bool) -> None:
@@ -117,17 +167,19 @@ def grafica_validacion(pct: dict) -> alt.LayerChart:
     })
     y = alt.Y("orden:N", sort=None, title=None, axis=alt.Axis(labelFontSize=13, labelLimit=260))
     barras = alt.Chart(datos).mark_bar(cornerRadiusEnd=6, height=34).encode(
-        x=alt.X("pct:Q", title="% de las ventas que quedan en el primer tercio", scale=alt.Scale(domain=[0, 100])),
+        x=alt.X("pct:Q", title="% de las ventas que quedan en el primer tercio", scale=alt.Scale(domain=[0, 100]),
+                  axis=alt.Axis(values=[0, 25, 50, 75, 100])),
         y=y,
-        color=alt.condition(alt.datum.nuestro, alt.value("#00547a"), alt.value("#c6d6df")),
+        color=alt.condition(alt.datum.nuestro, alt.value("#00547a"), alt.value("#c9d8de")),
         tooltip=[alt.Tooltip("orden:N", title="Orden"), alt.Tooltip("pct:Q", title="%", format=".0f")],
     )
-    texto = barras.mark_text(align="left", dx=6, fontSize=14, fontWeight="bold", color="#1f2937").encode(
-        text=alt.Text("pct:Q", format=".0f"), color=alt.value("#1f2937"))
-    azar = alt.Chart(pd.DataFrame({"x": [100 / 3]})).mark_rule(strokeDash=[5, 4], color="#ef4444", size=2).encode(x="x:Q")
+    texto = barras.mark_text(align="left", dx=6, fontSize=14, fontWeight="bold", color="#0e2a36").encode(
+        text=alt.Text("pct:Q", format=".0f"), color=alt.value("#0e2a36"))
+    azar = alt.Chart(pd.DataFrame({"x": [100 / 3]})).mark_rule(strokeDash=[5, 4], color="#b4232a", size=1.5).encode(x="x:Q")
     nota = alt.Chart(pd.DataFrame({"x": [100 / 3], "t": ["al azar: 33%"]})).mark_text(
-        align="left", dx=5, dy=-8, color="#ef4444", fontSize=12).encode(x="x:Q", y=alt.value(0), text="t:N")
-    return (barras + texto + azar + nota).properties(height=190)
+        align="left", dx=5, dy=-8, color="#b4232a", fontSize=12).encode(x="x:Q", y=alt.value(0), text="t:N")
+    return (barras + texto + azar + nota).properties(height=190).configure(font="Inter").configure_axis(
+        grid=False, domainColor="#dbe6ea", tickColor="#dbe6ea", labelColor="#5a6e78", titleColor="#5a6e78").configure_view(stroke=None)
 
 
 @st.cache_data
@@ -202,25 +254,28 @@ concentracion = float(lista.probabilidad.iloc[:tercio].sum()) / esperadas if esp
 urgentes = int((lista.horas_esperando < 0.25).sum()) if n else 0
 
 # ---------------------------------------------------------------- encabezado
-estado = [f"{fecha_txt(dia).capitalize()}, {hora:02d}:00",
-          f"{len(asesores)} asesor{'es' if len(asesores) != 1 else ''}",
-          "mensajes con IA" if clave else "mensajes con plantilla"]
+detalle = [f"{len(asesores)} asesor{'es' if len(asesores) != 1 else ''}",
+           "mensajes con IA" if clave else "mensajes con plantilla"]
 if mostrar:
-    estado.append("mostrando qué pasó después")
+    detalle.append("mostrando qué pasó después")
 st.markdown(f"""
 <div class="pl-hero">
-  <h1>Primera Llamada</h1>
-  <p>A quién llama primero cada asesor, en orden de probabilidad de venta si se le llama ahora.</p>
-  <div class="estado">{" · ".join(estado)}</div>
+  <div>
+    <div class="marca">Clivi · Ventas</div>
+    <h1>Primera Llamada</h1>
+    <p>A quién llama primero cada asesor, en orden de probabilidad de venta si se le llama ahora.</p>
+  </div>
+  <div class="estado"><b>{fecha_txt(dia).capitalize()}, {hora:02d}:00</b>{" · ".join(detalle)}</div>
 </div>""", unsafe_allow_html=True)
 
-k1, k2, k3, k4 = st.columns(4)
-kpi(k1, "Leads en cola", f"{n}", "sin primera llamada, últimas 48 h")
-kpi(k2, "Prioridad alta", f"{int((lista.prioridad == 'alta').sum()) if n else 0}",
-    f"probabilidad ≥ 8% · {urgentes} llegaron hace < 15 min", "accent")
-kpi(k3, "Ventas esperadas", f"{esperadas:.1f}", "si se llama a toda la cola ahora")
-kpi(k4, "Primer tercio", f"{concentracion:.0%}" if n else "–",
-    f"de las ventas esperadas están en los primeros {tercio}", "good")
+franja([
+    ("Leads en cola", f"{n}", "sin primera llamada, últimas 48 h"),
+    ("Prioridad alta", f"{int((lista.prioridad == 'alta').sum()) if n else 0}",
+     f"probabilidad ≥ 8% · {urgentes} llegaron hace menos de 15 min", "accent"),
+    ("Ventas esperadas", f"{esperadas:.1f}", "si se llama a toda la cola ahora"),
+    ("Primer tercio", f"{concentracion:.0%}" if n else "–",
+     f"de las ventas esperadas están en los primeros {tercio}", "good"),
+])
 
 st.write("")
 tab_lista, tab_contacto, tab_modelo = st.tabs(["Lista del día", "Preparar contacto", "Cómo decide y si funciona"])
@@ -406,11 +461,12 @@ with tab_modelo:
         pct = {k: 100 * v[k] / v["ventas"] for k in ("primera_llamada", "orden_real", "orden_llegada")}
         st.markdown('<div class="pl-section">¿Funciona? Ventas que quedan en el primer tercio de la lista de las 9:00</div>',
                     unsafe_allow_html=True)
-        a, b, c = st.columns(3)
-        kpi(a, "Primera Llamada", f"{pct['primera_llamada']:.0f}%",
-            f"{v['primera_llamada']} de {v['ventas']} ventas en el primer tercio", "good")
-        kpi(b, "Orden real de los asesores", f"{pct['orden_real']:.0f}%", f"{v['orden_real']} de {v['ventas']} ventas")
-        kpi(c, "Orden de llegada", f"{pct['orden_llegada']:.0f}%", f"{v['orden_llegada']} de {v['ventas']} ventas")
+        franja([
+            ("Primera Llamada", f"{pct['primera_llamada']:.0f}%",
+             f"{v['primera_llamada']} de {v['ventas']} ventas en el primer tercio", "good"),
+            ("Orden real de los asesores", f"{pct['orden_real']:.0f}%", f"{v['orden_real']} de {v['ventas']} ventas"),
+            ("Orden de llegada", f"{pct['orden_llegada']:.0f}%", f"{v['orden_llegada']} de {v['ventas']} ventas"),
+        ])
         st.altair_chart(grafica_validacion(pct), use_container_width=True)
         st.caption(f"{v['mananas']} mañanas, {v['leads']} leads en cola, {v['ventas']} ventas. "
                    f"Cada día el modelo solo aprende de días anteriores. Un tercio al azar daría 33%.")
@@ -423,11 +479,13 @@ with tab_modelo:
                 "(contestó, no contestó, compró o no le interesa) y aquí verás si la prioridad acierta.")
     else:
         r = registro.resumen(hechos)
-        a, b, c = st.columns(3)
         contestaron = int(r.contestaron.sum())
-        kpi(a, "Leads registrados", f"{len(hechos)}", f"{hechos.dia.nunique()} día(s) · {hechos.asesor.nunique()} asesor(es)")
-        kpi(b, "Contestaron", f"{contestaron / len(hechos):.0%}", f"{contestaron} de {len(hechos)}")
-        kpi(c, "Compraron", f"{int(r.compraron.sum())}", "ventas registradas", "good")
+        franja([
+            ("Leads registrados", f"{len(hechos)}",
+             f"{hechos.dia.nunique()} día(s) · {hechos.asesor.nunique()} asesor(es)"),
+            ("Contestaron", f"{contestaron / len(hechos):.0%}", f"{contestaron} de {len(hechos)}"),
+            ("Compraron", f"{int(r.compraron.sum())}", "ventas registradas", "good"),
+        ])
         st.dataframe(r, hide_index=True, width="stretch",
                      column_config={"prioridad": st.column_config.TextColumn("Prioridad"),
                                     "registrados": st.column_config.NumberColumn("Registrados"),
