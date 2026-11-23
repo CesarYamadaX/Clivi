@@ -1,5 +1,14 @@
+# Colores tomados de clivi.com.mx (azul petróleo #00547A, texto #1F2937, fondos azul muy claro, tipografía Inter)
 [theme]
-primaryColor = "#0f6e5c"
-backgroundColor = "#f5f7f6"
-secondaryBackgroundColor = "#e1f0eb"
-textColor = "#14302b"
+primaryColor = "#00547a"
+backgroundColor = "#f7fbfd"
+secondaryBackgroundColor = "#e9f5fb"
+textColor = "#1f2937"
+font = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+baseRadius = "0.75rem"
+buttonRadius = "full"
+borderColor = "#e5eef2"
+
+[theme.sidebar]
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f3f6f7"

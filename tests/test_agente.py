@@ -39,12 +39,16 @@ def test_con_ia():
     req = enviado[0]
     assert req["model"] == "gpt-6-luna"
     assert req["response_format"]["type"] == "json_schema"
-    assert "L01738" in req["messages"][1]["content"] and "11.9 horas" in req["messages"][1]["content"]
+    assert "L01738" in req["messages"][-1]["content"] and "11.9 horas" in req["messages"][-1]["content"]
+    assert len(req["messages"]) == 2 + 2 * 2  # sistema, 2 ejemplos (pregunta y respuesta), lead
+    assert req["temperature"] == 0.4
 
 
-def test_sin_credenciales(monkeypatch):
+def test_sin_credenciales(monkeypatch, tmp_path):
+    from primera_llamada import agente
     for v in ["OPENAI_API_KEY", "OPENROUTER_API_KEY"]:
         monkeypatch.delenv(v, raising=False)
+    monkeypatch.setattr(agente, "ARCHIVO_ENV", tmp_path / "no-existe.env")  # que no lea tu .env real
     c, fuente = preparar_contacto(LEAD)
     assert fuente.startswith("plantilla") and "control de peso" in c.whatsapp
 
@@ -63,3 +67,157 @@ def test_clave_openrouter():
     assert str(cli.base_url).startswith("https://openrouter.ai/api/v1") and modelo == "openai/gpt-6-luna"
     cli, modelo = crear_cliente("sk-prueba")
     assert "openai.com" in str(cli.base_url) and modelo == "gpt-6-luna"
+
+
+# ---------------------------------------------------------------- casos de error y reglas del mensaje
+import re
+
+import pytest
+
+from primera_llamada.agente import plantilla
+
+
+def _cliente(manejar):
+    return openai.OpenAI(api_key="x", max_retries=0, http_client=httpx.Client(transport=httpx.MockTransport(manejar)))
+
+
+def _respuesta(contenido, refusal=None):
+    return httpx.Response(200, json={
+        "id": "c", "object": "chat.completion", "created": 0, "model": "m",
+        "choices": [{"index": 0, "finish_reason": "stop",
+                     "message": {"role": "assistant", "refusal": refusal, "content": contenido}}]})
+
+
+@pytest.mark.parametrize("manejar, motivo", [
+    (lambda r: httpx.Response(404, json={"error": {"message": "no"}}), "no está disponible"),
+    (lambda r: httpx.Response(429, json={"error": {"message": "lento"}}), "límite de uso"),
+    (lambda r: httpx.Response(500, json={"error": {"message": "caído"}}), "error de la API (500)"),
+    (lambda r: (_ for _ in ()).throw(httpx.ConnectError("sin red")), "sin conexión"),
+    (lambda r: (_ for _ in ()).throw(httpx.ReadTimeout("lento")), "tardó demasiado"),
+    (lambda r: _respuesta("esto no es json"), "plantilla"),
+    (lambda r: _respuesta('{"canal_recomendado": "fax"}'), "plantilla"),
+    (lambda r: _respuesta(None, refusal="No puedo ayudar"), "no devolvió una respuesta válida"),
+])
+def test_fallas_de_la_api_caen_a_plantilla(manejar, motivo):
+    c, fuente = preparar_contacto(LEAD, client=_cliente(manejar), modelo="m")
+    assert fuente.startswith("plantilla") and motivo in fuente
+    assert isinstance(c, Contacto) and c.whatsapp
+
+
+def frases(texto):
+    return [f for f in re.split(r"(?<=[.!?])\s+", texto.strip()) if f]
+
+
+@pytest.mark.parametrize("horas", [0.1, 5, 13, 40])
+@pytest.mark.parametrize("prioridad", ["alta", "media", "baja"])
+def test_plantilla_cumple_reglas(horas, prioridad):
+    c = plantilla({**LEAD, "horas_esperando": horas, "prioridad": prioridad})
+    assert len(frases(c.whatsapp)) <= 3 and c.whatsapp.endswith("?")
+    assert c.canal_recomendado == ("llamada" if prioridad == "alta" else "whatsapp")
+    assert len(c.preguntas) == 3 and len(c.objeciones) == 2
+    assert ("Perdón" in c.whatsapp) == (horas >= 12)
+
+
+def test_revision_detecta_problemas():
+    from primera_llamada.revision import revisar
+    lead = {**LEAD, "horas_esperando": 20}
+    malo = Contacto(canal_recomendado="whatsapp", por_que_canal="x",
+                    whatsapp="Hola Mariana. Soy de Clivi. Con nosotros bajarás 10 kilos. Tu nutrióloga te atiende. Cuesta $999.",
+                    guion_apertura="Hola Mariana, ¿cómo estás?", preguntas=["a"], objeciones=["a", "b", "c"],
+                    si_no_contesta="Reintenta.")
+    p = " | ".join(revisar(malo, lead))
+    for esperado in ["frases", "no termina en pregunta", "1 preguntas", "3 objeciones",
+                     "promesa", "nutrióloga", "nombre inventado", "$999", "no recomienda llamada", "12 h", "objetivo"]:
+        assert esperado in p, esperado
+
+
+@pytest.mark.parametrize("horas", [0.1, 13])
+@pytest.mark.parametrize("objetivo", ["control de peso", "diabetes tipo 2"])
+def test_plantilla_pasa_la_revision(horas, objetivo):
+    from primera_llamada.revision import revisar
+    lead = {**LEAD, "horas_esperando": horas, "objetivo": objetivo}
+    assert revisar(plantilla(lead), lead) == []
+
+
+def test_revision_reglas_de_estilo():
+    """Casos reales de la primera prueba con la IA (22 nov) que antes pasaban."""
+    from primera_llamada.revision import revisar
+    base = dict(canal_recomendado="whatsapp", por_que_canal="x", preguntas=["a", "b", "c"],
+                objeciones=["a", "b"], si_no_contesta="x")
+    lead = {**LEAD, "prioridad": "baja", "horas_esperando": 15.7, "anuncio": "Imagen plan mensual"}
+    c = Contacto(**base, whatsapp="Hola, vi que llegaste por el anuncio de Meta del plan mensual y te interesa "
+                                  "el control de peso. Disculpa la espera. ¿Te cuento más por aquí?",
+                 guion_apertura="Hola, te contacto de Clivi por tu registro de control de peso.")
+    p = " | ".join(revisar(c, lead))
+    assert "no dice que es de Clivi" in p and "Meta" in p and "no termina en pregunta" in p
+    lead = {**LEAD, "prioridad": "media", "horas_esperando": 3.2}
+    c = Contacto(**base, whatsapp="Hola, soy de Clivi; una disculpa por la demora. Me comentaste que te interesa "
+                                  "el control de peso. ¿Te llamo?",
+                 guion_apertura="Hola, te llamo de Clivi por el control de peso, ¿tienes un minuto?")
+    p = " | ".join(revisar(c, lead))
+    assert "conversación previa" in p and "poco esperando" in p
+
+
+def test_clave_desde_env(tmp_path, monkeypatch):
+    from primera_llamada import agente
+    for v in ["OPENAI_API_KEY", "OPENROUTER_API_KEY"]:
+        monkeypatch.delenv(v, raising=False)
+    env = tmp_path / ".env"
+    env.write_text('# comentario\nexport OPENROUTER_API_KEY="sk-or-desde-archivo"\n', encoding="utf-8")
+    monkeypatch.setattr(agente, "ARCHIVO_ENV", env)
+    assert agente.clave_del_entorno() == "sk-or-desde-archivo"
+    monkeypatch.setenv("OPENROUTER_API_KEY", "sk-or-terminal")
+    assert agente.clave_del_entorno() == "sk-or-terminal"
+    monkeypatch.delenv("OPENROUTER_API_KEY")
+    env.unlink()
+    assert agente.clave_del_entorno() == ""
+
+
+def test_los_ejemplos_cumplen_las_reglas():
+    """Los ejemplos que le damos al modelo deben pasar la misma revisión que sus respuestas."""
+    from primera_llamada.agente import EJEMPLOS
+    from primera_llamada.revision import revisar
+    for lead, respuesta in EJEMPLOS:
+        assert revisar(Contacto(**respuesta), lead) == [], lead["lead_id"]
+
+
+def test_pistas_por_tipo_de_lead():
+    from primera_llamada.agente import _contexto, pistas
+    p = " ".join(pistas({**LEAD, "canal": "Referido", "objetivo": "diabetes tipo 2", "edad": "58",
+                         "plan_de_interes": "2499", "horas_esperando": 30, "hora_actual": "20:00"}))
+    for esperado in ["recomendó", "ya tengo doctor", "58 años", "$2,499", "más de un día", "fuera de horario"]:
+        assert esperado in p, esperado
+    p = " ".join(pistas({**LEAD, "canal": "TikTok", "objetivo": "control de peso", "edad": "24",
+                         "plan_de_interes": "1299", "horas_esperando": 0.1}))
+    for esperado in ["TikTok", "ya probé de todo", "24 años", "$1,299", "Acaba de dejar"]:
+        assert esperado in p, esperado
+    assert pistas({**LEAD, "edad": "199"}) == pistas({**LEAD, "edad": "nan"})  # edades imposibles se ignoran
+    assert "Pistas para este lead" in _contexto(LEAD)
+
+
+def test_autocorreccion_cuando_rompe_reglas():
+    malo = {**RESPUESTA, "whatsapp": "Hola. Soy de Clivi. Vi tu registro. Es de control de peso. ¿Te llamo?"}
+    bueno = {**RESPUESTA, "whatsapp": "Hola, soy tu asesor de Clivi y vi tu registro de control de peso. ¿Te llamo hoy?",
+             "guion_apertura": "Hola, te llamo de Clivi por tu registro de control de peso. ¿Tienes 5 minutos?"}
+    respuestas, enviados = [malo, bueno], []
+
+    def manejar(request):
+        enviados.append(json.loads(request.content))
+        return _respuesta(json.dumps(respuestas.pop(0), ensure_ascii=False))
+    c, fuente = preparar_contacto(LEAD, client=_cliente(manejar), modelo="m")
+    assert fuente == "ia (corregida)" and c.whatsapp == bueno["whatsapp"]
+    assert "Corrige estos problemas" in enviados[1]["messages"][-1]["content"]
+
+
+def test_demo_llave_y_carga(tmp_path):
+    import json
+    from primera_llamada import demo
+    lead = dict(LEAD, hora_actual="09:00")
+    c = plantilla(lead)
+    archivo = tmp_path / "r.json"
+    archivo.write_text(json.dumps({"respuestas": {demo.llave(lead): c.model_dump()}}), encoding="utf-8")
+    assert demo.respuesta_guardada(lead, archivo) == c
+    assert demo.respuesta_guardada(dict(lead, hora_actual="10:00"), archivo) is None
+    assert demo.respuesta_guardada(lead, tmp_path / "no-existe.json") is None
+    (tmp_path / "roto.json").write_text("{no es json", encoding="utf-8")
+    assert demo.respuesta_guardada(lead, tmp_path / "roto.json") is None
