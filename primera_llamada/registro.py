@@ -13,8 +13,8 @@ from typing import Optional
 import pandas as pd
 
 ARCHIVO = Path(__file__).resolve().parents[1] / "data" / "resultados_registrados.csv"
-RESULTADOS = {"contesto": "📞 Contestó", "no_contesto": "📵 No contestó",
-              "compro": "✅ Compró", "no_interesado": "✖️ No interesado"}
+RESULTADOS = {"contesto": "Contestó", "no_contesto": "No contestó",
+              "compro": "Compró", "no_interesado": "No interesado"}
 COLUMNAS = ["registrado", "dia", "hora", "lead_id", "asesor", "prioridad", "probabilidad",
             "canal_recomendado", "fuente_mensaje", "resultado"]
 

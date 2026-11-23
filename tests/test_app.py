@@ -66,7 +66,7 @@ def test_clave_falsa_no_rompe_la_app(monkeypatch):
     at = _app(monkeypatch)
     monkeypatch.setenv("OPENROUTER_API_KEY", "sk-or-v1-clave-falsa")
     at.run()
-    assert any("IA activa" in s.value for s in at.success)
+    assert any("IA conectada" in c.value for c in at.caption)
     at.button[0].click().run()
     assert not at.exception
     assert at.session_state["contacto"][2].startswith("plantilla")
