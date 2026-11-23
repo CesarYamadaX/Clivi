@@ -64,7 +64,9 @@ def test_cambiar_de_lead_limpia_el_contacto(monkeypatch):
 
 def test_clave_falsa_no_rompe_la_app(monkeypatch):
     at = _app(monkeypatch)
-    at.text_input[0].set_value("sk-or-v1-clave-falsa").run()
+    monkeypatch.setenv("OPENROUTER_API_KEY", "sk-or-v1-clave-falsa")
+    at.run()
+    assert any("IA activa" in s.value for s in at.success)
     at.button[0].click().run()
     assert not at.exception
     assert at.session_state["contacto"][2].startswith("plantilla")

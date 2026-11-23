@@ -180,19 +180,16 @@ with st.sidebar:
     mostrar = st.toggle("Mostrar qué pasó después", help="Revela el resultado real de cada lead para comprobar el orden.")
 
     st.markdown("### 🤖 Asistente con IA")
-    clave = st.text_input("Clave de API (OpenRouter u OpenAI)", type="password",
-                          help="Opcional. Sin clave, el asistente usa una plantilla fija. "
-                               "También lee OPENROUTER_API_KEY u OPENAI_API_KEY del entorno o de los secretos de Streamlit.")
-    if not clave:
-        try:
-            clave = st.secrets.get("OPENROUTER_API_KEY", "") or st.secrets.get("OPENAI_API_KEY", "")
-        except Exception:
-            clave = ""
+    # La clave vive en los secretos de Streamlit (app publicada) o en .env (en tu computadora), nunca en pantalla.
+    try:
+        clave = st.secrets.get("OPENROUTER_API_KEY", "") or st.secrets.get("OPENAI_API_KEY", "")
+    except Exception:
+        clave = ""
     clave = clave or clave_del_entorno()
     if clave:
         st.success("IA activa · GPT-6 Luna", icon="✅")
     else:
-        st.info("Sin clave: el asistente usará una plantilla.", icon="ℹ️")
+        st.info("IA no disponible: el asistente usará una plantilla.", icon="ℹ️")
     usar_guardadas = RESPUESTAS_DEMO.exists() and st.toggle(
         "Usar respuestas guardadas", value=True,
         help="Para la demo: muestra al instante lo que la IA ya escribió para los leads de hoy a las 9:00, "

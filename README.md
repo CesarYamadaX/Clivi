@@ -36,7 +36,6 @@ Usa lo que se sabe del lead: anuncio, objetivo, plan, horas esperando y priorida
 Para activarlo, usa una de estas opciones:
 
 - **recomendado:** copia `.env.example` como `.env` y pon ahí tu clave (`.env` está en `.gitignore`, no se sube); la app y `probar_ia.py` la leen solas,
-- escribe la clave en la barra lateral de la app (una clave `sk-or-...` usa OpenRouter; una `sk-...` usa OpenAI),
 - `export OPENROUTER_API_KEY=...` (u `OPENAI_API_KEY`) antes de `streamlit run app.py`,
 - en Streamlit Cloud, agrega `OPENROUTER_API_KEY` en *Settings → Secrets*.
 
