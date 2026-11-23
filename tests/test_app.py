@@ -100,3 +100,30 @@ def test_respuesta_guardada_para_la_demo(monkeypatch, tmp_path):
     [t for t in at.toggle if t.label == "Usar respuestas guardadas"][0].set_value(False).run()
     at.button[0].click().run()
     assert not at.exception and at.session_state["contacto"][2] == "ia (guardada)"
+
+
+def test_vista_de_un_asesor(monkeypatch):
+    """Con «Ver como» un asesor, la lista principal solo muestra sus leads y el equipo queda en otra pestaña."""
+    at = _app(monkeypatch)
+    vista = [s for s in at.selectbox if s.label == "Ver como"][0]
+    asesor = vista.options[1]
+    vista.set_value(asesor).run()
+    assert not at.exception
+    assert any(t.label.startswith("Mis leads") for t in at.tabs)
+    assert any(t.label.startswith("Todo el equipo") for t in at.tabs)
+    lead = [s for s in at.selectbox if s.label == "Lead"][0]
+    assert all(asesor in o for o in lead.options)
+
+
+def test_lead_elegido_en_la_lista_abre_el_panel(monkeypatch):
+    """Picar una fila de la lista deja el lead elegido: se abre su panel ahí mismo y en Preparar contacto."""
+    at = _app(monkeypatch)
+    lead = [s for s in at.selectbox if s.label == "Lead"][0]
+    tercero = lead.options[2].split(" · ")[1]
+    at.session_state["lead_sel"] = tercero
+    at.run()
+    assert not at.exception
+    assert any(b.key == "lista_preparar" for b in at.button)
+    [b for b in at.button if b.key == "lista_preparar"][0].click().run()
+    assert not at.exception
+    assert at.session_state["contacto"][0] == tercero
