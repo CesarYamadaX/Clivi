@@ -20,8 +20,8 @@ DATOS = Path(__file__).parent / "data" / "leads_ficticios.csv"
 DIAS = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"]
 MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]
 PRIORIDAD = {"alta": "🔴 Alta", "media": "🟠 Media", "baja": "⚪ Baja"}
-RESULTADO = {"venta": "✅ Venta", "en_seguimiento": "🔁 En seguimiento", "no_contesta": "📵 No contestó",
-             "no_interesado": "✖️ No interesado", "sin_contactar": "⏸️ Sin contactar"}
+RESULTADO = {"venta": "Venta", "en_seguimiento": "En seguimiento", "no_contesta": "No contestó",
+             "no_interesado": "No interesado", "sin_contactar": "Sin contactar"}
 
 st.set_page_config(page_title="Primera Llamada", page_icon="📞", layout="wide")
 
@@ -30,29 +30,23 @@ st.markdown("""
 .block-container {padding-top: 3.6rem; padding-bottom: 3rem; max-width: 1400px;}
 [data-testid="stSidebar"] h3 {font-size: 0.95rem; margin-bottom: 0.2rem;}
 
-.pl-hero {background: linear-gradient(120deg, #002d42 0%, #00547a 65%, #0a6d99 100%);
-  color: #fff; border-radius: 18px; padding: 26px 30px 22px; margin-bottom: 18px;
-  box-shadow: 0 6px 22px rgba(0,84,122,.20);}
-.pl-hero .eyebrow {font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; opacity: .85; font-weight: 600;}
-.pl-hero h1 {color: #fff; font-size: 2.3rem; margin: 4px 0 6px; padding: 0; line-height: 1.15;}
-.pl-hero p {margin: 0 0 14px; opacity: .93; font-size: 1.02rem; max-width: 760px;}
-.pl-chip {display: inline-block; background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.28);
-  border-radius: 999px; padding: 4px 12px; margin: 0 6px 6px 0; font-size: .86rem; font-weight: 500;}
+.pl-hero {border-bottom: 1px solid #e5eef2; padding: 0 0 14px; margin-bottom: 18px;}
+.pl-hero h1 {color: #00547a; font-size: 2rem; margin: 0 0 4px; padding: 0; line-height: 1.15;}
+.pl-hero p {margin: 0 0 6px; color: #1f2937; font-size: 1.02rem; max-width: 760px;}
+.pl-hero .estado {color: #65758b; font-size: .9rem;}
 
-.pl-kpi {background: #fff; border: 1px solid #e5eef2; border-radius: 14px; padding: 16px 18px; min-height: 128px;
-  box-shadow: 0 1px 3px rgba(31,41,55,.05);}
-.pl-kpi .label {font-size: .82rem; color: #65758b; font-weight: 600; text-transform: uppercase; letter-spacing: .04em;}
+.pl-kpi {background: #fff; border: 1px solid #e5eef2; border-radius: 10px; padding: 14px 16px; min-height: 118px;}
+.pl-kpi .label {font-size: .9rem; color: #65758b; font-weight: 600;}
 .pl-kpi .value {font-size: 2.1rem; font-weight: 700; color: #1f2937; line-height: 1.15; margin: 4px 0 2px;}
 .pl-kpi .hint {font-size: .85rem; color: #65758b;}
-.pl-kpi.accent {border-left: 5px solid #ef4444;}
-.pl-kpi.good {border-left: 5px solid #00547a;}
+.pl-kpi.accent .value {color: #b91c1c;}
+.pl-kpi.good .value {color: #00547a;}
 
-.pl-card {background: #fff; border: 1px solid #e5eef2; border-radius: 14px; padding: 16px 18px; height: 100%;
-  box-shadow: 0 1px 3px rgba(31,41,55,.05);}
+.pl-card {background: #fff; border: 1px solid #e5eef2; border-radius: 10px; padding: 16px 18px; height: 100%;}
 .pl-card.top3 {min-height: 262px;}
 .pl-card .top {display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;}
 .pl-rank {background: #00547a; color: #fff; border-radius: 8px; padding: 2px 9px; font-weight: 700; font-size: .9rem;}
-.pl-pill {border-radius: 999px; padding: 2px 10px; font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em;}
+.pl-pill {border-radius: 6px; padding: 2px 8px; font-size: .82rem; font-weight: 600;}
 .pl-pill.alta {background: #fde8e8; color: #b91c1c;}
 .pl-pill.media {background: #fff1dc; color: #b45309;}
 .pl-pill.baja {background: #f3f6f7; color: #65758b;}
@@ -60,7 +54,7 @@ st.markdown("""
 .pl-card .prob small {font-size: .85rem; font-weight: 500; color: #65758b;}
 .pl-card .meta {font-size: .88rem; color: #65758b; margin: 6px 0 10px;}
 .pl-card .meta b {color: #1f2937;}
-.pl-card .why {font-size: .9rem; background: #e9f5fb; border-radius: 10px; padding: 10px 12px; color: #1f2937;}
+.pl-card .why {font-size: .9rem; background: #f3f8fa; border-radius: 8px; padding: 10px 12px; color: #1f2937;}
 
 .pl-section {font-size: 1.15rem; font-weight: 700; color: #1f2937; margin: 18px 0 8px;}
 .pl-muted {color: #65758b; font-size: .9rem;}
@@ -70,8 +64,8 @@ st.markdown("""
 .pl-big {font-size: 2.6rem; font-weight: 800; line-height: 1;}
 .pl-wa {background: #e7f8ee; border: 1px solid #b9e6cb; border-radius: 14px 14px 14px 4px; padding: 14px 16px;
   font-size: .98rem; color: #1f2937; white-space: pre-wrap;}
-.pl-formula {background: #fff; font-weight: 600; line-height: 1.7; border: 1px dashed #9fc7da;
-  border-radius: 12px; padding: 14px 16px; font-size: .95rem; color: #1f2937;}
+.pl-formula {background: #f3f8fa; font-weight: 600; line-height: 1.7; border: 0;
+  border-radius: 8px; padding: 14px 16px; font-size: .95rem; color: #1f2937;}
 
 .stTabs [data-baseweb="tab-list"] {gap: 6px;}
 .stTabs [data-baseweb="tab"] {font-weight: 600; padding: 0 14px;}
@@ -110,7 +104,7 @@ def tarjeta_lead(col, fila, mostrar: bool) -> None:
   <div class="prob">{fila.probabilidad * 100:.1f}% <small>probabilidad de venta</small></div>
   <div class="meta"><b>{escape(str(fila.lead_id))}</b> · {escape(anuncio_txt(fila))}<br>
     Asignado a <b>{escape(str(fila.asignado))}</b> · esperando {horas_txt(fila.horas_esperando)}</div>
-  <div class="why">💡 {escape(fila.razon)}</div>
+  <div class="why">{escape(fila.razon)}</div>
   {extra}
 </div>""", unsafe_allow_html=True)
 
@@ -152,10 +146,10 @@ def validacion(contenido: Optional[bytes]):
 
 # ---------------------------------------------------------------- barra lateral
 with st.sidebar:
-    st.markdown("## 📞 Primera Llamada")
+    st.markdown("## Primera Llamada")
     st.caption("Lista diaria de llamadas para el equipo de ventas.")
 
-    with st.expander("📁 Datos", expanded=False):
+    with st.expander("Datos", expanded=False):
         archivo = st.file_uploader("Cargar otro CSV (mismo formato que leads_ficticios.csv)", type="csv")
     contenido = archivo.getvalue() if archivo else None
     try:
@@ -164,7 +158,7 @@ with st.sidebar:
         st.error(str(e))
         st.stop()
 
-    st.markdown("### 🗓️ ¿Cuándo?")
+    st.markdown("### Día y hora")
     primero = leads.reg.min().normalize() + timedelta(days=7)
     ultimo = leads.reg.max().normalize() + timedelta(days=1)
     dias = {fecha_txt(d) + (" · mañana siguiente a los datos" if d == ultimo else ""): d
@@ -172,14 +166,14 @@ with st.sidebar:
     dia = dias[st.selectbox("Día", list(dias))]
     hora = st.select_slider("Hora", options=list(range(7, 21)), value=9, format_func=lambda h: f"{h:02d}:00")
 
-    st.markdown("### 👥 ¿Quién trabaja hoy?")
+    st.markdown("### Asesores de hoy")
     todos = sorted(leads.asesor.dropna().unique()) if "asesor" in leads else []
     asesores = st.multiselect("Asesores", todos, default=todos, label_visibility="collapsed")
 
-    st.markdown("### 🔍 Validación")
+    st.markdown("### Validación")
     mostrar = st.toggle("Mostrar qué pasó después", help="Revela el resultado real de cada lead para comprobar el orden.")
 
-    st.markdown("### 🤖 Asistente con IA")
+    st.markdown("### Asistente de mensajes")
     clave = st.text_input("Clave de API (OpenRouter u OpenAI)", type="password",
                           help="Opcional. Sin clave, el asistente usa una plantilla fija. "
                                "También lee OPENROUTER_API_KEY u OPENAI_API_KEY del entorno o de los secretos de Streamlit.")
@@ -190,9 +184,9 @@ with st.sidebar:
             clave = ""
     clave = clave or clave_del_entorno()
     if clave:
-        st.success("IA activa · GPT-6 Luna", icon="✅")
+        st.caption("IA conectada (GPT-6 Luna).")
     else:
-        st.info("Sin clave: el asistente usará una plantilla.", icon="ℹ️")
+        st.caption("Sin clave: el asistente usa una plantilla fija.")
     usar_guardadas = RESPUESTAS_DEMO.exists() and st.toggle(
         "Usar respuestas guardadas", value=True,
         help="Para la demo: muestra al instante lo que la IA ya escribió para los leads de hoy a las 9:00, "
@@ -211,16 +205,16 @@ concentracion = float(lista.probabilidad.iloc[:tercio].sum()) / esperadas if esp
 urgentes = int((lista.horas_esperando < 0.25).sum()) if n else 0
 
 # ---------------------------------------------------------------- encabezado
-estado_ia = "🤖 IA activa" if clave else "🤖 Plantilla (sin IA)"
+estado = [f"{fecha_txt(dia).capitalize()}, {hora:02d}:00",
+          f"{len(asesores)} asesor{'es' if len(asesores) != 1 else ''}",
+          "mensajes con IA" if clave else "mensajes con plantilla"]
+if mostrar:
+    estado.append("mostrando qué pasó después")
 st.markdown(f"""
 <div class="pl-hero">
-  <div class="eyebrow">Clivi · Misión A</div>
   <h1>Primera Llamada</h1>
-  <p>A quién llama primero cada asesor esta mañana, ordenado por la probabilidad de venta si se le llama ahora.</p>
-  <span class="pl-chip">📅 {fecha_txt(dia).capitalize()} · {hora:02d}:00</span>
-  <span class="pl-chip">👥 {len(asesores)} asesor{'es' if len(asesores) != 1 else ''}</span>
-  <span class="pl-chip">{estado_ia}</span>
-  {'<span class="pl-chip">🔍 Modo validación</span>' if mostrar else ''}
+  <p>A quién llama primero cada asesor, en orden de probabilidad de venta si se le llama ahora.</p>
+  <div class="estado">{" · ".join(estado)}</div>
 </div>""", unsafe_allow_html=True)
 
 k1, k2, k3, k4 = st.columns(4)
@@ -232,21 +226,21 @@ kpi(k4, "Primer tercio", f"{concentracion:.0%}" if n else "–",
     f"de las ventas esperadas están en los primeros {tercio}", "good")
 
 st.write("")
-tab_lista, tab_contacto, tab_modelo = st.tabs(["📋  Lista del día", "💬  Preparar contacto", "📊  Cómo decide y si funciona"])
+tab_lista, tab_contacto, tab_modelo = st.tabs(["Lista del día", "Preparar contacto", "Cómo decide y si funciona"])
 
 # ---------------------------------------------------------------- 1. lista
 with tab_lista:
     if lista.empty:
-        st.info("No hay leads esperando primera llamada a esta hora. Prueba las 9:00 o elige otro día.", icon="☕")
+        st.info("No hay leads esperando primera llamada a esta hora. Prueba las 9:00 o elige otro día.")
     else:
-        st.markdown('<div class="pl-section">🎯 Llamar primero</div>', unsafe_allow_html=True)
+        st.markdown('<div class="pl-section">Llamar primero</div>', unsafe_allow_html=True)
         cols = st.columns(3)
         for col, fila in zip(cols, lista.head(3).itertuples()):
             tarjeta_lead(col, fila, mostrar)
 
-        st.markdown('<div class="pl-section">📋 Lista completa por asesor</div>', unsafe_allow_html=True)
+        st.markdown('<div class="pl-section">Lista completa por asesor</div>', unsafe_allow_html=True)
         if not asesores:
-            st.warning("Elige al menos un asesor en la barra lateral para repartir la lista.", icon="👥")
+            st.warning("Elige al menos un asesor en la barra lateral para repartir la lista.")
         etiquetas = [f"Todos · {n}"] + [f"{a} · {(lista.asignado == a).sum()}" for a in asesores]
         grupos = [lista] + [lista[lista.asignado == a] for a in asesores]
         for i, (pestaña, g) in enumerate(zip(st.tabs(etiquetas), grupos)):
@@ -262,11 +256,10 @@ with tab_lista:
                     k = -(-len(g) // 3)
                     tot, top = int(g.venta.sum()), int(g.venta.iloc[:k].sum())
                     if tot:
-                        st.success(f"En esta lista hubo **{tot} venta{'s' if tot > 1 else ''}**. "
-                                   f"**{top}** {'quedó' if top == 1 else 'quedaron'} en el primer tercio (los primeros {k}).",
-                                   icon="✅")
+                        st.info(f"En esta lista hubo **{tot} venta{'s' if tot > 1 else ''}**. "
+                                   f"**{top}** {'quedó' if top == 1 else 'quedaron'} en el primer tercio (los primeros {k}).")
                     else:
-                        st.warning("Ninguno de estos leads terminó comprando. Prueba miércoles 4 nov o lunes 2 nov.")
+                        st.info("Ninguno de estos leads terminó comprando. Prueba miércoles 4 nov o lunes 2 nov.")
                 tabla = pd.DataFrame({
                     "#": g.orden.to_numpy(),
                     "llamado": False,
@@ -306,8 +299,8 @@ with tab_lista:
 
 # ---------------------------------------------------------------- 2. asistente
 with tab_contacto:
-    st.markdown('<div class="pl-muted">El asistente decide si empezar por llamada o WhatsApp, escribe el mensaje, '
-                'el guion y qué hacer si no contesta. Usa solo lo que sabemos del lead.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="pl-muted">Para el lead que elijas: si empezar por llamada o WhatsApp, el mensaje, '
+                'el guion y qué hacer si no contesta. Solo usa los datos del registro.</div>', unsafe_allow_html=True)
     if lista.empty:
         st.info("No hay leads en la lista a esta hora.")
     else:
@@ -331,10 +324,10 @@ with tab_contacto:
     <div>Estado · edad<b>{escape(str(fila.get("estado", "–")))} · {escape(str(edad)) if pd.notna(edad) else "–"}</b></div>
     <div>Asesor<b>{escape(str(fila.asignado))}</b></div>
   </div>
-  <div class="why">💡 {escape(fila.razon)}</div>
+  <div class="why">{escape(fila.razon)}</div>
 </div>""", unsafe_allow_html=True)
             st.write("")
-            if st.button("✨ Preparar contacto", type="primary", width="stretch"):
+            if st.button("Preparar contacto", type="primary", width="stretch"):
                 lead = {k: fila.get(k) for k in ["lead_id", "canal", "anuncio", "objetivo", "plan_de_interes", "estado",
                                                  "edad", "horas_esperando", "prioridad", "probabilidad"]}
                 lead["hora_actual"] = f"{hora:02d}:00"
@@ -350,7 +343,7 @@ with tab_contacto:
                 st.session_state["contacto"] = (fila.lead_id, contacto, fuente)
 
             # ---- qué pasó después del contacto
-            st.markdown('<div class="pl-section" style="margin-top:18px">📝 ¿Qué pasó con este lead?</div>',
+            st.markdown('<div class="pl-section" style="margin-top:18px">¿Qué pasó con este lead?</div>',
                         unsafe_allow_html=True)
             registrados = registro.leer()
             dia_txt = f"{dia:%Y-%m-%d}"
@@ -368,7 +361,7 @@ with tab_contacto:
                             "probabilidad": round(float(fila.probabilidad), 4),
                             "canal_recomendado": guardado_c[1].canal_recomendado if mismo else "",
                             "fuente_mensaje": guardado_c[2] if mismo else "", "resultado": clave_res})
-                        st.toast(f"Guardado: {fila.lead_id} · {etiqueta}", icon="📝")
+                        st.toast(f"Guardado: {fila.lead_id} · {etiqueta}")
                         previo = registro.leer().pipe(lambda t: t[(t.lead_id == str(fila.lead_id)) & (t.dia == dia_txt)
                                                                     & (t.hora == f"{hora:02d}:00")])
                     except OSError:
@@ -377,39 +370,36 @@ with tab_contacto:
                 st.caption(f"Registrado: **{registro.RESULTADOS[previo.resultado.iloc[-1]]}** "
                            f"({previo.registrado.iloc[-1][11:16]}). Puedes cambiarlo con otro botón.")
             else:
-                st.caption("Márcalo después de llamar o escribir. Con estos datos se recalibra la prioridad "
-                           "y se afina la IA con casos reales.")
+                st.caption("Márcalo después de llamar o escribir. Con estos datos se recalibra la prioridad.")
 
         with der:
             guardado = st.session_state.get("contacto")
             if not guardado or guardado[0] != fila.lead_id:
                 st.markdown('<div class="pl-card" style="text-align:center; padding:48px 24px;">'
-                            '<div style="font-size:2.4rem">💬</div>'
-                            '<div class="pl-section" style="margin-top:6px">Elige un lead y presiona “Preparar contacto”</div>'
-                            '<div class="pl-muted">Verás el canal recomendado, el WhatsApp listo para enviar, '
+                            '<div class="pl-section" style="margin-top:0">Elige un lead y presiona “Preparar contacto”</div>'
+                            '<div class="pl-muted">Aquí aparecen el canal recomendado, el WhatsApp, '
                             'el guion de llamada y las objeciones probables.</div></div>', unsafe_allow_html=True)
             else:
                 lid, c, fuente = guardado
-                icono = "📞" if c.canal_recomendado == "llamada" else "💬"
-                st.success(f"{icono} **Empezar por {c.canal_recomendado}.** {c.por_que_canal}")
-                st.caption(("✨ Escrito con IA (GPT-6 Luna)" + (" · corregido automáticamente" if "corregida" in fuente else "")
+                st.info(f"**Empezar por {c.canal_recomendado}.** {c.por_que_canal}")
+                st.caption(("Escrito con IA (GPT-6 Luna)" + (" · corregido automáticamente" if "corregida" in fuente else "")
                             + (" · respuesta guardada" if "guardada" in fuente else ""))
-                           if fuente.startswith("ia") else f"📝 Usando {fuente}")
+                           if fuente.startswith("ia") else f"Usando {fuente}")
                 with st.container(border=True):
-                    st.markdown("**💬 WhatsApp listo para enviar**")
+                    st.markdown("**WhatsApp**")
                     st.markdown(f'<div class="pl-wa">{escape(c.whatsapp)}</div>', unsafe_allow_html=True)
                     with st.expander("Copiar texto"):
                         st.code(c.whatsapp, language=None, wrap_lines=True)
                 a, b = st.columns(2)
                 with a, st.container(border=True):
-                    st.markdown("**📞 Guion de llamada**")
+                    st.markdown("**Guion de llamada**")
                     st.write(c.guion_apertura)
                     st.markdown("**Preguntas para entender su caso**")
                     st.markdown("\n".join(f"{j}. {p}" for j, p in enumerate(c.preguntas, 1)))
                 with b, st.container(border=True):
-                    st.markdown("**🛡️ Objeciones probables**")
+                    st.markdown("**Objeciones probables**")
                     st.markdown("\n".join(f"- {o}" for o in c.objeciones))
-                    st.markdown("**⏰ Si no contesta**")
+                    st.markdown("**Si no contesta**")
                     st.write(c.si_no_contesta)
 
 # ---------------------------------------------------------------- 3. modelo y validación
@@ -429,11 +419,11 @@ with tab_modelo:
                    f"Cada día el modelo solo aprende de días anteriores. Un tercio al azar daría 33%.")
 
     # ---- lo que registran los asesores
-    st.markdown('<div class="pl-section">📝 Lo que registran los asesores</div>', unsafe_allow_html=True)
+    st.markdown('<div class="pl-section">Lo que registran los asesores</div>', unsafe_allow_html=True)
     hechos = registro.leer()
     if hechos.empty:
         st.info("Todavía no hay resultados registrados. En **Preparar contacto**, marca qué pasó con cada lead "
-                "(contestó, no contestó, compró o no le interesa) y aquí verás si la prioridad acierta.", icon="📝")
+                "(contestó, no contestó, compró o no le interesa) y aquí verás si la prioridad acierta.")
     else:
         r = registro.resumen(hechos)
         a, b, c = st.columns(3)
@@ -448,10 +438,8 @@ with tab_modelo:
                                     "compraron": st.column_config.NumberColumn("Compraron"),
                                     "tasa_compra": st.column_config.ProgressColumn("Compra", format="percent",
                                                                                    min_value=0, max_value=1)})
-        st.caption("Si la prioridad acierta, la columna Compra baja de alta a media a baja. Con unas semanas de "
-                   "registros se recalibra el modelo con resultados reales, y los mensajes que terminaron en "
-                   "venta sirven de ejemplos para afinar la IA.")
-        st.download_button("⬇️ Descargar registros (CSV)", hechos.to_csv(index=False).encode("utf-8"),
+        st.caption("Si la prioridad acierta, la columna Compra baja de alta a media a baja.")
+        st.download_button("Descargar registros (CSV)", hechos.to_csv(index=False).encode("utf-8"),
                            "resultados_registrados.csv", "text/csv")
 
     st.markdown('<div class="pl-section">Cómo decide el orden</div>', unsafe_allow_html=True)
@@ -465,13 +453,13 @@ with tab_modelo:
                     "- **Reparto en serpiente** (A B C C B A…) para que todos reciban leads buenos.\n"
                     "- Prioridad **alta** ≥ 8%, **media** ≥ 3%, **baja** el resto.")
     with f2:
-        st.markdown("**⏱️ Efecto del tiempo esperando**")
+        st.markdown("**Efecto del tiempo esperando**")
         st.dataframe(modelo.tabla_efecto(), hide_index=True, width="stretch",
                      column_config={"si se le llama": st.column_config.TextColumn("Si se le llama"),
                                     "efecto": st.column_config.NumberColumn("Efecto", format="×%.2f")})
         st.caption("Llamar en los primeros 15 minutos multiplica la probabilidad; después de 12 h cae a menos de la mitad.")
     with f3:
-        st.markdown("**📣 Tasa de venta por anuncio**")
+        st.markdown("**Tasa de venta por anuncio**")
         st.dataframe(modelo.tabla_anuncios().assign(tasa_venta=lambda t: t.tasa_venta * 100), hide_index=True,
                      width="stretch", height=260,
                      column_config={"canal": st.column_config.TextColumn("Canal", width="small"),
@@ -481,7 +469,7 @@ with tab_modelo:
                                                                                   min_value=0, max_value=20)})
 
     # ---- cómo mejoramos la IA
-    st.markdown('<div class="pl-section">🤖 Cómo mejoramos la IA del asistente</div>', unsafe_allow_html=True)
+    st.markdown('<div class="pl-section">Cómo se mejoró el asistente</div>', unsafe_allow_html=True)
     st.markdown('<div class="pl-muted">Cada versión se probó con la IA real sobre los mismos 12 leads variados '
                 '(prioridad alta, media y baja; recién llegados y de más de 12 h; peso y diabetes), y una revisión '
                 'automática contó cuántos mensajes rompen alguna regla y cuántas objeciones son genéricas.</div>',

@@ -38,7 +38,7 @@ def test_archivo_roto(tmp_path):
 
 def test_app_registra_resultado(monkeypatch):
     at = _app(monkeypatch)
-    [b for b in at.button if b.label == "✅ Compró"][0].click().run()
+    [b for b in at.button if b.label == "Compró"][0].click().run()
     assert not at.exception
     t = registro.leer()
     assert len(t) == 1 and t.resultado.iloc[0] == "compro" and t.prioridad.iloc[0] == "alta"
