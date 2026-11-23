@@ -1,0 +1,678 @@
+{
+ "modelo": "openai/gpt-6-luna",
+ "generado": "2026-11-22 19:02",
+ "respuestas": {
+  "L01738|09:00|11.95": {
+   "canal_recomendado": "llamada",
+   "por_que_canal": "Es prioridad alta y estamos en horario; conviene llamar para resolver sus dudas directamente.",
+   "whatsapp": "Hola, soy asesor de Clivi. Vi tu registro para control de peso y puedo aclararte tus dudas sobre el plan de $1,599 al mes; ¿te puedo llamar ahora?",
+   "guion_apertura": "Hola, soy asesor de Clivi; te llamo porque buscaste opciones para control de peso y quería ayudarte a resolver tus dudas. ¿Tienes unos minutos para platicar?",
+   "preguntas": [
+    "¿Qué te llevó a buscar apoyo para controlar tu peso en este momento?",
+    "¿Qué has intentado hasta ahora y qué sientes que no te funcionó?",
+    "¿Qué dudas estás comparando o te gustaría aclarar antes de decidir?"
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que puede ser frustrante. Si quieres, cuéntame qué has intentado y te explico cómo el equipo médico considera cada caso.",
+    "Estoy comparando opciones → Claro, es buena idea revisar antes de decidir. ¿Qué aspecto te importa más para poder orientarte?"
+   ],
+   "si_no_contesta": "Deja el WhatsApp y vuelve a llamar en unas horas. Si no responde durante el día, intenta una vez más mañana por la mañana."
+  },
+  "L01740|09:00|10.73": {
+   "canal_recomendado": "llamada",
+   "por_que_canal": "Es prioridad alta y son las 09:00, así que conviene intentar la llamada ahora; si no contesta, puedes continuar por WhatsApp.",
+   "whatsapp": "Hola, soy asesor de Clivi. Vi tu registro sobre control de peso y puedo resolver tus dudas sobre el plan de $1,299 al mes. ¿Te queda bien una llamada breve hoy?",
+   "guion_apertura": "Hola, soy asesor de Clivi; te llamo porque dejaste tus datos para conocer opciones de control de peso. ¿Tienes unos minutos para que resolvamos tus dudas?",
+   "preguntas": [
+    "¿Qué te hizo buscar apoyo para controlar tu peso en este momento?",
+    "¿Qué has probado hasta ahora y qué sentiste que no te funcionó?",
+    "¿Qué te gustaría saber para comparar esta opción con las que estás considerando?"
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que puede ser frustrante. El equipo médico puede revisar tu caso y explicarte qué opciones se ajustan a ti, sin prometer resultados por adelantado.",
+    "¿Qué incluye el plan de $1,299? → Te lo explico con claridad en la llamada para que puedas valorar si se ajusta a lo que buscas."
+   ],
+   "si_no_contesta": "Manda el WhatsApp y espera unas horas; vuelve a llamar alrededor del mediodía. Si no responde, deja un último mensaje breve más tarde, sin insistir."
+  },
+  "L01742|09:00|11.40": {
+   "canal_recomendado": "llamada",
+   "por_que_canal": "Es prioridad alta y son las 09:00; conviene llamar para resolver sus dudas directamente.",
+   "whatsapp": "Hola, soy asesor de Clivi; te contacto porque llegaste recomendado para recibir apoyo con diabetes tipo 2. ¿Te puedo llamar ahora?",
+   "guion_apertura": "Hola, soy asesor de Clivi; te llamo porque llegaste recomendado con nosotros para recibir apoyo con diabetes tipo 2. ¿Tienes unos minutos para platicar?",
+   "preguntas": [
+    "¿Quién te recomendó y qué te contó sobre Clivi?",
+    "¿Cómo llevas actualmente el control de tu diabetes y quién te da seguimiento?",
+    "¿Qué te gustaría resolver o entender primero sobre el plan que te interesó?"
+   ],
+   "objeciones": [
+    "Ya tengo doctor → Qué bueno; Clivi puede acompañarte entre consultas, sin sustituir a tu médico. ¿Cómo se coordinan hoy tus seguimientos?",
+    "¿Qué incluye el plan de $1,299? → Te lo explico con claridad en la llamada para que puedas valorar si se ajusta a lo que buscas."
+   ],
+   "si_no_contesta": "Déjale el WhatsApp y vuelve a llamar en 15–20 minutos. Si no responde, intenta una vez más por la tarde y espera su respuesta antes de insistir."
+  },
+  "L01719|09:00|11.05": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "La prioridad es media, así que conviene retomar primero por WhatsApp y dejarle espacio para responder.",
+   "whatsapp": "Hola, soy asesor de Clivi. Vi que te registraste en nuestro anuncio para recibir información sobre control de peso; ¿qué fue lo que más te llamó la atención?",
+   "guion_apertura": "Hola, soy asesor de Clivi; te llamo por tu registro para recibir información sobre control de peso. ¿Tienes un momento para contarme qué te interesó?",
+   "preguntas": [
+    "¿Qué fue lo que te llamó la atención del anuncio o del plan mensual de $1,599?",
+    "¿Qué has intentado antes para controlar tu peso y qué sientes que no te funcionó?",
+    "¿Qué te gustaría aclarar antes de decidir si esta opción es adecuada para ti?"
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que puede ser frustrante. El equipo médico puede conocer tu caso y orientarte sobre si esta opción se ajusta a ti.",
+    "No sé si me conviene pagar cada mes → Es válido querer entenderlo bien; podemos revisar tus dudas sobre el plan de $1,599 antes de que decidas."
+   ],
+   "si_no_contesta": "Espera unas horas por si responde; si no, envía un mensaje breve por la tarde preguntando si prefiere que le contactes otro día."
+  },
+  "L01713|09:00|37.67": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Lleva más de un día esperando y tiene prioridad media; un mensaje breve le permite retomar el contacto sin presión.",
+   "whatsapp": "Hola, soy asesor de Clivi; disculpa la demora en contactarte. Vi que buscabas apoyo para el control de peso y que te interesó el plan de $1,599 al mes; puedo resolver tus dudas para que compares con calma. ¿Te gustaría que te escriba por aquí?",
+   "guion_apertura": "Hola, soy asesor de Clivi; te llamo por tu registro para control de peso y antes que nada, disculpa la demora. ¿Tienes unos minutos para contarme qué estás buscando y resolver tus dudas?",
+   "preguntas": [
+    "¿Qué has intentado antes para controlar tu peso y qué sientes que no te funcionó?",
+    "¿Qué te gustaría aclarar mientras comparas opciones?",
+    "¿Qué esperas encontrar en un acompañamiento para el control de peso?"
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que puede ser frustrante. En Clivi un médico revisa tu caso y valora qué puede ajustarse a tus necesidades.",
+    "Quiero comparar antes de decidir → Claro, es buena idea. ¿Qué información te ayudaría a comparar el plan de $1,599 al mes?"
+   ],
+   "si_no_contesta": "Si no responde, espera hasta la tarde y envía un último mensaje breve diciendo que puede retomar la conversación cuando le convenga y que, si ya no le interesa, también está bien."
+  },
+  "L01739|09:00|18.95": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Como ya pasó más de medio día, conviene disculparse y ofrecerle una llamada breve para resolver sus dudas sin saturarlo de mensajes.",
+   "whatsapp": "Hola, soy asesor de Clivi; disculpa la demora en contactarte. Vi tu registro porque buscas apoyo para la diabetes tipo 2 y puedo aclararte tus dudas para que compares con calma. ¿Te viene bien una llamada breve hoy?",
+   "guion_apertura": "Hola, soy asesor de Clivi; te llamo por tu registro para conocer opciones de apoyo para la diabetes tipo 2, y disculpa que no te contactáramos antes. ¿Tienes unos minutos para resolver tus dudas?",
+   "preguntas": [
+    "¿Cómo llevas actualmente el control de tu diabetes y quién te da seguimiento?",
+    "¿Qué información estás buscando al comparar opciones para atender tu diabetes?",
+    "¿Qué te gustaría aclarar primero sobre el plan de $1,599 al mes?"
+   ],
+   "objeciones": [
+    "Ya tengo doctor → Qué bueno; Clivi no sustituye a tu médico, puede acompañarte entre consultas. ¿Cómo se coordinan hoy tus seguimientos?",
+    "Estoy comparando opciones → Claro, es importante elegir con información. Cuéntame qué estás comparando y te explico cómo funciona Clivi para que valores si te conviene."
+   ],
+   "si_no_contesta": "Envía el WhatsApp ahora. Si no responde, intenta llamarle una vez entre el mediodía y la tarde; si tampoco contesta, deja un mensaje breve y espera antes de volver a contactarlo."
+  },
+  "L01716|09:00|36.82": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Como ya pasó más de un día, conviene retomar con una disculpa y dejar que el lead elija si quiere seguir la conversación.",
+   "whatsapp": "Hola, soy asesor de Clivi. Perdón por tardar en contactarte; vi que te registraste para buscar apoyo con la diabetes tipo 2. Si ya no te interesa, está bien; ¿prefieres que sigamos por aquí o te marco?",
+   "guion_apertura": "Hola, soy asesor de Clivi; te llamo por tu registro para buscar apoyo con la diabetes tipo 2 y antes que nada, disculpa la demora. ¿Tienes unos minutos para platicar?",
+   "preguntas": [
+    "¿Quién te recomendó Clivi y qué te contó?",
+    "¿Cómo llevas actualmente el control de tu diabetes y quién te da seguimiento?",
+    "¿Qué tipo de apoyo te gustaría tener entre tus consultas?"
+   ],
+   "objeciones": [
+    "Ya tengo doctor → Qué bueno; Clivi no sustituye a tu médico, puede acompañarte entre consultas.",
+    "No puedo hablar ahora → Claro, podemos seguir por WhatsApp o acordar otro momento que te acomode."
+   ],
+   "si_no_contesta": "Si no responde, deja pasar unas horas y manda un mensaje breve ofreciendo continuar por WhatsApp o coordinar una llamada. Si sigue sin contestar, intenta una vez más mañana y luego dale espacio."
+  },
+  "L01741|09:00|13.00": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Como la prioridad es media, conviene empezar con un mensaje cálido y sin presionar.",
+   "whatsapp": "Hola, soy asesor de Clivi; disculpa la demora en contactarte. Vi que buscas apoyo para el control de peso y te interesó el plan de $2,499 al mes. ¿Quién te recomendó y qué te contó?",
+   "guion_apertura": "Hola, soy asesor de Clivi; te llamo porque te recomendaron con nosotros para buscar apoyo con el control de peso, y disculpa la demora en contactarte. ¿Tienes unos minutos para platicar?",
+   "preguntas": [
+    "¿Quién te recomendó Clivi y qué te contó?",
+    "¿Qué has intentado para controlar tu peso y qué sientes que no te funcionó?",
+    "¿Qué te gustaría lograr con el apoyo que estás buscando?"
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que puede ser frustrante. En la consulta, el médico revisa tu caso y valora contigo un abordaje adecuado para ti.",
+    "El plan de $2,499 se me hace mucho → Lo entiendo; podemos revisar qué opción se ajusta mejor a lo que buscas y a tu presupuesto, desde el plan de $1,299 al mes."
+   ],
+   "si_no_contesta": "Espera unas horas por si responde al WhatsApp; si no, intenta una llamada por la tarde. Si tampoco contesta, deja un mensaje breve al día siguiente y espera su respuesta."
+  },
+  "L01717|09:00|35.05": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Es una prioridad media y lleva más de un día esperando, así que conviene retomar con un mensaje cálido y sin presión.",
+   "whatsapp": "Hola, soy asesor de Clivi; perdón por tardar en escribirte. Vi que te interesa el control de peso y la opción de $1,299 al mes; si ya no te interesa, también está bien. ¿Te gustaría que te explique la opción por llamada?",
+   "guion_apertura": "Hola, te habla un asesor de Clivi; perdón por tardar en contactarte sobre tu interés en control de peso. ¿Tienes unos minutos para platicar?",
+   "preguntas": [
+    "¿Cómo supiste de Clivi?",
+    "¿Qué has intentado antes para controlar tu peso y qué sientes que no te funcionó?",
+    "¿Qué te gustaría aclarar sobre la opción que te interesó?"
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que puede ser frustrante; en la llamada podemos revisar qué has intentado y explicarte cómo se considera tu caso, sin dar por hecho que sea igual para todos.",
+    "¿Qué incluye? → Te lo explico con detalle en una llamada para que puedas valorar si la opción de $1,299 se ajusta a lo que buscas."
+   ],
+   "si_no_contesta": "Espera hasta la tarde por si responde al WhatsApp; si no, haz un intento de llamada mañana a media mañana. Si tampoco contesta, envía un último mensaje breve y deja la puerta abierta sin insistir."
+  },
+  "L01743|09:00|22.85": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Como ya pasó casi un día y la prioridad es media, conviene retomar con un mensaje amable y sin presión.",
+   "whatsapp": "Hola, soy asesor de Clivi; disculpa la demora en contactarte. Vi tu registro para recibir apoyo con diabetes tipo 2; si ya no te interesa, no pasa nada. ¿Prefieres que te llame o seguimos por aquí?",
+   "guion_apertura": "Hola, soy asesor de Clivi; te llamo por tu registro para recibir apoyo con diabetes tipo 2, y disculpa que tardara en contactarte. ¿Tienes unos minutos para platicar?",
+   "preguntas": [
+    "¿Cómo supiste de Clivi y qué te llamó la atención?",
+    "¿Cómo llevas actualmente el control de tu diabetes y quién te da seguimiento?",
+    "¿Qué te gustaría resolver o mejorar con el apoyo que estás buscando?"
+   ],
+   "objeciones": [
+    "Ya tengo doctor → Qué bueno; Clivi puede acompañarte entre consultas, sin sustituir a tu médico. ¿Cómo se coordinan hoy tus seguimientos?",
+    "¿Qué incluye el plan de $1,299? → El asesor puede explicarte los detalles en una llamada y resolver tus dudas para que valores si se ajusta a lo que buscas."
+   ],
+   "si_no_contesta": "Si no responde, espera hasta la tarde y haz un intento de llamada; si tampoco contesta, envía un mensaje breve al día siguiente y deja que decida si quiere retomar."
+  },
+  "L01692|09:00|35.57": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Como ya pasó más de un día, conviene retomar con un mensaje amable y darle espacio para decidir si todavía le interesa.",
+   "whatsapp": "Hola, soy asesor de Clivi; disculpa que tardemos en contactarte. Nos dejaste tus datos para recibir información sobre apoyo para diabetes tipo 2; si ya no te interesa, está bien, ¿te gustaría que te llamara para platicarlo?",
+   "guion_apertura": "Hola, te habla un asesor de Clivi; disculpa que tardemos en contactarte por tu registro para recibir información sobre diabetes tipo 2. ¿Tienes unos minutos para platicar?",
+   "preguntas": [
+    "¿Qué te llamó la atención cuando viste nuestro anuncio?",
+    "¿Cómo llevas actualmente el control de tu diabetes y quién te da seguimiento?",
+    "¿Qué te gustaría aclarar sobre el plan de $1,299 al mes?"
+   ],
+   "objeciones": [
+    "Ya tengo doctor → Qué bueno que ya tienes seguimiento. Clivi puede acompañarte entre consultas y no sustituye a tu médico.",
+    "¿Qué incluye? → Con gusto te lo explico por llamada para darte la información clara; ¿qué horario te acomoda?"
+   ],
+   "si_no_contesta": "Si no responde al WhatsApp, intenta una llamada a media mañana de mañana. Si no contesta, deja un último mensaje breve y no insistas."
+  },
+  "L01727|09:00|22.68": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Aunque suele preferir una llamada, no es una prioridad alta; un WhatsApp breve y respetuoso es un buen primer contacto.",
+   "whatsapp": "Hola, soy asesor de Clivi; disculpa la demora en contactarte. Vi que dejaste tus datos para conocer opciones de control de peso y te interesó el plan de $1,299 al mes. ¿Qué fue lo que más te llamó la atención?",
+   "guion_apertura": "Hola, soy asesor de Clivi; te llamo por el registro que dejaste para conocer opciones de control de peso, y disculpa que tardara en contactarte. ¿Tienes unos minutos para platicar?",
+   "preguntas": [
+    "¿Qué fue lo que te llamó la atención de nuestro anuncio?",
+    "¿Qué has probado antes para controlar tu peso y qué sentiste que no te funcionó?",
+    "¿Qué te gustaría saber para decidir si una opción como esta te conviene?"
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que puede ser frustrante. En una llamada, el equipo puede explicarte cómo un médico revisa tu caso y valora qué opción podría ser adecuada para ti.",
+    "¿Qué incluye el plan de $1,299? → Con gusto te lo explico en una llamada para que tengas claro qué ofrece antes de decidir."
+   ],
+   "si_no_contesta": "Si no responde al WhatsApp, intenta una llamada entre media mañana y el mediodía. Si tampoco contesta, deja un mensaje breve ofreciendo retomar cuando le resulte cómodo y no insistas de nuevo ese día."
+  },
+  "L01700|09:00|34.32": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Como la prioridad es baja y ya pasó más de un día, conviene retomar por mensaje sin presionar.",
+   "whatsapp": "Hola, soy asesor de Clivi; disculpa que no te contactara antes. Vi que dejaste tus datos para control de peso y te interesó la opción de $1,599 al mes. Si ya no te interesa, también está bien; ¿te gustaría que te comparta más información?",
+   "guion_apertura": "Hola, soy asesor de Clivi; disculpa que no te contactara antes, te llamo por tu registro para control de peso. ¿Tienes unos minutos para contarme qué te llamó la atención de la opción mensual que viste?",
+   "preguntas": [
+    "¿Qué te llamó la atención de lo que viste en nuestro anuncio?",
+    "¿Qué has intentado antes para controlar tu peso y qué sentiste que no te funcionó?",
+    "¿Qué te gustaría lograr al buscar apoyo ahora?"
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que puede ser frustrante. El equipo médico puede revisar lo que has intentado y valorar contigo qué opciones podrían ajustarse a tu caso.",
+    "No sé si quiero empezar ahora → Claro, no tienes que decidir en este momento; si te parece, primero resolvemos tus dudas y tú ves si te interesa seguir."
+   ],
+   "si_no_contesta": "Deja el WhatsApp y espera hasta la tarde; si no responde, haz un solo intento de llamada mañana a media mañana. Si sigue sin contestar, no insistas y deja abierta la opción de que te contacte."
+  },
+  "L01721|09:00|23.55": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Como no es prioridad alta, conviene empezar con un mensaje amable, disculparte por la demora y dejarle fácil elegir una llamada.",
+   "whatsapp": "Hola, soy asesor de Clivi; disculpa que tardara en contactarte. Vi tu registro para recibir información sobre control de peso; ¿qué te llamó la atención de nuestro anuncio?",
+   "guion_apertura": "Hola, te habla un asesor de Clivi; te llamo por tu registro para recibir información sobre control de peso, y disculpa la demora. ¿Te queda bien platicar unos minutos?",
+   "preguntas": [
+    "¿Qué te llamó la atención de la información que viste sobre Clivi?",
+    "¿Qué has intentado antes para controlar tu peso y qué sientes que no te funcionó?",
+    "¿Qué te gustaría aclarar para saber si esta opción puede ser adecuada para ti?"
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que puede ser desalentador. El médico puede revisar tu caso y valorar contigo qué opciones tienen sentido para ti.",
+    "El plan de $1,599 al mes se me complica → Lo entiendo; si quieres, te explico las opciones y vemos cuál se ajusta mejor a lo que buscas."
+   ],
+   "si_no_contesta": "Deja el WhatsApp y, si no responde, intenta una llamada por la tarde. Si tampoco contesta, manda un último mensaje al día siguiente y espera su respuesta."
+  },
+  "L01718|09:00|20.90": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Como la prioridad es baja y ya pasó casi un día, conviene retomar por WhatsApp con calidez y sin presionar.",
+   "whatsapp": "Hola, soy asesor de Clivi; perdón por tardar en escribirte. Vi que dejaste tus datos para control de peso y quería saber qué te llamó la atención de nuestro anuncio. ¿Te interesa que te cuente un poco más por aquí?",
+   "guion_apertura": "Hola, soy asesor de Clivi; te llamo porque dejaste tus datos para conocer opciones de control de peso, y disculpa la demora. ¿Te viene bien platicar un par de minutos?",
+   "preguntas": [
+    "¿Qué fue lo que te llamó la atención de nuestro anuncio?",
+    "¿Qué has intentado antes para controlar tu peso y qué sentiste que no te funcionó?",
+    "¿Qué te gustaría entender mejor antes de decidir si quieres avanzar?"
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que pueda dar desconfianza intentarlo otra vez; el equipo médico puede revisar tu caso y orientarte sobre qué opciones tienen sentido para ti.",
+    "Solo estaba viendo → Claro, no hay compromiso; ¿qué dato te ayudaría a saber si esto te interesa?"
+   ],
+   "si_no_contesta": "Si no responde, deja el WhatsApp y espera hasta la tarde; si sigue sin contestar, intenta una llamada mañana y no insistas más de una vez."
+  },
+  "L01722|09:00|16.72": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Como la prioridad es baja y ya pasó más de medio día, conviene retomar por mensaje, con una disculpa y sin presionar.",
+   "whatsapp": "Hola, soy asesor de Clivi; disculpa que tardara en contactarte. Vi que dejaste tus datos para control de peso y te interesó el plan de $1,299 al mes. ¿Qué fue lo que más te llamó la atención?",
+   "guion_apertura": "Hola, soy asesor de Clivi; te llamo por tu registro para control de peso y disculpa que tardara en contactarte. ¿Tienes unos minutos para contarme qué estás buscando?",
+   "preguntas": [
+    "¿Qué te llamó la atención de nuestro anuncio y del plan de $1,299 al mes?",
+    "¿Qué has intentado antes para controlar tu peso y qué sentiste que no te funcionó?",
+    "¿Qué te gustaría aclarar antes de decidir si esto es para ti?"
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo; el equipo médico puede revisar lo que has intentado y orientarte según tu caso, sin prometerte resultados.",
+    "¿Qué incluye el plan de $1,299? → Te lo explico con claridad en una llamada para que puedas decidir si te conviene, sin compromiso."
+   ],
+   "si_no_contesta": "Si no responde, espera hasta la tarde y envía un solo seguimiento breve, dándole la opción de responder cuando le acomode; si no contesta, no insistas y deja que retome el contacto."
+  },
+  "L01729|09:00|14.95": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Por su edad y la baja prioridad, conviene empezar con un WhatsApp breve y cercano, no con una llamada fría.",
+   "whatsapp": "Hola, soy asesor de Clivi; perdón por tardar en escribirte. Vi tu registro para control de peso y quería saber qué te llamó la atención de nuestro anuncio. ¿Qué te interesó más?",
+   "guion_apertura": "Hola, soy asesor de Clivi; te llamo por tu registro para control de peso y quería saber qué te llamó la atención. ¿Tienes un momento para platicar?",
+   "preguntas": [
+    "¿Qué fue lo que te interesó del anuncio?",
+    "¿Has probado antes dietas u otros métodos para controlar tu peso? ¿Qué no te funcionó?",
+    "¿Qué te gustaría aclarar antes de decidir si este plan es para ti?"
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que puede ser frustrante; si quieres, cuéntame qué intentaste y el equipo médico puede valorar tu caso.",
+    "¿Qué incluye el plan de $1,299? → Te lo explico con claridad en una llamada para que puedas ver si se ajusta a lo que buscas."
+   ],
+   "si_no_contesta": "Déjale el WhatsApp y espera hasta mañana antes de hacer un seguimiento breve por el mismo medio; evita insistir con llamadas."
+  },
+  "L01724|09:00|13.87": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Como la prioridad es baja, un WhatsApp breve y personalizado permite retomar el contacto sin presionarle.",
+   "whatsapp": "Hola, soy asesor de Clivi; disculpa la demora en contactarte. Vi que dejaste tus datos en nuestro anuncio para control de peso y que te interesó el plan de $2,499 al mes. ¿Qué fue lo que más te llamó la atención?",
+   "guion_apertura": "Hola, soy asesor de Clivi; disculpa que apenas te contacte, vi que dejaste tus datos para conocer opciones de control de peso. ¿Qué te llamó la atención del plan que viste?",
+   "preguntas": [
+    "¿Qué fue lo que más te llamó la atención de lo que viste en nuestro anuncio?",
+    "¿Qué has intentado antes para controlar tu peso y qué sientes que no te funcionó?",
+    "¿Qué te gustaría entender mejor sobre el plan de $2,499 al mes antes de decidir? "
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que pueda ser frustrante. El equipo médico puede revisar tu caso y valorar qué enfoque podría ajustarse a ti, sin prometer resultados por adelantado.",
+    "El plan de $2,499 se me hace mucho → Lo entiendo. Podemos revisar qué opción se ajusta mejor a lo que buscas; hay planes desde $1,299 al mes."
+   ],
+   "si_no_contesta": "Si no responde al WhatsApp, intenta una llamada entre media mañana y el mediodía. Si tampoco contesta, deja pasar un día y envía un último mensaje breve, dándole espacio para decirte si ya no le interesa."
+  },
+  "L01730|09:00|13.45": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Como no es una prioridad alta, conviene abrir por WhatsApp y ofrecer una llamada breve, que puede ser más cómoda que intercambiar muchos mensajes.",
+   "whatsapp": "Hola, soy asesor de Clivi. Disculpa la demora; vi tu registro para recibir información sobre control de peso y el plan de $1,299 al mes. ¿Qué te llamó la atención del anuncio; prefieres que te marque para platicarlo?",
+   "guion_apertura": "Hola, soy asesor de Clivi; te llamo porque dejaste tus datos para recibir información sobre control de peso. ¿Tienes unos minutos para contarme qué te interesó?",
+   "preguntas": [
+    "¿Qué fue lo que te llamó la atención cuando viste nuestro anuncio?",
+    "¿Qué has intentado para controlar tu peso y qué sientes que no te ha funcionado?",
+    "¿Qué te gustaría saber primero sobre el plan de $1,299 al mes?"
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que puede ser frustrante. El equipo médico puede revisar tu caso y orientarte sobre opciones adecuadas para ti.",
+    "¿Qué incluye el plan? → Con gusto te lo explico en una llamada para que conozcas los detalles y puedas resolver tus dudas."
+   ],
+   "si_no_contesta": "Si no responde el WhatsApp, intenta una llamada por la tarde. Si tampoco contesta, envía un último mensaje al día siguiente, sin insistir más."
+  },
+  "L01728|09:00|12.78": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "La prioridad es baja y ya lleva más de 12 horas esperando; un WhatsApp breve permite retomar el registro sin presión.",
+   "whatsapp": "Hola, soy asesor de Clivi; disculpa la demora en escribirte. Vi que dejaste tus datos para conocer opciones de control de peso y te interesó el plan de $1,599 al mes. ¿Qué fue lo que más te llamó la atención?",
+   "guion_apertura": "Hola, soy asesor de Clivi; te llamo porque dejaste tus datos para conocer opciones de control de peso, y disculpa que tardara en contactarte. ¿Tienes un momento para contarme qué estás buscando?",
+   "preguntas": [
+    "¿Qué te llamó la atención cuando viste nuestro anuncio y dejaste tus datos?",
+    "¿Qué has probado antes para controlar tu peso y qué sientes que no te funcionó?",
+    "¿Qué te gustaría aclarar sobre el plan de $1,599 al mes antes de decidir?"
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que puedas sentirte así. En la llamada te explico cómo se revisa tu caso y puedes resolver tus dudas antes de decidir.",
+    "No recuerdo bien el anuncio → No pasa nada; te cuento brevemente por qué te contactamos y vemos si todavía te interesa conocer las opciones."
+   ],
+   "si_no_contesta": "Deja el WhatsApp y espera respuesta durante el día. Si no contesta, intenta una llamada mañana en horario laboral y evita insistir con varios mensajes."
+  },
+  "L01694|09:00|37.22": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Como la prioridad es baja y lleva más de un día esperando, conviene retomar por WhatsApp sin presionarle; si prefiere, puede hablar por llamada.",
+   "whatsapp": "Hola, soy asesor de Clivi; disculpa la demora en contactarte. Vi que dejaste tus datos para control de peso y te interesó el plan de $1,299 al mes; si ya no te interesa, no pasa nada. ¿Qué fue lo que más te llamó la atención?",
+   "guion_apertura": "Hola, soy asesor de Clivi; te llamo porque dejaste tus datos para conocer opciones de control de peso, y disculpa que tardara en contactarte. ¿Tienes unos minutos para platicar?",
+   "preguntas": [
+    "¿Qué fue lo que te llamó la atención cuando viste nuestro anuncio?",
+    "¿Qué has probado antes para controlar tu peso y qué sentiste que no te funcionó?",
+    "¿Qué te gustaría aclarar sobre el plan de $1,299 al mes?"
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que puede ser frustrante. En una llamada podemos revisar tu caso y resolver tus dudas sobre las opciones disponibles.",
+    "¿Qué incluye el plan? → Te lo explica el asesor en una llamada para que tengas claro qué ofrece antes de decidir."
+   ],
+   "si_no_contesta": "Si no responde, espera hasta la tarde y envía un mensaje breve para ofrecerle una llamada cuando le acomode. Si tampoco contesta, haz un último intento en uno o dos días y deja abierta la opción de contactarte más adelante."
+  },
+  "L01697|09:00|36.38": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Como ya pasó más de un día y la prioridad es baja, conviene retomar sin presión por WhatsApp y ofrecer una salida sencilla.",
+   "whatsapp": "Hola, soy asesor de Clivi; disculpa que tardemos en contactarte. Dejaste tus datos para recibir información sobre control de peso y te interesó el plan de $1,599 al mes. ¿Qué te llamó la atención del anuncio, o prefieres que lo dejemos aquí?",
+   "guion_apertura": "Hola, soy asesor de Clivi; te llamo porque dejaste tus datos para recibir información sobre control de peso, y disculpa la demora. ¿Tienes un momento para contarme qué te llamó la atención?",
+   "preguntas": [
+    "¿Qué fue lo que te interesó del anuncio y te animó a dejar tus datos?",
+    "¿Qué has probado antes para controlar tu peso y qué sentiste que no te funcionó?",
+    "¿Qué te gustaría aclarar sobre el plan de $1,599 al mes antes de decidir si quieres avanzar?"
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que puede ser frustrante; en una consulta, el equipo médico puede revisar tu caso y explicarte qué opciones hay para ti.",
+    "No sé si vale la pena volver a intentarlo → Es razonable tener dudas; puedo resolver tus preguntas y tú decides con calma si quieres continuar."
+   ],
+   "si_no_contesta": "Deja el WhatsApp y espera hasta la tarde por si responde. Si no hay respuesta, haz un intento más mañana en horario laboral; si sigue sin contestar, no insistas."
+  },
+  "L01699|09:00|35.55": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Lleva más de un día esperando y su prioridad es baja, así que conviene retomar sin presionarle.",
+   "whatsapp": "Hola, soy asesor de Clivi; disculpa que apenas te escriba. Dejaste tus datos para conocer opciones de control de peso y quería saber qué te llamó la atención del anuncio; si ya no te interesa, también está bien. ¿Qué te pareció?",
+   "guion_apertura": "Hola, soy asesor de Clivi; disculpa la demora, te llamo porque dejaste tus datos para conocer opciones de control de peso. ¿Tienes un momento para contarme qué te llamó la atención?",
+   "preguntas": [
+    "¿Qué te llamó la atención del anuncio que viste?",
+    "¿Qué has intentado antes para controlar tu peso y qué sientes que no te funcionó?",
+    "Vi que te interesó el plan de $2,499 al mes; ¿qué te gustaría resolver para saber si se ajusta a lo que buscas?"
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que puede ser frustrante. En Clivi un médico valora tu caso y define si el tratamiento es adecuado para ti.",
+    "El plan de $2,499 se me hace mucho → Lo entiendo; ese plan es una opción, y también puedes empezar con uno de menor costo si se ajusta mejor a ti."
+   ],
+   "si_no_contesta": "Espera hasta la tarde por si responde al WhatsApp. Si no hay respuesta, intenta una llamada mañana entre media mañana y el mediodía; si tampoco contesta, deja un último mensaje amable y no insistas más."
+  },
+  "L01701|09:00|33.78": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Como la prioridad es baja y ya pasó más de un día, conviene retomar sin presión por WhatsApp.",
+   "whatsapp": "Hola, soy asesor de Clivi; disculpa que apenas te escriba. Vi que dejaste tus datos para control de peso y te interesó el plan de $1,599 al mes; ¿qué te llamó la atención del anuncio? Si ya no te interesa, también está bien.",
+   "guion_apertura": "Hola, soy asesor de Clivi; te llamo para retomar tu registro de control de peso, y disculpa la demora. ¿Tienes un momento para contarme qué te llamó la atención de lo que viste?",
+   "preguntas": [
+    "¿Qué fue lo que te llamó la atención del anuncio y te animó a dejar tus datos?",
+    "¿Qué has intentado antes para controlar tu peso y qué sientes que no te funcionó?",
+    "¿Qué te gustaría saber para decidir si el plan de $1,599 al mes podría ser adecuado para ti?"
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que puede ser frustrante. Si quieres, revisamos qué has intentado y el equipo puede orientarte sobre si el acompañamiento de Clivi podría ajustarse a tu caso.",
+    "No estoy seguro de empezar → Está bien; podemos resolver tus dudas sobre el plan y tú decides con calma si quieres avanzar."
+   ],
+   "si_no_contesta": "Espera hasta la tarde por si responde. Si no, envía un último mensaje breve mañana a media mañana y deja abierta la opción de retomar cuando le convenga."
+  },
+  "L01703|09:00|33.08": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Como la prioridad es baja y lleva más de un día esperando, conviene retomar el contacto por WhatsApp sin presionar.",
+   "whatsapp": "Hola, soy asesor de Clivi; perdón por tardar en escribirte. Vi que dejaste tus datos para conocer apoyo para la diabetes tipo 2 y quería saber qué te llamó la atención. Si ya no te interesa, también está bien; ¿te gustaría que te cuente más por aquí?",
+   "guion_apertura": "Hola, soy asesor de Clivi; te llamo por el registro que hiciste para conocer apoyo para la diabetes tipo 2, y disculpa la demora. ¿Tienes un momento para platicar?",
+   "preguntas": [
+    "¿Qué te llamó la atención del anuncio que viste?",
+    "¿Cómo llevas actualmente el control de tu diabetes y quién te da seguimiento?",
+    "¿Qué te gustaría resolver o entender mejor sobre el plan de $1,299 al mes?"
+   ],
+   "objeciones": [
+    "Ya tengo doctor → Qué bueno; Clivi no sustituye a tu médico, sino que puede acompañarte entre consultas.",
+    "¿Qué incluye el plan? → Te lo explica el asesor en una llamada para que puedas resolver tus dudas antes de decidir."
+   ],
+   "si_no_contesta": "Espera hasta la tarde por si responde; si no, haz un intento de llamada mañana a media mañana. Si tampoco contesta, manda un último WhatsApp breve y deja abierta la opción de retomar cuando le convenga."
+  },
+  "L01720|09:00|26.25": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Como la prioridad es baja y ya pasó más de un día, conviene retomar con un mensaje amable y sin presión.",
+   "whatsapp": "Hola, soy asesor de Clivi; disculpa que no te haya contactado antes. Vi que dejaste tus datos para control de peso y te interesó el plan de $1,599 al mes. ¿Qué te llamó la atención cuando viste nuestro anuncio, o prefieres que lo dejemos aquí si ya no te interesa?",
+   "guion_apertura": "Hola, soy asesor de Clivi; disculpa que no te haya llamado antes. Te contacto por tu registro para control de peso, ¿tienes un momento para contarme qué te llamó la atención?",
+   "preguntas": [
+    "¿Qué fue lo que te llamó la atención del anuncio cuando dejaste tus datos?",
+    "¿Qué has probado antes para controlar tu peso y qué sientes que no te funcionó?",
+    "¿Qué te gustaría aclarar sobre el plan de $1,599 al mes antes de decidir si quieres conocer más?"
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que puede ser frustrante. En una consulta, el equipo médico puede revisar tu situación y orientarte sobre qué opciones podrían ajustarse a ti.",
+    "Lo dejé por impulso y ya no sé si me interesa → No pasa nada; si quieres, resolvemos tus dudas con calma y, si ya no es el momento, también está bien."
+   ],
+   "si_no_contesta": "Espera hasta la tarde por si responde al WhatsApp. Si no hay respuesta, intenta una llamada mañana a media mañana y, si tampoco contesta, deja un último mensaje breve sin insistir."
+  },
+  "L01725|09:00|24.28": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Como la prioridad es baja y ya pasó más de un día, conviene retomar con un mensaje amable y sin presión antes de llamar.",
+   "whatsapp": "Hola, soy asesor de Clivi; una disculpa por tardar en contactarte. Dejaste tus datos para recibir información sobre apoyo con diabetes tipo 2 y vi que te interesó el plan de $1,599 al mes. ¿Qué te llamó la atención, o prefieres dejarlo aquí?",
+   "guion_apertura": "Hola, te habla un asesor de Clivi; te llamo porque dejaste tus datos para recibir información sobre apoyo con diabetes tipo 2, y disculpa la demora. ¿Tienes un momento para contarme qué te llamó la atención?",
+   "preguntas": [
+    "¿Qué te llamó la atención de lo que viste y qué esperabas conocer al dejar tus datos?",
+    "¿Cómo llevas actualmente el control de tu diabetes y quién te da seguimiento?",
+    "¿Qué te gustaría resolver o entender mejor sobre el plan que te interesó?"
+   ],
+   "objeciones": [
+    "Ya tengo doctor → Qué bueno que ya tienes seguimiento; Clivi no sustituye a tu médico, puede acompañarte entre consultas.",
+    "No recuerdo bien el anuncio o lo hice por impulso → No pasa nada; te cuento brevemente de qué se trata y tú decides si quieres seguir conversando."
+   ],
+   "si_no_contesta": "Espera hasta la tarde por si responde al WhatsApp. Si no hay respuesta, intenta una llamada mañana a media mañana; si tampoco contesta, deja un último mensaje breve y no insistas."
+  },
+  "L01726|09:00|19.62": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Como la prioridad es baja, conviene retomar por WhatsApp con una disculpa breve y sin presionar.",
+   "whatsapp": "Hola, soy asesor de Clivi; perdón por tardar en contactarte. Vi que dejaste tus datos para conocer opciones de control de peso después de ver nuestro anuncio. ¿Qué fue lo que más te llamó la atención?",
+   "guion_apertura": "Hola, soy asesor de Clivi; te llamo porque dejaste tus datos para conocer opciones de control de peso y quería disculparme por la demora. ¿Tienes unos minutos para platicar?",
+   "preguntas": [
+    "¿Qué te llamó la atención de lo que viste y qué te gustaría saber?",
+    "¿Qué has intentado antes para controlar tu peso y qué no te funcionó?",
+    "¿Qué te gustaría entender sobre el plan de $1,299 al mes antes de decidir?"
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que puede ser frustrante; el equipo médico puede revisar tu caso y explicarte qué opciones podrían ser adecuadas para ti.",
+    "¿Qué incluye? → Te lo explico con claridad en una llamada para que puedas valorar si el plan se ajusta a lo que buscas."
+   ],
+   "si_no_contesta": "Si no responde el WhatsApp, intenta una llamada por la tarde; si tampoco contesta, manda un último mensaje al día siguiente y espera su respuesta."
+  },
+  "L01731|09:00|14.78": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Como la prioridad es baja y ya pasó más de medio día, conviene retomar por WhatsApp con calma y darle opción de hablar por llamada.",
+   "whatsapp": "Hola, soy asesor de Clivi; disculpa que tardé en contactarte. Vi que pediste información para control de peso después de ver nuestro anuncio y que te interesó el plan de $2,499 al mes. ¿Qué fue lo que más te llamó la atención?",
+   "guion_apertura": "Hola, te habla un asesor de Clivi; disculpa la demora, te llamo por tu registro para control de peso. ¿Tienes unos minutos para contarme qué te llamó la atención?",
+   "preguntas": [
+    "¿Qué te llamó la atención del anuncio para dejar tus datos?",
+    "¿Qué has probado antes para controlar tu peso y qué sientes que no te funcionó?",
+    "¿Qué te gustaría aclarar sobre el plan que te interesó?"
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que puede ser frustrante; un médico puede valorar tu caso y revisar qué opciones tienen sentido para ti.",
+    "Se me hace mucho el plan de $2,499 → Lo entiendo; si prefieres, también puedes empezar con una opción desde $1,299 al mes y el asesor te explica las diferencias."
+   ],
+   "si_no_contesta": "Deja el WhatsApp y espera hasta la tarde; si no responde, intenta una llamada mañana a media mañana y manda un último mensaje breve si tampoco contesta."
+  },
+  "L01696|09:00|37.42": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Como lleva más de un día esperando y su prioridad es baja, conviene retomar por mensaje sin presionarle.",
+   "whatsapp": "Hola, soy asesor de Clivi; disculpa que tardé en contactarte. Vi que dejaste tus datos para recibir información sobre control de peso y que te interesó el plan de $2,499 al mes; si ya no te interesa, no pasa nada. ¿Qué te llamó la atención en nuestro anuncio?",
+   "guion_apertura": "Hola, soy asesor de Clivi; te llamo porque dejaste tus datos para recibir información sobre control de peso, y disculpa la demora. ¿Tienes un momento para platicar de lo que estás buscando?",
+   "preguntas": [
+    "¿Qué te llamó la atención de nuestro anuncio sobre control de peso?",
+    "¿Qué has intentado hasta ahora y qué sientes que no te funcionó?",
+    "¿Qué te gustaría aclarar sobre el plan que te interesó o sobre las otras opciones? "
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que puede ser frustrante. Un médico puede revisar tu caso y valorar qué opciones se ajustan a ti.",
+    "El plan de $2,499 se me hace caro → Lo entiendo; podemos revisar su valor y, si lo prefieres, también puedes empezar con otro plan."
+   ],
+   "si_no_contesta": "Déjale tiempo para responder durante el día. Si no contesta, envía un último mensaje mañana por la tarde y no insistas si no responde."
+  },
+  "L01687|09:00|34.68": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Lleva más de un día esperando, su prioridad es baja y un mensaje breve evita una llamada fría.",
+   "whatsapp": "Hola, soy asesor de Clivi; disculpa que apenas te escriba. Dejaste tus datos para conocer opciones de control de peso y quería saber qué te llamó la atención; si ya no te interesa, también está bien. ¿Qué te gustaría saber?",
+   "guion_apertura": "Hola, soy asesor de Clivi; te llamo porque dejaste tus datos para conocer opciones de control de peso, y quería saber qué te llamó la atención. ¿Tienes un momento para platicar?",
+   "preguntas": [
+    "¿Qué fue lo que te llamó la atención de nuestro anuncio?",
+    "¿Qué has intentado para controlar tu peso y qué sientes que no te funcionó?",
+    "¿Qué te gustaría saber sobre el plan de $2,499 al mes? También puedes empezar con una opción más accesible, si lo prefieres."
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que puede ser frustrante. En Clivi un médico revisa tu caso y adapta el acompañamiento; ¿qué intentaste antes?",
+    "Se me hace mucho $2,499 al mes → Lo entiendo; si prefieres, puedes comenzar con el plan de $1,299 al mes y conocer la opción que mejor se ajuste a ti."
+   ],
+   "si_no_contesta": "Espera respuesta durante el día. Si no contesta, manda un último WhatsApp mañana por la tarde; si sigue sin responder, no insistas."
+  },
+  "L01723|09:00|12.50": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Como la prioridad es baja y ya pasaron más de 12 horas, conviene retomar por WhatsApp sin presionar.",
+   "whatsapp": "Hola, soy asesor de Clivi; perdón por tardar en contactarte. Vi que dejaste tus datos para control de peso y que te interesó el plan de $2,499 al mes; si ya no te interesa, también está bien. ¿Qué fue lo que más te llamó la atención?",
+   "guion_apertura": "Hola, soy asesor de Clivi; perdón por no haberte contactado antes. Vi que te interesó nuestro apoyo para control de peso, ¿tienes un momento para contarme qué estás buscando?",
+   "preguntas": [
+    "¿Qué fue lo que te llamó la atención cuando viste nuestro anuncio?",
+    "¿Qué has intentado antes para controlar tu peso y qué sientes que no te funcionó?",
+    "¿Qué te gustaría saber del plan de $2,499 al mes para decidir si te hace sentido?"
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que puede ser frustrante; aquí un médico revisa tu caso y ajusta el acompañamiento a tus necesidades.",
+    "El plan de $2,499 se me hace mucho → Lo entiendo; si prefieres, también puedes empezar con una opción desde $1,299 al mes."
+   ],
+   "si_no_contesta": "Espera hasta la tarde por si responde; si no, envía un último mensaje breve mañana y deja que la persona decida si quiere retomar."
+  },
+  "L01705|09:00|36.33": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "La prioridad es baja, viene de una exploración en TikTok y conviene empezar con un mensaje breve, sin pedirle una llamada larga.",
+   "whatsapp": "Hola, soy asesor de Clivi; disculpa que tardara en contactarte. Vi que te interesó conocer opciones para control de peso, con un plan desde $1,299 al mes; si ya no te interesa, no pasa nada. ¿Qué has probado hasta ahora y qué no te funcionó?",
+   "guion_apertura": "Hola, soy asesor de Clivi; te llamo por tu registro para conocer opciones de control de peso y antes que nada, disculpa la demora. ¿Te viene bien hablar un momento o prefieres que te comparta información por WhatsApp?",
+   "preguntas": [
+    "¿Qué te llamó la atención cuando viste el contenido de Clivi?",
+    "¿Qué has intentado para controlar tu peso y qué sentiste que no te funcionó?",
+    "¿Qué te gustaría saber primero sobre la opción de $1,299 al mes?"
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que puede ser frustrante; en Clivi un médico revisa tu caso y ajusta el acompañamiento a tus necesidades.",
+    "¿Qué incluye el plan de $1,299? → Te lo explica un asesor en una llamada breve para que tengas claros los detalles antes de decidir."
+   ],
+   "si_no_contesta": "Deja el WhatsApp y espera hasta la tarde. Si no responde, haz un último intento por WhatsApp al día siguiente; si tampoco contesta, no insistas."
+  },
+  "L01735|09:00|17.17": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "La prioridad es baja y, por su interés en TikTok, conviene empezar con un mensaje breve y ofrecer información por aquí.",
+   "whatsapp": "¡Qué tal! Soy asesor de Clivi; perdón por tardar en escribirte. Vi que te interesó el plan de $1,299 al mes para control de peso; ¿quieres que te comparta información por aquí?",
+   "guion_apertura": "Hola, soy asesor de Clivi; te llamo por el registro que dejaste para control de peso y perdón por la demora. ¿Te queda bien hablar un par de minutos?",
+   "preguntas": [
+    "¿Qué te animó a buscar opciones para controlar tu peso?",
+    "¿Qué has probado hasta ahora y qué sientes que no te funcionó?",
+    "¿Qué te gustaría saber primero sobre el plan que te interesó?"
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que puede ser frustrante; el equipo médico puede revisar tu caso y valorar qué opciones tienen sentido para ti.",
+    "¿Qué incluye? → Te lo explica un asesor en una llamada breve; si prefieres, coordinamos una cuando te venga bien."
+   ],
+   "si_no_contesta": "Espera hasta la tarde y manda un solo mensaje breve para ofrecer información por WhatsApp; si no responde, haz un último intento mañana por la mañana."
+  },
+  "L01733|09:00|16.32": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Por la prioridad baja y porque quizá apenas está explorando; mejor ofrecer información breve por WhatsApp antes de proponer una llamada.",
+   "whatsapp": "Hola, soy asesor de Clivi; perdón por tardar en contactarte. Vi que te interesó conocer opciones de apoyo para diabetes tipo 2 y el plan de $1,599 al mes. ¿Qué te gustaría saber primero?",
+   "guion_apertura": "Hola, soy asesor de Clivi; te llamo por el registro que hiciste para conocer apoyo para diabetes tipo 2, y disculpa la demora. ¿Te viene bien platicar un momento o prefieres que te comparta información por WhatsApp?",
+   "preguntas": [
+    "¿Cómo llevas actualmente el control de tu diabetes y quién te da seguimiento?",
+    "¿Qué te llamó la atención de lo que viste y qué quisieras aclarar primero?",
+    "¿Ya tienes un médico que te acompañe o estás buscando apoyo adicional entre consultas?"
+   ],
+   "objeciones": [
+    "Ya tengo doctor → Qué bueno; Clivi no lo sustituye. Puede acompañarte entre consultas, manteniendo a tu médico como parte de tu atención.",
+    "Solo estaba viendo → Claro, no hay prisa. ¿Qué información te ayudaría a valorar si te interesa seguir explorando?"
+   ],
+   "si_no_contesta": "Deja que responda al WhatsApp durante el día; si no contesta, envía un solo mensaje breve mañana por la mañana ofreciendo resolver sus dudas por aquí."
+  },
+  "L01736|09:00|13.20": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "La prioridad es baja y llegó desde TikTok; conviene un mensaje breve y casual antes de proponer una llamada.",
+   "whatsapp": "¡Qué tal! Soy asesor de Clivi; perdón por tardar en contactarte. Vi que te interesa el control de peso y el plan de $1,299 al mes; ¿quieres que te cuente por aquí cómo seguir?",
+   "guion_apertura": "Hola, soy asesor de Clivi. Te llamo por tu registro para control de peso; ¿te viene bien hablar un momento?",
+   "preguntas": [
+    "¿Qué te gustaría cambiar o mejorar respecto a tu peso?",
+    "¿Qué has intentado hasta ahora y qué sentiste que no te funcionó?",
+    "¿Qué te gustaría saber primero sobre el plan de $1,299 al mes?"
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que puede ser frustrante; en una llamada el asesor puede explicarte cómo se valora tu caso con el equipo médico.",
+    "¿Qué incluye? → Te lo explicamos con detalle en una llamada breve para que puedas revisar si se ajusta a lo que buscas."
+   ],
+   "si_no_contesta": "Déjale el WhatsApp y espera hasta la tarde. Si no responde, manda un solo seguimiento mañana, sin insistir con llamadas."
+  },
+  "L01707|09:00|33.92": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "La prioridad es baja, viene de TikTok y lleva más de un día esperando; conviene retomar con un mensaje breve y sin presión.",
+   "whatsapp": "Hola, soy asesor de Clivi; perdón por tardar en escribirte. Vi que te interesó conocer opciones para el control de peso y puedo compartirte información por aquí; si ya no te interesa, también está bien. ¿Qué te gustaría saber primero?",
+   "guion_apertura": "Hola, soy asesor de Clivi; te llamo por tu registro para conocer opciones de control de peso, y perdón por la demora. ¿Te viene bien hablar un momento o prefieres que te comparta información por WhatsApp?",
+   "preguntas": [
+    "¿Qué te llamó la atención del video y qué te gustaría conocer?",
+    "¿Qué has probado antes para controlar tu peso y qué sientes que no te funcionó?",
+    "¿Prefieres que te cuente por aquí sobre el plan de $1,599 al mes o tienes alguna duda concreta?"
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que puede ser frustrante. En Clivi un médico revisa tu caso para valorar qué opciones pueden ser adecuadas para ti.",
+    "Solo tenía curiosidad → Claro, con gusto te comparto información por aquí y tú decides si quieres seguir conversando."
+   ],
+   "si_no_contesta": "No llames de inmediato: espera hasta mañana y manda un solo mensaje breve para saber si todavía quiere información; si no responde, no insistas."
+  },
+  "L01732|09:00|17.37": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "La prioridad es baja y, como viene con curiosidad, conviene ofrecerle información breve por WhatsApp antes de proponer una llamada.",
+   "whatsapp": "Hola, soy asesor de Clivi; disculpa la demora en contactarte. Vi que te interesa el control de peso y puedo compartirte información por aquí, sin compromiso. ¿Te gustaría que te la mande?",
+   "guion_apertura": "Hola, soy asesor de Clivi; te llamo por tu registro para conocer un poco más sobre lo que buscas con el control de peso, y disculpa que tardara en contactarte. ¿Te queda bien platicar un par de minutos?",
+   "preguntas": [
+    "¿Qué te despertó la curiosidad sobre buscar apoyo para controlar tu peso?",
+    "¿Qué has probado hasta ahora y qué sientes que no te funcionó?",
+    "¿Qué te gustaría saber primero para decidir si esto podría ser para ti?"
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que puede ser frustrante. En una consulta, el equipo médico puede revisar tu caso y orientarte sobre si este camino es adecuado para ti.",
+    "Solo quería informarme → Claro, con gusto te comparto información por aquí y tú decides si quieres seguir conversando."
+   ],
+   "si_no_contesta": "Deja el WhatsApp y espera hasta la tarde; si no responde, manda un solo seguimiento breve al día siguiente y evita insistir."
+  },
+  "L01706|09:00|35.23": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Por su interés inicial desde TikTok y la prioridad baja, conviene ofrecer información breve por WhatsApp antes de proponer una llamada.",
+   "whatsapp": "Hola, soy asesor de Clivi; disculpa que tardara en contactarte. Vi que te interesó el control de peso y puedo compartirte información por aquí; si ya no te interesa, no pasa nada. ¿Qué te gustaría saber primero?",
+   "guion_apertura": "Hola, soy asesor de Clivi; te llamo por tu registro para conocer más sobre control de peso, y disculpa la demora. ¿Te viene bien platicar un momento?",
+   "preguntas": [
+    "¿Qué te dio curiosidad sobre el control de peso cuando viste nuestro contenido?",
+    "¿Qué has probado antes y qué sientes que no te funcionó?",
+    "¿Qué te gustaría saber del plan de $2,499 al mes antes de decidir si es para ti?"
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que pueda dar desconfianza volver a intentarlo; el equipo médico puede revisar tu caso y orientarte sobre si es adecuado para ti.",
+    "Se me hace mucho $2,499 al mes → Te entiendo; podemos revisar el valor de ese plan y, si prefieres, también considerar empezar con una opción desde $1,299 al mes."
+   ],
+   "si_no_contesta": "Déjale el WhatsApp y espera hasta la tarde; si no responde, envía un solo mensaje breve al día siguiente ofreciendo resolver sus dudas por aquí, sin insistir con llamadas."
+  },
+  "L01710|09:00|34.12": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "La prioridad es baja y puede que apenas esté explorando; conviene empezar con un mensaje breve y ofrecer información por aquí.",
+   "whatsapp": "Hola, soy asesor de Clivi; disculpa que tardara en escribirte sobre tu registro para control de peso. Vi que te interesó el plan de $1,299 al mes y puedo orientarte sin compromiso. ¿Qué te gustaría saber primero?",
+   "guion_apertura": "Hola, soy asesor de Clivi; te llamo por tu registro para control de peso y disculpa la demora. ¿Te queda bien hablar un momento ahora?",
+   "preguntas": [
+    "¿Qué te llamó la atención de buscar apoyo para controlar tu peso?",
+    "¿Qué has intentado hasta ahora y qué sentiste que no te funcionó?",
+    "¿Prefieres que te comparta información por aquí o que te explique en una llamada breve el plan que te interesó?"
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que puede ser frustrante; en una consulta, el equipo médico revisa tu caso para valorar qué puede ser adecuado para ti.",
+    "¿Qué incluye el plan? → Un asesor te puede explicar los detalles en una llamada breve; si quieres, coordinamos una sin compromiso."
+   ],
+   "si_no_contesta": "Como ya pasó más de un día, deja este mensaje y espera hasta mañana antes de hacer un solo seguimiento por WhatsApp; si no responde, no insistas con llamadas repetidas."
+  },
+  "L01734|09:00|15.68": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Por su baja prioridad y porque viene de TikTok con curiosidad; un mensaje breve le permite conocer más sin empezar con una llamada larga.",
+   "whatsapp": "Hola, soy asesor de Clivi; disculpa la demora en escribirte. Vi que te interesa el control de peso y el plan de $1,299 al mes; ¿qué duda te gustaría resolver por aquí?",
+   "guion_apertura": "Hola, soy asesor de Clivi; te llamo por tu registro sobre control de peso y disculpa que haya tardado en contactarte. ¿Te viene bien que te cuente brevemente cómo podemos orientarte?",
+   "preguntas": [
+    "¿Qué te dio curiosidad de nuestra información sobre control de peso?",
+    "¿Qué has intentado hasta ahora y qué sientes que no te funcionó?",
+    "¿Qué duda te gustaría resolver antes de considerar una llamada?"
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que puede ser frustrante. Si me cuentas qué has intentado, el equipo médico puede explicarte en una llamada si su enfoque podría ser adecuado para tu caso.",
+    "¿Qué incluye el plan de $1,299? → El asesor te explica los detalles del plan en una llamada breve; si prefieres, primero dime qué te interesa aclarar."
+   ],
+   "si_no_contesta": "Déjale este WhatsApp y espera hasta la tarde. Si no responde, envía un seguimiento breve mañana; no hace falta insistir con una llamada larga."
+  },
+  "L01737|09:00|15.22": {
+   "canal_recomendado": "whatsapp",
+   "por_que_canal": "Por ahora conviene enviar información breve por WhatsApp, sin presionar para una llamada larga; además, lleva más de 12 horas esperando.",
+   "whatsapp": "Hola, soy asesor de Clivi; disculpa la demora en contactarte. Vi que te interesó conocer opciones para control de peso y con gusto te comparto información por aquí. ¿Qué te gustaría saber primero?",
+   "guion_apertura": "Hola, te habla un asesor de Clivi; disculpa que tardara en contactarte por tu registro sobre control de peso. ¿Te queda bien que conversemos un momento sobre lo que estás buscando?",
+   "preguntas": [
+    "¿Qué te dio curiosidad sobre el control de peso cuando viste nuestro anuncio?",
+    "¿Qué has intentado antes y qué sentiste que no te funcionó?",
+    "¿Qué información te ayudaría a decidir si quieres conocer más? "
+   ],
+   "objeciones": [
+    "Ya probé de todo → Entiendo que puede ser desalentador. Si te interesa, podemos conversar sobre tu caso y resolver tus dudas, sin compromiso.",
+    "Solo estaba viendo → Claro, no tienes que decidir ahora. ¿Qué te gustaría saber para orientarte mejor?"
+   ],
+   "si_no_contesta": "Déjale espacio para responder durante el día; si no contesta, envía un solo mensaje breve mañana por la mañana y espera su respuesta antes de volver a contactar."
+  }
+ }
+}
