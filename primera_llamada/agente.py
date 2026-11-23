@@ -87,6 +87,9 @@ no los cites. Si hace falta, di "tu registro" o "nuestro anuncio".
 - No inventes datos del lead que no te dieron (por ejemplo, su nombre) ni digas que ya habló contigo \
 ("me comentaste"): es el primer contacto.
 - La apertura de la llamada termina con una pregunta.
+- Cada lead trae "pistas": úsalas. Al menos una pregunta y una objeción deben salir de las pistas \
+de ese lead, no ser genéricas ("quiero pensarlo", "se me hace caro") salvo que la pista lo indique.
+- Varía la primera frase del WhatsApp según el lead; no empieces siempre igual.
 - Adapta las preguntas y las objeciones al lead: no son las mismas para diabetes que para peso, \
 ni para un referido que para alguien que vio un anuncio. Los ejemplos muestran el tono y el largo; \
 no copies sus frases."""
@@ -103,8 +106,78 @@ class Contacto(BaseModel):
     si_no_contesta: str = Field(description="Qué hacer y cuándo reintentar si no contesta.")
 
 
+# ---------------------------------------------------------------- pistas por tipo de lead
+# Lo que un asesor con experiencia sabe de cada tipo de lead. Se calculan con reglas (no con IA)
+# y se le pasan al modelo para que adapte el mensaje en vez de adivinar.
+PISTAS_CANAL = {
+    "Referido": "Llegó recomendado por alguien: ya confía un poco. Pregunta quién lo recomendó y qué le contó; "
+                "apóyate en esa confianza.",
+    "Google": "Buscó activamente en Google: tiene una necesidad concreta y está comparando. Sé directo y "
+              "ofrece resolver sus dudas ya.",
+    "TikTok": "Viene de TikTok: suele ser curiosidad, todavía sin decisión. Tono ligero y breve; ofrece "
+              "información por WhatsApp antes que una llamada larga.",
+    "Meta": "Vio un anuncio en redes y dejó sus datos, quizá de impulso: recuérdale con naturalidad qué pidió "
+            "y pregunta qué le llamó la atención.",
+    "Organico": "Llegó solo al sitio de Clivi: ya nos conoce algo. Pregunta cómo supo de Clivi.",
+}
+PISTAS_OBJETIVO = {
+    "diabetes": "Busca apoyo con diabetes tipo 2: probablemente ya tiene médico. Objeción probable: "
+                "\"ya tengo doctor\" → Clivi acompaña entre consultas, no sustituye a su médico. Pregunta cómo "
+                "lleva hoy su control y quién le da seguimiento.",
+    "peso": "Busca control de peso: probablemente ya intentó dietas u otros métodos. Objeción probable: "
+            "\"ya probé de todo\" → aquí lo lleva un médico y se ajusta a su caso. Pregunta qué ha intentado "
+            "y qué no le funcionó.",
+}
+
+
+def pistas(lead: dict) -> list:
+    p = []
+    canal = str(lead.get("canal") or "")
+    if canal in PISTAS_CANAL:
+        p.append(PISTAS_CANAL[canal])
+    objetivo = str(lead.get("objetivo") or "").lower()
+    for clave, texto in PISTAS_OBJETIVO.items():
+        if clave in objetivo:
+            p.append(texto)
+    try:
+        edad = int(float(lead.get("edad")))
+    except (TypeError, ValueError):
+        edad = None
+    if edad is not None and 18 <= edad <= 100:
+        if edad >= 50:
+            p.append(f"Tiene {edad} años: tono cálido y respetuoso, frases claras; suele preferir una llamada "
+                     "a muchos mensajes.")
+        elif edad <= 30:
+            p.append(f"Tiene {edad} años: tono cercano y casual; WhatsApp corto funciona mejor que una llamada fría.")
+    plan = str(lead.get("plan_de_interes") or "").replace(",", "")
+    if plan == "2499":
+        p.append("Le interesó el plan más completo ($2,499): objeción probable de precio → habla del valor y de "
+                 "que puede empezar con otro plan si lo prefiere; no lo bajes de plan de entrada.")
+    elif plan == "1299":
+        p.append("Le interesó el plan de entrada ($1,299): cuida el presupuesto; no intentes venderle uno más caro "
+                 "en el primer contacto. Objeción probable: \"¿qué incluye?\" → eso se explica en la llamada.")
+    horas = float(lead.get("horas_esperando") or 0)
+    if horas < 0.25:
+        p.append("Acaba de dejar sus datos (menos de 15 minutos): es el mejor momento, llama ya y dilo "
+                 "(\"hace un momento dejaste tus datos\").")
+    elif horas >= 24:
+        p.append("Lleva más de un día esperando: discúlpate y dale una salida fácil (\"si ya no te interesa, "
+                 "también está bien\").")
+    hora = str(lead.get("hora_actual") or "09:00")
+    try:
+        h = int(hora.split(":")[0])
+    except ValueError:
+        h = 9
+    if h >= 19 or h < 9:
+        p.append(f"Son las {hora}: fuera de horario para llamar; empieza por WhatsApp y propone llamar mañana.")
+    return p
+
+
 def _contexto(lead: dict) -> str:
     anuncio = lead.get("anuncio") or "(sin anuncio)"
+    lista = pistas(lead)
+    extra = ("\nPistas para este lead (úsalas para adaptar el mensaje, sin copiarlas):\n"
+             + "\n".join(f"- {x}" for x in lista)) if lista else ""
     return (
         f"Lead {lead.get('lead_id')}\n"
         f"- Llegó por: {lead.get('canal')} · {anuncio}\n"
@@ -115,6 +188,7 @@ def _contexto(lead: dict) -> str:
         f"- Prioridad en la lista: {lead.get('prioridad')} "
         f"({100 * lead.get('probabilidad', 0):.1f}% de probabilidad de venta si se le llama ahora)\n"
         f"- Hora actual del asesor: {lead.get('hora_actual', '09:00')}"
+        + extra
     )
 
 

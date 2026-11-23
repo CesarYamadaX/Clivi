@@ -10,6 +10,7 @@ Toma leads variados (prioridad alta, media y baja; recién llegados y de más de
 cada uno, revisa las reglas con primera_llamada/revision.py y escribe todo en
 reporte_ia.md para leerlo con calma.
 """
+import re
 import sys
 import time
 from datetime import datetime
@@ -52,6 +53,7 @@ def main():
 
     lineas = [f"# Prueba del asistente con IA\n\n{datetime.now():%Y-%m-%d %H:%M} · modelo `{modelo}` · {n} leads\n"]
     resumen = []
+    inicios, objeciones = set(), []
     for f in muestra(n).itertuples():
         lead = {k: getattr(f, k) for k in ["lead_id", "canal", "anuncio", "objetivo", "plan_de_interes", "estado",
                                             "edad", "horas_esperando", "prioridad", "probabilidad", "hora_actual"]}
@@ -61,6 +63,9 @@ def main():
         problemas = revisar(c, lead) if fuente == "ia" else [fuente]
         ok = "✅" if not problemas else "⚠️"
         resumen.append((fuente == "ia", not problemas, seg))
+        if fuente == "ia":
+            inicios.add(" ".join(c.whatsapp.lower().replace(",", "").split()[:5]))
+            objeciones += c.objeciones
         print(f"{ok} {lead['lead_id']} · {lead['prioridad']:5} · {lead['horas_esperando']:5.1f} h · "
               f"{lead['objetivo']:15} · {seg:4.1f} s · {'; '.join(problemas) or 'pasa'}")
         lineas += [
@@ -81,6 +86,9 @@ def main():
     tiempos = sorted(s for a, _, s in resumen if a) or [0]
     total = (f"\nRespondió la IA: {con_ia} de {len(resumen)} · pasan todas las reglas: {pasan} de {con_ia} · "
              f"tiempo típico {tiempos[len(tiempos) // 2]:.1f} s, máximo {tiempos[-1]:.1f} s")
+    genericas = sum(bool(re.search(r"pensar|caro|no puedo hablar|no tengo tiempo", o, re.I)) for o in objeciones)
+    total += (f"\nVariedad: {len(inicios)} formas distintas de empezar el WhatsApp en {con_ia} mensajes · "
+              f"objeciones genéricas (pensarlo, caro, no puedo hablar): {genericas} de {len(objeciones)}")
     print(total)
     lineas.insert(1, total.strip() + "\n")
     (AQUI / "reporte_ia.md").write_text("\n".join(lineas), encoding="utf-8")

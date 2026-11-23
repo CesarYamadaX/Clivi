@@ -177,3 +177,17 @@ def test_los_ejemplos_cumplen_las_reglas():
     from primera_llamada.revision import revisar
     for lead, respuesta in EJEMPLOS:
         assert revisar(Contacto(**respuesta), lead) == [], lead["lead_id"]
+
+
+def test_pistas_por_tipo_de_lead():
+    from primera_llamada.agente import _contexto, pistas
+    p = " ".join(pistas({**LEAD, "canal": "Referido", "objetivo": "diabetes tipo 2", "edad": "58",
+                         "plan_de_interes": "2499", "horas_esperando": 30, "hora_actual": "20:00"}))
+    for esperado in ["recomendó", "ya tengo doctor", "58 años", "$2,499", "más de un día", "fuera de horario"]:
+        assert esperado in p, esperado
+    p = " ".join(pistas({**LEAD, "canal": "TikTok", "objetivo": "control de peso", "edad": "24",
+                         "plan_de_interes": "1299", "horas_esperando": 0.1}))
+    for esperado in ["TikTok", "ya probé de todo", "24 años", "$1,299", "Acaba de dejar"]:
+        assert esperado in p, esperado
+    assert pistas({**LEAD, "edad": "199"}) == pistas({**LEAD, "edad": "nan"})  # edades imposibles se ignoran
+    assert "Pistas para este lead" in _contexto(LEAD)
