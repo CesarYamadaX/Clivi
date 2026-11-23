@@ -59,6 +59,10 @@ python guardar_demo.py        # guarda las respuestas de la IA para la demo
 
 La app usa `data/leads_ficticios.csv` por defecto. Desde la barra lateral se puede subir otro CSV con las mismas columnas; se limpia solo (fechas DD/MM y teléfonos repetidos).
 
+### Registrar qué pasó con cada lead
+
+En **Preparar contacto**, debajo de la tarjeta del lead, el asesor marca *Contestó*, *No contestó*, *Compró* o *No interesado*. Se guarda en `data/resultados_registrados.csv` (no se sube a git) y la pestaña **Cómo decide y si funciona** muestra el resumen por prioridad y permite descargarlo. Con unas semanas de registros se recalibra la prioridad con resultados reales, y los mensajes que terminaron en venta sirven de ejemplos para afinar la IA. En Streamlit Cloud el archivo es temporal: se borra cuando la app se reinicia.
+
 ## Publicarla gratis (Streamlit Community Cloud)
 
 1. Entra a https://share.streamlit.io con tu cuenta de GitHub y presiona **Create app → Deploy a public app from GitHub**.
@@ -75,6 +79,7 @@ La app usa `data/leads_ficticios.csv` por defecto. Desde la barra lateral se pue
 | `app.py` | Pantalla en Streamlit |
 | `validar.py` | Validación desde la terminal |
 | `primera_llamada/revision.py` | Revisa automáticamente cada mensaje (máx. 3 frases, sin promesas médicas, sin nombres inventados, precios reales, etc.) |
+| `primera_llamada/registro.py` | Guarda y resume los resultados que marcan los asesores |
 | `primera_llamada/demo.py` y `guardar_demo.py` | Respuestas de la IA guardadas para la demo (`data/respuestas_demo.json`) |
 | `probar_ia.py` | Prueba la IA real con leads variados y deja el detalle en `reporte_ia.md` |
 | `tests/` | Pruebas: limpieza, orden, reparto, que no use el futuro, números de la validación y el asistente con la API simulada |

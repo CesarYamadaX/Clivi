@@ -13,6 +13,7 @@ import streamlit as st
 
 from primera_llamada.agente import clave_del_entorno, preparar_contacto
 from primera_llamada.demo import ARCHIVO as RESPUESTAS_DEMO, respuesta_guardada
+from primera_llamada import registro
 from primera_llamada.modelo import leer_leads, lista_del_dia, validar
 
 DATOS = Path(__file__).parent / "data" / "leads_ficticios.csv"
@@ -348,6 +349,37 @@ with tab_contacto:
                         contacto, fuente = respaldo, "ia (guardada)"
                 st.session_state["contacto"] = (fila.lead_id, contacto, fuente)
 
+            # ---- qué pasó después del contacto
+            st.markdown('<div class="pl-section" style="margin-top:18px">📝 ¿Qué pasó con este lead?</div>',
+                        unsafe_allow_html=True)
+            registrados = registro.leer()
+            dia_txt = f"{dia:%Y-%m-%d}"
+            previo = registrados[(registrados.lead_id == str(fila.lead_id)) & (registrados.dia == dia_txt)
+                                 & (registrados.hora == f"{hora:02d}:00")]
+            botones = st.columns(2)
+            for j, (clave_res, etiqueta) in enumerate(registro.RESULTADOS.items()):
+                if botones[j % 2].button(etiqueta, key=f"res_{clave_res}", width="stretch"):
+                    guardado_c = st.session_state.get("contacto")
+                    mismo = guardado_c and guardado_c[0] == fila.lead_id
+                    try:
+                        registro.registrar({
+                            "dia": dia_txt, "hora": f"{hora:02d}:00", "lead_id": str(fila.lead_id),
+                            "asesor": fila.asignado, "prioridad": fila.prioridad,
+                            "probabilidad": round(float(fila.probabilidad), 4),
+                            "canal_recomendado": guardado_c[1].canal_recomendado if mismo else "",
+                            "fuente_mensaje": guardado_c[2] if mismo else "", "resultado": clave_res})
+                        st.toast(f"Guardado: {fila.lead_id} · {etiqueta}", icon="📝")
+                        previo = registro.leer().pipe(lambda t: t[(t.lead_id == str(fila.lead_id)) & (t.dia == dia_txt)
+                                                                    & (t.hora == f"{hora:02d}:00")])
+                    except OSError:
+                        st.error("No se pudo guardar el resultado en este equipo.")
+            if not previo.empty:
+                st.caption(f"Registrado: **{registro.RESULTADOS[previo.resultado.iloc[-1]]}** "
+                           f"({previo.registrado.iloc[-1][11:16]}). Puedes cambiarlo con otro botón.")
+            else:
+                st.caption("Márcalo después de llamar o escribir. Con estos datos se recalibra la prioridad "
+                           "y se afina la IA con casos reales.")
+
         with der:
             guardado = st.session_state.get("contacto")
             if not guardado or guardado[0] != fila.lead_id:
@@ -396,6 +428,32 @@ with tab_modelo:
         st.caption(f"{v['mananas']} mañanas, {v['leads']} leads en cola, {v['ventas']} ventas. "
                    f"Cada día el modelo solo aprende de días anteriores. Un tercio al azar daría 33%.")
 
+    # ---- lo que registran los asesores
+    st.markdown('<div class="pl-section">📝 Lo que registran los asesores</div>', unsafe_allow_html=True)
+    hechos = registro.leer()
+    if hechos.empty:
+        st.info("Todavía no hay resultados registrados. En **Preparar contacto**, marca qué pasó con cada lead "
+                "(contestó, no contestó, compró o no le interesa) y aquí verás si la prioridad acierta.", icon="📝")
+    else:
+        r = registro.resumen(hechos)
+        a, b, c = st.columns(3)
+        contestaron = int(r.contestaron.sum())
+        kpi(a, "Leads registrados", f"{len(hechos)}", f"{hechos.dia.nunique()} día(s) · {hechos.asesor.nunique()} asesor(es)")
+        kpi(b, "Contestaron", f"{contestaron / len(hechos):.0%}", f"{contestaron} de {len(hechos)}")
+        kpi(c, "Compraron", f"{int(r.compraron.sum())}", "ventas registradas", "good")
+        st.dataframe(r, hide_index=True, width="stretch",
+                     column_config={"prioridad": st.column_config.TextColumn("Prioridad"),
+                                    "registrados": st.column_config.NumberColumn("Registrados"),
+                                    "contestaron": st.column_config.NumberColumn("Contestaron"),
+                                    "compraron": st.column_config.NumberColumn("Compraron"),
+                                    "tasa_compra": st.column_config.ProgressColumn("Compra", format="percent",
+                                                                                   min_value=0, max_value=1)})
+        st.caption("Si la prioridad acierta, la columna Compra baja de alta a media a baja. Con unas semanas de "
+                   "registros se recalibra el modelo con resultados reales, y los mensajes que terminaron en "
+                   "venta sirven de ejemplos para afinar la IA.")
+        st.download_button("⬇️ Descargar registros (CSV)", hechos.to_csv(index=False).encode("utf-8"),
+                           "resultados_registrados.csv", "text/csv")
+
     st.markdown('<div class="pl-section">Cómo decide el orden</div>', unsafe_allow_html=True)
     f1, f2, f3 = st.columns([1, 1, 1.5], gap="large")
     with f1:
@@ -421,3 +479,35 @@ with tab_modelo:
                                     "leads": st.column_config.NumberColumn("Leads", width="small"),
                                     "tasa_venta": st.column_config.ProgressColumn("Venta", format="%.1f%%", width="medium",
                                                                                   min_value=0, max_value=20)})
+
+    # ---- cómo mejoramos la IA
+    st.markdown('<div class="pl-section">🤖 Cómo mejoramos la IA del asistente</div>', unsafe_allow_html=True)
+    st.markdown('<div class="pl-muted">Cada versión se probó con la IA real sobre los mismos 12 leads variados '
+                '(prioridad alta, media y baja; recién llegados y de más de 12 h; peso y diabetes), y una revisión '
+                'automática contó cuántos mensajes rompen alguna regla y cuántas objeciones son genéricas.</div>',
+                unsafe_allow_html=True)
+    st.markdown(
+        "| Versión | Pasan las reglas | Objeciones genéricas | Qué cambió |\n"
+        "|---|:---:|:---:|---|\n"
+        "| 1. Primera versión | 12 de 12 | — | No se presentaba como Clivi, citaba «Meta» y se disculpaba sin razón |\n"
+        "| 2. Reglas más claras | 12 de 12 | — | Todos se presentan como asesor de Clivi |\n"
+        "| 3. Ejemplos de buenas respuestas | 12 de 12 | 22 de 24 | Mejor tono, pero objeciones de cajón («lo voy a pensar», «está caro») |\n"
+        "| 4. Pistas por tipo de lead | 11 de 12 | 1 de 24 | Objeciones según canal, objetivo, edad, plan y horas esperando |\n"
+        "| **5. Pistas + autocorrección** | **12 de 12** | **0 de 24** | Si un mensaje rompe una regla, la IA lo corrige sola una vez |\n"
+        "| Demo: 42 leads de las 9:00 | 41 de 42 | — | Respuestas guardadas para que la demo no dependa de la red |")
+    st.write("")
+    i1, i2 = st.columns([1, 1], gap="large")
+    with i1:
+        st.markdown("**Reglas que revisa en cada mensaje**")
+        st.markdown("- WhatsApp de máximo 3 frases que termina en pregunta\n"
+                    "- Dice que es de Clivi y menciona el objetivo del lead\n"
+                    "- Sin promesas médicas, medicamentos ni precios inventados\n"
+                    "- Sin nombres inventados ni «me comentaste»\n"
+                    "- Se disculpa solo si el lead lleva más de 12 h esperando\n"
+                    "- Prioridad alta → recomienda llamar")
+    with i2:
+        st.markdown("**Siguiente paso: aprender de resultados reales**")
+        st.markdown("1. Los asesores marcan qué pasó con cada lead (botones en *Preparar contacto*).\n"
+                    "2. Cada semana se recalibra la prioridad con esos resultados.\n"
+                    "3. Los mensajes que terminaron en venta se vuelven los ejemplos de la IA; "
+                    "con cientos de casos ya se puede afinar el modelo (fine-tuning).")
