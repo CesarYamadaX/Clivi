@@ -68,3 +68,33 @@ def test_clave_falsa_no_rompe_la_app(monkeypatch):
     at.button[0].click().run()
     assert not at.exception
     assert at.session_state["contacto"][2].startswith("plantilla")
+
+
+def test_respuesta_guardada_para_la_demo(monkeypatch, tmp_path):
+    """Con una respuesta guardada, la app la muestra sin llamar a la IA (aquí no hay clave)."""
+    import json
+    from primera_llamada import demo
+    from primera_llamada.agente import plantilla
+    at = _app(monkeypatch)
+    at.button[0].click().run()
+    lead_id = at.session_state["contacto"][0]
+    assert at.session_state["contacto"][2].startswith("plantilla")
+    # guardamos para todos los leads de la lista una respuesta reconocible
+    import guardar_demo
+    respuestas = {}
+    for lead in guardar_demo.leads_demo():
+        c = plantilla(lead)
+        c.whatsapp = "¡Hola, soy tu asesor de Clivi, respuesta guardada! ¿Te llamo?"
+        respuestas[demo.llave(lead)] = c.model_dump()
+    archivo = tmp_path / "respuestas_demo.json"
+    archivo.write_text(json.dumps({"respuestas": respuestas}), encoding="utf-8")
+    monkeypatch.setattr(demo, "ARCHIVO", archivo)
+    at = AppTest.from_file(APP, default_timeout=60).run()
+    at.button[0].click().run()
+    assert not at.exception
+    lid, c, fuente = at.session_state["contacto"]
+    assert lid == lead_id and fuente == "ia (guardada)" and "respuesta guardada" in c.whatsapp
+    # apagando el interruptor intenta en vivo; sin IA disponible, usa la guardada de respaldo
+    [t for t in at.toggle if t.label == "Usar respuestas guardadas"][0].set_value(False).run()
+    at.button[0].click().run()
+    assert not at.exception and at.session_state["contacto"][2] == "ia (guardada)"

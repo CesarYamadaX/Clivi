@@ -12,6 +12,7 @@ import pandas as pd
 import streamlit as st
 
 from primera_llamada.agente import clave_del_entorno, preparar_contacto
+from primera_llamada.demo import ARCHIVO as RESPUESTAS_DEMO, respuesta_guardada
 from primera_llamada.modelo import leer_leads, lista_del_dia, validar
 
 DATOS = Path(__file__).parent / "data" / "leads_ficticios.csv"
@@ -191,6 +192,10 @@ with st.sidebar:
         st.success("IA activa · GPT-6 Luna", icon="✅")
     else:
         st.info("Sin clave: el asistente usará una plantilla.", icon="ℹ️")
+    usar_guardadas = RESPUESTAS_DEMO.exists() and st.toggle(
+        "Usar respuestas guardadas", value=True,
+        help="Para la demo: muestra al instante lo que la IA ya escribió para los leads de hoy a las 9:00, "
+             "sin depender de la red. Los demás leads se generan en vivo.")
 
     st.divider()
     st.caption(f"{resumen['registros']:,} registros leídos · {resumen['duplicados']} teléfonos repetidos quitados · "
@@ -332,8 +337,15 @@ with tab_contacto:
                 lead = {k: fila.get(k) for k in ["lead_id", "canal", "anuncio", "objetivo", "plan_de_interes", "estado",
                                                  "edad", "horas_esperando", "prioridad", "probabilidad"]}
                 lead["hora_actual"] = f"{hora:02d}:00"
-                with st.spinner("Preparando el primer contacto…"):
-                    contacto, fuente = preparar_contacto(lead, clave)
+                guardada = respuesta_guardada(lead) if usar_guardadas else None
+                if guardada is not None:
+                    contacto, fuente = guardada, "ia (guardada)"
+                else:
+                    with st.spinner("Preparando el primer contacto…"):
+                        contacto, fuente = preparar_contacto(lead, clave)
+                    # Si la IA falla en vivo pero hay una respuesta guardada, mejor esa que la plantilla.
+                    if not fuente.startswith("ia") and (respaldo := respuesta_guardada(lead)) is not None:
+                        contacto, fuente = respaldo, "ia (guardada)"
                 st.session_state["contacto"] = (fila.lead_id, contacto, fuente)
 
         with der:
@@ -348,7 +360,8 @@ with tab_contacto:
                 lid, c, fuente = guardado
                 icono = "📞" if c.canal_recomendado == "llamada" else "💬"
                 st.success(f"{icono} **Empezar por {c.canal_recomendado}.** {c.por_que_canal}")
-                st.caption(("✨ Escrito con IA (GPT-6 Luna)" + (" · corregido automáticamente" if "corregida" in fuente else ""))
+                st.caption(("✨ Escrito con IA (GPT-6 Luna)" + (" · corregido automáticamente" if "corregida" in fuente else "")
+                            + (" · respuesta guardada" if "guardada" in fuente else ""))
                            if fuente.startswith("ia") else f"📝 Usando {fuente}")
                 with st.container(border=True):
                     st.markdown("**💬 WhatsApp listo para enviar**")

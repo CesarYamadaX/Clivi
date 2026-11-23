@@ -207,3 +207,17 @@ def test_autocorreccion_cuando_rompe_reglas():
     c, fuente = preparar_contacto(LEAD, client=_cliente(manejar), modelo="m")
     assert fuente == "ia (corregida)" and c.whatsapp == bueno["whatsapp"]
     assert "Corrige estos problemas" in enviados[1]["messages"][-1]["content"]
+
+
+def test_demo_llave_y_carga(tmp_path):
+    import json
+    from primera_llamada import demo
+    lead = dict(LEAD, hora_actual="09:00")
+    c = plantilla(lead)
+    archivo = tmp_path / "r.json"
+    archivo.write_text(json.dumps({"respuestas": {demo.llave(lead): c.model_dump()}}), encoding="utf-8")
+    assert demo.respuesta_guardada(lead, archivo) == c
+    assert demo.respuesta_guardada(dict(lead, hora_actual="10:00"), archivo) is None
+    assert demo.respuesta_guardada(lead, tmp_path / "no-existe.json") is None
+    (tmp_path / "roto.json").write_text("{no es json", encoding="utf-8")
+    assert demo.respuesta_guardada(lead, tmp_path / "roto.json") is None

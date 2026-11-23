@@ -50,16 +50,21 @@ streamlit run app.py          # abre la app en el navegador
 python validar.py             # imprime la validación en la terminal
 python -m pytest              # corre las pruebas
 python probar_ia.py           # prueba la IA real con 12 leads y escribe reporte_ia.md
+python guardar_demo.py        # guarda las respuestas de la IA para la demo
 ```
+
+### Modo demo (respuestas guardadas)
+
+`guardar_demo.py` le pide a la IA el primer contacto de todos los leads de la lista que abre la app (mañana siguiente a los datos, 9:00) y lo guarda en `data/respuestas_demo.json`. Con el interruptor **Usar respuestas guardadas** (barra lateral, encendido por defecto) la app las muestra al instante, sin depender de la red. Los demás leads se generan en vivo, y si la IA falla en vivo para un lead guardado se usa la respuesta guardada en lugar de la plantilla.
 
 La app usa `data/leads_ficticios.csv` por defecto. Desde la barra lateral se puede subir otro CSV con las mismas columnas; se limpia solo (fechas DD/MM y teléfonos repetidos).
 
-## Publicarla gratis
+## Publicarla gratis (Streamlit Community Cloud)
 
-1. Sube esta carpeta a un repositorio de GitHub.
-2. Entra a https://share.streamlit.io, elige el repositorio y `app.py` como archivo principal.
-3. En *Advanced settings → Secrets* agrega `OPENROUTER_API_KEY = "..."` si quieres el asistente con IA.
-4. Comparte la liga que te da.
+1. Entra a https://share.streamlit.io con tu cuenta de GitHub y presiona **Create app → Deploy a public app from GitHub**.
+2. Repositorio `CesarYamadaX/Clivi`, rama `main`, archivo principal `app.py`. Elige una URL (por ejemplo `primera-llamada-clivi`).
+3. En **Advanced settings**: Python 3.12 y en *Secrets* pega `OPENROUTER_API_KEY = "sk-or-..."` (con comillas). Sin secreto la app funciona con las respuestas guardadas y la plantilla.
+4. **Deploy**. Tarda 2 o 3 minutos la primera vez; cada push a `main` la actualiza sola.
 
 ## Archivos
 
@@ -70,6 +75,7 @@ La app usa `data/leads_ficticios.csv` por defecto. Desde la barra lateral se pue
 | `app.py` | Pantalla en Streamlit |
 | `validar.py` | Validación desde la terminal |
 | `primera_llamada/revision.py` | Revisa automáticamente cada mensaje (máx. 3 frases, sin promesas médicas, sin nombres inventados, precios reales, etc.) |
+| `primera_llamada/demo.py` y `guardar_demo.py` | Respuestas de la IA guardadas para la demo (`data/respuestas_demo.json`) |
 | `probar_ia.py` | Prueba la IA real con leads variados y deja el detalle en `reporte_ia.md` |
 | `tests/` | Pruebas: limpieza, orden, reparto, que no use el futuro, números de la validación y el asistente con la API simulada |
 | `data/leads_ficticios.csv` | Datos de la Introducción |
