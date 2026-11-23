@@ -22,7 +22,7 @@ SERVICIOS = re.compile(r"\b(nutri[oó]log\w*|endocrin\w*|psic[oó]log\w*|ozempic
                        r"saxenda|semaglutida|tirzepatida|glp-?1|laboratorio)", re.IGNORECASE)
 
 # Un saludo con nombre propio ("Hola Ana") inventa datos del lead.
-SALUDO_CON_NOMBRE = re.compile(r"\b([Hh]ola|[Bb]uen[oa]s?\s+\w+)[,!\s]+(?!soy\b|te\b|qu[eé]\b|c[oó]mo\b)"
+SALUDO_CON_NOMBRE = re.compile(r"\b([Hh]ola|[Bb]uen[oa]s?\s+\w+)[,!\s]+(?!(?i:soy|te|qu[eé]|c[oó]mo)\b)"
                                r"([A-ZÁÉÍÓÚÑ][a-záéíóúñ]{2,})\b")
 
 DISCULPA = re.compile(r"perd[oó]n|disculp|demora|tard|esper", re.IGNORECASE)

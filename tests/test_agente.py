@@ -39,7 +39,9 @@ def test_con_ia():
     req = enviado[0]
     assert req["model"] == "gpt-6-luna"
     assert req["response_format"]["type"] == "json_schema"
-    assert "L01738" in req["messages"][1]["content"] and "11.9 horas" in req["messages"][1]["content"]
+    assert "L01738" in req["messages"][-1]["content"] and "11.9 horas" in req["messages"][-1]["content"]
+    assert len(req["messages"]) == 2 + 2 * 2  # sistema, 2 ejemplos (pregunta y respuesta), lead
+    assert req["temperature"] == 0.4
 
 
 def test_sin_credenciales(monkeypatch):
@@ -167,3 +169,11 @@ def test_clave_desde_env(tmp_path, monkeypatch):
     monkeypatch.delenv("OPENROUTER_API_KEY")
     env.unlink()
     assert agente.clave_del_entorno() == ""
+
+
+def test_los_ejemplos_cumplen_las_reglas():
+    """Los ejemplos que le damos al modelo deben pasar la misma revisión que sus respuestas."""
+    from primera_llamada.agente import EJEMPLOS
+    from primera_llamada.revision import revisar
+    for lead, respuesta in EJEMPLOS:
+        assert revisar(Contacto(**respuesta), lead) == [], lead["lead_id"]

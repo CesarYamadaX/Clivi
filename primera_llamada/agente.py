@@ -14,6 +14,7 @@ from __future__ import annotations
 
 from typing import Literal
 
+import json
 import os
 from pathlib import Path
 
@@ -23,6 +24,7 @@ from pydantic import BaseModel, Field
 OPENROUTER_URL = "https://openrouter.ai/api/v1"
 MODELO_OPENROUTER = "openai/gpt-6-luna"
 MODELO_OPENAI = "gpt-6-luna"
+TEMPERATURA = 0.4  # más bajo = respuestas más parejas entre leads
 TIEMPO_MAXIMO = 45  # segundos; en una demo es mejor caer a la plantilla que dejar la pantalla congelada
 
 
@@ -84,7 +86,10 @@ Si lleva más de 12 horas esperando, discúlpate con naturalidad; si lleva menos
 no los cites. Si hace falta, di "tu registro" o "nuestro anuncio".
 - No inventes datos del lead que no te dieron (por ejemplo, su nombre) ni digas que ya habló contigo \
 ("me comentaste"): es el primer contacto.
-- La apertura de la llamada termina con una pregunta."""
+- La apertura de la llamada termina con una pregunta.
+- Adapta las preguntas y las objeciones al lead: no son las mismas para diabetes que para peso, \
+ni para un referido que para alguien que vio un anuncio. Los ejemplos muestran el tono y el largo; \
+no copies sus frases."""
 
 
 class Contacto(BaseModel):
@@ -111,6 +116,61 @@ def _contexto(lead: dict) -> str:
         f"({100 * lead.get('probabilidad', 0):.1f}% de probabilidad de venta si se le llama ahora)\n"
         f"- Hora actual del asesor: {lead.get('hora_actual', '09:00')}"
     )
+
+
+# ---------------------------------------------------------------- ejemplos (few-shot)
+# Dos casos resueltos "como lo haría el mejor asesor". Le enseñan al modelo el tono, el largo
+# y cómo adaptar el mensaje al lead, sin tener que entrenarlo (fine-tuning).
+EJEMPLOS = [
+    ({"lead_id": "EJEMPLO-1", "canal": "Google", "anuncio": "Busqueda tratamiento peso", "objetivo": "control de peso",
+      "plan_de_interes": "1599", "estado": "Jalisco", "edad": "34", "horas_esperando": 0.1,
+      "prioridad": "alta", "probabilidad": 0.31, "hora_actual": "10:00"},
+     {"canal_recomendado": "llamada",
+      "por_que_canal": "Acaba de dejar sus datos y es prioridad alta: llamar en los primeros 15 minutos "
+                       "es cuando más contesta y más compra.",
+      "whatsapp": "¡Hola! Soy tu asesora de Clivi. Vi que acabas de dejar tus datos para control de peso; "
+                  "¿te puedo marcar en 5 minutos para platicarte cómo funciona?",
+      "guion_apertura": "Hola, te habla tu asesora de Clivi; te marco porque hace un momento dejaste tus datos para control "
+                        "de peso. ¿Tienes 5 minutos para contarme qué estás buscando?",
+      "preguntas": ["¿Qué te hizo buscar apoyo justo ahora?",
+                    "¿Has intentado algo antes para controlar tu peso? ¿Qué te funcionó y qué no?",
+                    "Si en unos meses esto te sale bien, ¿qué cambiaría en tu día a día?"],
+      "objeciones": ["Lo voy a pensar → Claro. ¿Qué te gustaría tener claro para decidir? Lo vemos ahorita "
+                     "y si no te convence, no pasa nada.",
+                     "¿Y si no me funciona? → Es justo lo que revisa el médico en tu primera consulta: "
+                     "si el tratamiento es para ti y cómo se ajusta a tu caso."],
+      "si_no_contesta": "Manda el WhatsApp de inmediato y vuelve a llamar en 15 a 20 minutos; si tampoco "
+                        "contesta, un último intento entre 12:00 y 15:00."}),
+    ({"lead_id": "EJEMPLO-2", "canal": "Referido", "anuncio": "(sin anuncio)", "objetivo": "diabetes tipo 2",
+      "plan_de_interes": "2499", "estado": "CDMX", "edad": "58", "horas_esperando": 30.0,
+      "prioridad": "media", "probabilidad": 0.05, "hora_actual": "09:00"},
+     {"canal_recomendado": "whatsapp",
+      "por_que_canal": "Lleva más de un día esperando: un WhatsApp con disculpa abre la puerta sin presionar.",
+      "whatsapp": "Hola, soy tu asesor de Clivi; perdón por tardar en escribirte. Vi que te recomendaron "
+                  "con nosotros para el control de la diabetes tipo 2. ¿Te queda mejor que platiquemos "
+                  "por aquí o por llamada?",
+      "guion_apertura": "Hola, te habla tu asesor de Clivi; te llamo porque alguien te recomendó con nosotros para el "
+                        "control de la diabetes, y perdón por la demora. ¿Tienes unos minutos?",
+      "preguntas": ["¿Quién te recomendó y qué te contó de su experiencia?",
+                    "¿Cómo llevas hoy el control de tu diabetes y quién te da seguimiento?",
+                    "¿Qué te gustaría que fuera distinto con tu tratamiento?"],
+      "objeciones": ["Ya tengo doctor → Qué bueno. Clivi no lo sustituye: te acompaña entre consultas "
+                     "y tu médico puede seguir siendo parte.",
+                     "Está caro → Entiendo; el plan de $1,299 es una buena forma de empezar y "
+                     "puedes cambiar después."],
+      "si_no_contesta": "Espera respuesta al WhatsApp hasta la tarde; si no contesta, una llamada mañana "
+                        "a media mañana y después solo un mensaje más."}),
+]
+
+
+def mensajes(lead: dict) -> list:
+    """Sistema + ejemplos resueltos + el lead real."""
+    m = [{"role": "system", "content": SISTEMA}]
+    for ejemplo, respuesta in EJEMPLOS:
+        m.append({"role": "user", "content": _contexto(ejemplo)})
+        m.append({"role": "assistant", "content": json.dumps(respuesta, ensure_ascii=False)})
+    m.append({"role": "user", "content": _contexto(lead)})
+    return m
 
 
 def plantilla(lead: dict) -> Contacto:
@@ -147,9 +207,9 @@ def preparar_contacto(lead: dict, clave: str = "", client: openai.OpenAI | None 
     try:
         r = client.chat.completions.parse(
             model=modelo,
-            messages=[{"role": "system", "content": SISTEMA},
-                      {"role": "user", "content": _contexto(lead)}],
+            messages=mensajes(lead),
             response_format=Contacto,
+            temperature=TEMPERATURA,
         )
         msg = r.choices[0].message
         if msg.refusal or msg.parsed is None:
